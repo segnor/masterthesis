@@ -1,0 +1,222 @@
+%%
+%% Hochschule Emden-Leer --  Abschlussarbeit
+%%
+%% Hauptdokument
+%%
+%% 23.01.09 Tschirley V.01
+%% 24.08.14 Bergen V.03
+%% 28.11.14 Lorenz V.04
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, a4paper]{book}
+\usepackage[hang]{footmisc}
+\setlength\footnotemargin{10pt}
+
+%% Übersetzen als Entwurf
+%\usepackage[entwurf]{latexTemplate/bhtThesis}
+%% Übersetzen für die Abgabe
+\usepackage[abgabe]{latexTemplate/bhtThesis}	
+\typeout{Master-Thesis Sascha Lorenz Hochschule Emden-Leer V0.1}
+\usepackage{blindtext}   %für Blindtext, warum auch immer; ohne geht maketitle nicht: EB, 01.05.2014
+\usepackage{listings}
+\lstset{ 
+  literate={ö}{{\"o}}1
+           {ä}{{\"a}}1
+           {ü}{{\"u}}1
+           {Ö}{{\"O}}1
+           {Ä}{{\"A}}1
+           {Ü}{{\"U}}1
+           {ß}{{\ss}}2
+}
+
+% Symbole
+\usepackage{trsym} % http://ftp.gwdg.de/pub/ctan/fonts/trsym/trsym.pdf
+\usepackage{bytefield} %http://ftp.uni-erlangen.de/mirrors/CTAN/macros/latex/contrib/bytefield/bf-example.pdf
+\usepackage{bibgerm}
+\usepackage{MnSymbol}
+\usepackage{lmodern}
+\usepackage{multibib}
+%\usepackage[acronyms]{glossaries}
+\usepackage[acronym,style=long,toc=true,numberedsection=autolabel]{glossaries} 
+%\robustify{\gls}
+
+\usepackage{booktabs}
+\makeglossaries
+
+
+\newcites{lit}{Literaturverzeichnis}
+\newcites{int}{Internetquellen}
+
+\usepackage{listings,xcolor}
+
+\definecolor{listingBackground}{rgb}{0.97,0.97,0.97}
+\definecolor{stringColor}{rgb}{0.37,0.37,0.37}
+\lstset{
+	basicstyle=\footnotesize\ttfamily,
+	numbers=left,
+	numberstyle=\tiny,
+	%stepnumber=2,
+	numbersep=5pt,
+	tabsize=2,
+	extendedchars=true,
+	breaklines=true,
+	keywordstyle=\color{red},
+	frame=b,
+	stringstyle=\color{stringColor}\ttfamily,
+	showspaces=false,
+	showtabs=false,
+	xleftmargin=17pt,
+	framexleftmargin=17pt,
+	framexrightmargin=5pt,
+	framexbottommargin=4pt,
+	backgroundcolor=\color{listingBackground},
+	showstringspaces=false
+}
+
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{black}}
+\DeclareCaptionFormat{listing}{\colorbox[rgb]{0.87, 0.87, 0.87}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white,singlelinecheck=false,margin=0pt,font={bf,footnotesize}}
+
+\usepackage[babel,german=quotes]{csquotes}
+
+
+\DeclareQuoteStyle{fquotes}
+  {\em}{}{\em}{}
+
+\newcommand*{\myfquote}[1]{%
+  \begingroup%
+    \setquotestyle{fquotes}%
+    \enquote{#1}%
+  \endgroup%
+}
+
+\newif\ifmyblockquote
+\newcommand*{\myblockquote}{%
+\myblockquotetrue\blockquote}
+
+\DeclareQuoteStyle[italics]{german}
+[\itshape]
+[\itshape]
+{\quotedblbase}
+{\textquotedblleft}
+[0.025em]
+{\quotesinglbase}
+{\fixligatures\textquoteleft}
+\DeclareQuoteAlias[italics]{german}{german}
+
+
+\renewcommand\mkblockquote[4]{\enquote{#1#2#3}#4}
+
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+
+%%
+%% Pfad zu den Bildern
+%%
+\graphicspath{
+  {pictures/},
+  %{einleitung/pictures},
+  %{kapitel1/pictures/},
+  %{kapitel2/pictures/}
+}
+
+%\usepackage{pgfplots}
+%\usepgfplotslibrary{dateplot}
+
+
+
+%%
+%% Einbinden persönlicher macros 
+%%
+\input{personalMacros.tex}
+
+%% Message
+\typeout{-----------------------------------------------------------}
+\typeout{----> thesis.tex ---- Zentrales Dokument-------------------}
+\typeout{-----------------------------------------------------------}
+
+\version{1.56}
+\abgabedatum{{07}. {März} {2015}}
+%%
+%% Titel, Autor und Betreuer
+%%
+\fachbereich{Technik} 
+\studiengang{Medieninformatik-Online (Master)}
+\autor{Sascha P. Lorenz}
+\matrnr{501 63 21}
+\titel{Big Data Processing mit Apache Spark}
+\untertitel{}
+\betreuerFeld{
+  \begin{tabular}{llr}
+    
+    \textbf{1. Betreuer} & Herr~Prof.~Dr.~Edlich & Beuth Hochschule für Technik\\
+    \textbf{2. Betreuer} & Herr~Prof.~Dr. Schiemann-Lillie & Hochschule Emden-Leer
+  \end{tabular}
+}
+
+%%\renewcommand{\baselinestretch}{1.05} 
+\renewcommand{\arraystretch}{1.3}
+\pagenumbering{Alph}
+\begin{document}
+\pagestyle{fancy}
+\input{glossary.tex}
+
+\cleardoublepage
+
+\input{titelseiten.tex}
+\frontmatter
+
+
+
+\mainmatter
+
+\pagenumbering{arabic}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Die Kapitel der Arbeit
+
+\input{einfuehrung.tex}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Verzeichnisse
+
+\chapter{Verzeichnisse}
+\label{chapter:verzeichnisse}
+%\addcontentsline{toc}{chapter}{Verzeichnisse}
+
+\bibliographystylelit{geralpha}
+\bibliographylit{literaturVerzeichnis}
+\addcontentsline{toc}{section}{Literaturverzeichnis}
+
+%\newpage
+\bibliographystyleint{geralpha}
+\bibliographyint{internetQuellen}
+\addcontentsline{toc}{section}{Internetquellen}
+
+%\newpage
+\listoffigures
+\addcontentsline{toc}{section}{Abbildungsverzeichnis}
+\clearpage
+\cleardoublepage
+%\newpage
+\listoftables
+\addcontentsline{toc}{section}{Tabellenverzeichnis}
+\clearpage
+\cleardoublepage
+\lstlistoflistings 
+\addcontentsline{toc}{section}{Quellenverzeichnis}
+\clearpage
+\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Anhang
+
+\clearpage\newpage
+\begin{appendix}
+  \input{anhang.tex}
+\end{appendix}
+
+
+
+\end{document}
