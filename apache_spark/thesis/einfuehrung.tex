@@ -15,18 +15,18 @@ Im vierten Teil dieser Ausarbeitung wird Spark in der praktischen Anwendung geze
 \label{section:was versteht man unter ``Big Data”?}
 
 
-Der Begriff ``Big Data“ wurde vermutlich zum ersten Mal Ende des 20. Jahrhunderts von John R. Marshey, damals Chefwissenschaftler bei Silicon Graphics, im Rahmen einer Usenix-Konferenz öffentlich erwähnt. Mittlerweile ziert dieser Begriff gefühlt jedes zweite Cover von IT-Zeitschriften mit Business-Fokus und auch Manager und ``Sales-Professionals“ werten Ihre Produktpräsentationen gerne mit diesem Buzzword auf. Aber dieser Begriff ist nicht nur positiv assoziiert. Besonders seit Bekanntwerden der Tätigkeiten des Amerikanischen Auslandsgeheimdienstes weckt die Vorstellung des „Datensammelns“ in großen Dimensionen auch Misstrauen. 
+Der Begriff ``Big Data“ wurde vermutlich zum ersten Mal Ende des 20. Jahrhunderts von John R. Marshey, damals Chefwissenschaftler bei Silicon Graphics, im Rahmen einer Usenix-Konferenz öffentlich erwähnt. Mittlerweile ziert dieser Begriff gefühlt jedes zweite Cover von IT-Zeitschriften mit Business-Fokus und auch Manager und ``Sales-Professionals“ werten Ihre Produktpräsentationen gerne mit diesem Buzzword auf.  Aber dieser Begriff ist nicht nur positiv assoziiert. Besonders seit Bekanntwerden der Tätigkeiten des Amerikanischen Auslandsgeheimdienstes weckt die Vorstellung des „Datensammelns“ in großen Dimensionen auch Misstrauen. 
 
-	Im Rahmen dieser Ausarbeitung soll jedoch ausschließlich die technische Betrachtung und die exemplarische Darstellung von möglichen Anwendungsgebieten diskutiert werden. 
-
-
+	Im Rahmen dieser Arbeit soll jedoch ausschließlich die technische Betrachtung und die exemplarische Darstellung von möglichen Anwendungsgebieten diskutiert werden.
 
 
-Wie lässt sich der Begriff „Big Data“ abgrenzen? Es existiert keine abschließend eindeutige Definition, jedoch gibt es einige Attribute, die sich in einem Großteil der Fachliteratur etabliert haben. Der Wikipedia-Artikel zum Thema [WP14] fasst dies folgendermaßen zusammen: 
 
-\enquote{[…]bezeichnet Datenmengen, die zu groß, oder zu komplex sind, oder sich zu schnell ändern, um sie mit händischen und klassischen Methoden der Datenverarbeitung auszuwerten.}
 
-Neben der reinen Menge spielt also offensichtlich auch die mangelnde oder fehlende Strukturierung der Daten eine nicht unerhebliche Rolle. Dies können beispielsweise Daten aus Social-Media-Quellen sein, die aus allen möglichen verschiedenen Einzeldaten bestehen, Daten von Sensoren, die permanent überwacht werden müssen, oder Datenströme (Video, Audio, Bilder, Text), die nach einheitlichen Kriterien gefiltert werden sollen, um hier nur einige Beispiele zu nennen. Auch die temporäre Komponente ist ein Einsatzgebiet für „Big Data“, und auch hier ist wieder das Beispiel der Datenströme heranzuziehen. 
+Wie lässt sich der Begriff „Big Data“ abgrenzen? Es existiert keine abschließend eindeutige Definition, jedoch gibt es einige Attribute, die sich in einem Großteil der Fachliteratur etabliert haben. Der Artikel aus dem O'Reilly Radar zum Thema \citeint{dumbhill}fasst dies folgendermaßen zusammen: 
+
+\enquote{Big data is data that exceeds the processing capacity of conventional database systems. The data is too big, moves too fast, or doesn’t fit the structures of your database architectures.}
+
+Neben der reinen Menge spielt also offensichtlich auch die mangelnde oder fehlende Strukturierung und unter Umständen die Flüchtigkeit der Daten eine nicht unerhebliche Rolle. Dies können beispielsweise Daten aus Social-Media-Quellen sein, die aus allen möglichen verschiedenen Einzeldaten bestehen, Daten von Sensoren, die permanent überwacht werden müssen, oder Datenströme (Video, Audio, Bilder, Text), die nach einheitlichen Kriterien gefiltert werden sollen, um hier nur einige Beispiele zu nennen. Auch die temporäre Komponente ist ein Einsatzgebiet für „Big Data“, und auch hier ist wieder das Beispiel der Datenströme heranzuziehen. 
 
 Bei der Definition von Big Data werden laut des BITKOM-Ratgebers zum Thema „Big Data“ [BK14] auch immer wieder die „Three Vs“ angeführt. Dies sind Volume, also die Datenmenge, Variety, die Datenvielfalt und Velocity, die Geschwindigkeit der Auswertung. 
 
@@ -96,4 +96,14 @@ Für linear-algebraische Berechnungen (lineare Regression, Eigenwertproblem, Hau
 von O(n²) oder O(n³)), Graphentheorie, Optimierungsprobleme (Verlust-, Kosten- oder Energiefunktionen, sowie  Integrations- und Ausrichtungsfunktionen ist Hadoop nur in jeweils einfacher Problemausprägung einsetzbar. Auch für Interaktive Abfragen ist Hadoop nur bedingt geeignet, da es ursprünglich für die Batch-Verarbeitung entwickelt wurde.
 
 Aus diesem Grund wurde am AMPLab der University of California in Berkeley nach Alternativen geforscht, die auch für komplexe linear-algebraische Probleme, generalisierte n-Körper-Probleme und diverse Optimierungsprobleme geeignet sind. Das Ergebnis ist Spark, mittlerweile Apache Top-Level-Projekt und dazu geeignet, die Nachfolge von Hadoop als Big-Data-Analytics-Framework anzutreten. 
+
+\section{Ziel und Aufbau dieser Arbeit}
+\label{section:ziel dieser Arbeit}
+
+Die vorliegende Arbeit beschäftigt sich mit Apache Spark und dem dazugehörigen Ökosystem bestehend aus Schichten  mit verschiedenen Bibliotheken, dem Berkeley Data Anaytics Stack (BDAS). Auf dem Markt befindet sich bislang noch verhältnismäßig wenig Literatur zu diesem Thema und wenn, dann werden zumeist Teilaspekte für bestimmte Anwendungsbereiche gekapselt betrachtet. Diese Arbeit soll zunächst einen ganzheitlichen Überblick über den Stack bieten. Hier werden die einzelnen Schichten des Stacks kurz beschrieben und gegebenenfalls Alternativlösungen zu den jeweiligen Implementierungen vorgestellt. 
+
+Insbesondere werden in den darauffolgenden Kapiteln die Statistik- und Vorhersagebibliotheken MLLib im Gegensatz zu H2O betrachtet und die Kernimplementierung von Spark mit dem neueren Framework Apache Flink verglichen. Die Bibliotheken des Caching-Frameworks Tachyon werden vorgestellt, sowie die Streaming-Bibliothek Spark Streaming und die Graphenanwendung GraphX. 
+
+Dann werden jeweils praktische Anwendungsbeispiele gezeigt und im Zuge dessen die APIs von Spark und MLlib insbesondere vorgestellt.   
+
 
