@@ -1,3 +1,5 @@
+
+
 /**
  *
  *
@@ -9,6 +11,9 @@
 
 
 
+
+import com.sun.javafx.geom.AreaOp;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.io.Serializable;
@@ -21,6 +26,7 @@ public class ApacheAccessLog implements Serializable{
 
 
     private static final Logger logger = Logger.getLogger("AccessLogs");
+
 
     private String ipAddress;
     private String clientIdentd;
@@ -127,10 +133,16 @@ public class ApacheAccessLog implements Serializable{
     private static final Pattern PATTERN = Pattern.compile(LOG_ENTRY_PATTERN);
 
     public static ApacheAccessLog parseFromLogLine(String logline) {
+
+        logger.setLevel(Level.WARN);
+        System.out.println("LOGLINE IS: " + logline);
+        System.out.println("_____________________________________________________________\n");
         Matcher m = PATTERN.matcher(logline);
         if (!m.find()) {
-            logger.trace("Cannot parse logline" + logline);
+            logger.trace("************************************************Cannot parse logline" + logline);
+            System.out.println("Cannot parse logline" + logline);
             throw new RuntimeException("Error parsing logline");
+
         }
 
         return new ApacheAccessLog(m.group(1), m.group(2), m.group(3), m.group(4),

@@ -1,6 +1,6 @@
 /**
  * Created by Sascha P. Lorenz on 14/12/14.
- * * The LogAnalyzer takes in an apache access log file and
+ *  The LogAnalyzer takes in an apache access log file and
  * computes some statistics on them.
  *
  * Example command to run:
@@ -23,6 +23,8 @@ import java.util.List;
 
 
 public class SparkLogAnalyzer {
+
+
 
     private static Function2<Long, Long, Long> SUM_REDUCER = (a, b) -> a + b;
 
