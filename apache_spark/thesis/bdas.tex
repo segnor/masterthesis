@@ -131,18 +131,17 @@ Der ML-Optimizer soll ML-Probleme für Endnutzer vereinfachen, in dem Modellausw
 
 
 
-\subsection{Shark}
-\label{section:shark}
+\subsection{Spark SQL}
+\label{section:spark SQL}
 
 
+\textit{Hive} ist eine \textit{SQL-Query-Engine} für Hadoop, die sich großer Beliebtheit in der Hadoop-Community erfreut. Spark SQL\footnote{Ursprünglich war die für den BDAS-Stack empfohlene Implementierung einer SQL-Query-Engine unter dem Namen \textit{Shark} bekannt. Im Juli 2014 wurde jedoch bekanntgegeben, dass die Entwicklung von Shark zugunsten von Spark SQL eingestellt wurde und die vorhandenen Shark-Implementierungen voll in Spark SQL integriert werden. Deshalb zeigen Schaubilder des BDAS von vor Juli 2014 Shark als Query-Engine.} ist eine Portierung dieser Engine für Spark, um alle Vorteile der BDAS-Architektur nutzen zu können und ist kompatibel mit sämtlichen Hive-Daten, -Metastores und –Queries. Im Gegensatz zu Hive, das aus Datensätzen zur Laufzeit Java-Objekte generiert, nutzt Spark SQL eine zeilenorientierte Speicherung mittels Arrays primitiver Datentypen und ist somit selbst in einer Hadoop-Infrastruktur im Mittel bis zu fünfmal schneller als Hive. 
 
-Hive ist eine SQL-Query-Engine für Hadoop, die sich großer Beliebtheit in der Hadoop-Community erfreut. Shark ist eine Portierung dieser Engine für Spark, um alle Vorteile der In-Memory-Architektur nutzen zu können und ist kompatibel mit sämtlichen Hive-Daten, -Metastores und –Queries. Im Gegensatz zu Hive, das aus Datensätzen zur Laufzeit Java-Objekte generiert, nutzt Shark eine zeilenorientierte Speicherung mittels Arrays primitiver Datentypen und ist somit selbst in einer Hadoop-Infrastruktur im Mittel bis zu fünfmal schneller als Hive. 
+Eine Besonderheit von Spark SQL ist neben seinem SQL-Interface die Möglichkeit, auch Machine-Learning-Funktionen als Abfragen formulieren zu können. 
 
-Eine Besonderheit von Shark ist neben seinem SQL-Interface die Möglichkeit, auch Machine-Learning-Funktionen als Abfragen formulieren zu können. 
+Für die Anwendung von Spark SQL hat sich die Architektur von Spark mit seinen RDDs als sehr vorteilhaft erwiesen, da Abfragen auf Fehlerhaften RDDs nach dem Neuaufbau des entsprechenden Datasets direkt erneut ausgeführt werden können. 
 
-Für die Anwendung von Shark hat sich die Architektur von Spark mit seinen RDDs als sehr vorteilhaft erwiesen, da Abfragen auf Fehlerhaften RDDs nach dem Neuaufbau des entsprechenden Datasets direkt erneut ausgeführt werden können. 
-
-Ein weiterer Unterschied zu Hive ist die sogenannte Partial-DAG-Execution (PDE). Dies bedeutet, dass logische Abfragepläne in Shark aufgrund gesammelter Statistiken zur Laufzeit flexibel erstellt werden im Gegensatz zu Hive oder herkömmlichen relationalen Datenbanksystemen, wo bereits zur Kompilierungszeit starre physische Abfragepläne generiert werden. Besonders die Machine-Learning- und Failover-Funktionen wären mit einer Planerstellung zu Kompilierzeit nicht umsetzbar. 
+Ein weiterer Unterschied zu Hive ist die sogenannte Partial-DAG-Execution (PDE). Dies bedeutet, dass logische Abfragepläne in Spark SQL aufgrund gesammelter Statistiken zur Laufzeit flexibel erstellt werden im Gegensatz zu Hive oder herkömmlichen relationalen Datenbanksystemen, wo bereits zur Kompilierungszeit starre physische Abfragepläne generiert werden. Besonders die Machine-Learning- und Failover-Funktionen wären mit einer Planerstellung zu Kompilierzeit nicht umsetzbar. 
 
 
 \section{Alternative Wege innerhalb des BDAS}
@@ -182,7 +181,7 @@ Apache Hive ist eine Data-Warehouse-Infrastruktur für Hadoop, die ursprünglich
 Um Abfragen zu beschleunigen, nutzt die Query-Engine Datenbankindizes, die, zusammen mit Metadaten, in einer eigenen Apache Derby-Datenbank gespeichert werden.
 
 
-Hive kann auf einer Hadoop-basierten Alternativinfrastruktur verhältnismäßig viel Leistung bieten. Wird jedoch Spark eingesetzt, sollte auf jeden Fall Shark statt Hive zum Einsatz kommen, wie in Kapitel 2.4.4 beschrieben.
+Hive kann auf einer Hadoop-basierten Alternativinfrastruktur verhältnismäßig viel Leistung bieten. Wird jedoch Spark eingesetzt, sollte auf jeden Fall SparkSQL statt Hive zum Einsatz kommen, wie in \ref{section:spark SQL} beschrieben.
 
 \subsection{Storm}
 \label{section:storm}
