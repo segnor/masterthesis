@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 public class ApacheAccessLog implements Serializable{
 
 
-    private static final Logger logger = Logger.getLogger("AccessLogs");
+    private static Logger logger = Logger.getLogger( SparkLogAnalyzer.class );
 
 
     private String ipAddress;
@@ -133,8 +133,12 @@ public class ApacheAccessLog implements Serializable{
     private static final Pattern PATTERN = Pattern.compile(LOG_ENTRY_PATTERN);
 
     public static ApacheAccessLog parseFromLogLine(String logline) {
+        Long a,b;
 
         logger.setLevel(Level.WARN);
+
+        a= System.currentTimeMillis();
+        logger.warn("Current timestamp: " + a.toString());
         System.out.println("LOGLINE IS: " + logline);
         System.out.println("_____________________________________________________________\n");
         Matcher m = PATTERN.matcher(logline);
@@ -144,7 +148,8 @@ public class ApacheAccessLog implements Serializable{
             throw new RuntimeException("Error parsing logline");
 
         }
-
+        b = System.currentTimeMillis();
+        logger.warn("Execution for this line took: " + (b-a));
         return new ApacheAccessLog(m.group(1), m.group(2), m.group(3), m.group(4),
                 m.group(5), m.group(6), m.group(7), m.group(8), m.group(9));
     }

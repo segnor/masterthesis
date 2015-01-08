@@ -3,37 +3,54 @@
 
 
 Das nachfolgende Kapitel behandelt die Grundlagen, die für ein Verständnis der Anwendungsbereiche von Apache Spark, dem Berkeley Data Analytics Stack und im Allgemeinen des Themenkomplexes Big Data Analytics nötig sind. Im ersten Unterkapitel werden die grundsätzlichen Eigenschaften eines verteilten Systems beschrieben um die Basis für die in der Arbeit beschriebenen Besonderheiten von Verarbeitungen im Clusterbetrieb zu legen. Hier wird ein exemplarischer Clusteraufbau skizziert, Probleme mit Concurrency und Netzwerkverkehr beschrieben und welche Möglichkeiten es hier gibt.  Im darauf folgenden Unterkapitel werden grundlegende Problemstellungen und Technologien  beschrieben, die im Rahmen von Big Data Analytics im Allgemeinen vorkommen. Unter anderem werden hier Grundlagen und Begriffe aus den Themengebieten Loganalysen, Machine Learning, statistische Analysen, Graph-Suchen, Datenbankabfragen und Streaming-Frameworks in Kurzform erklärt. In einer Zusammenfassung werde diese Grundlagen nochmals auf einen Blick dargestellt. 
+ 
 
 \section{Cluster Computing}
 \label{section:cluster computing}
 
-Die Nachfrage nach immer mehr Rechenleistung hat in dein letzten Jahren dazu geführt, dass verstärkt Rechnercluster eingesetzt werden. Alternativ gibt es den Ansatz, Mainframes\footnote{Unter Mainframe wird hier ein sehr leistungsfähiges Rechnersystem verstanden, das einen oder  beliebig viele Prozessoren in einer physischen Einheit, also einem logischen Mainboard verbindet. } mit immer mehr Rechenleistung auszustatten, diese jedoch ausdrücklich autonom zu betreiben\footnote{In diesem Kontext kann durchaus ein Failover-Cluster vorhanden sein, also eine Mainframe wird zur Ausfallsicherheit repliziert. Dies wird hier jedoch nicht als Cluster im eigentlichen Sinn bezeichnet.}. Je nach Aufgabenspektrum ist die eine oder andere Art besser geeignet. In der Regel wird ein geclustertes System dort eingesetzt, wo hohe Verfügbarkeit oder gut parallelisierbare Aufgaben vorherrschen. Bei netzwerkintensiven Aufgaben, wie z.B. als Webserver oder Datenbanksystem sollten besser Installationen auf einem autonomen System eingesetzt werden \citelit{clus1}.   
+Die Nachfrage nach immer mehr Rechenleistung hat in dein letzten Jahren dazu geführt, dass verstärkt Rechnercluster eingesetzt werden. Alternativ gibt es den Ansatz, Mainframes\footnote{Unter Mainframe wird hier ein sehr leistungsfähiges Rechnersystem verstanden, das einen oder  beliebig viele Prozessoren in einer physischen Einheit, also einem logischen Mainboard verbindet. } mit immer mehr Rechenleistung auszustatten, diese jedoch ausdrücklich autonom zu betreiben\footnote{In diesem Kontext kann durchaus ein Failover-Cluster vorhanden sein, also eine Mainframe wird zur Ausfallsicherheit repliziert. Dies wird an dieser Stelle jedoch nicht als Cluster im eigentlichen Sinn bezeichnet.}. Je nach Aufgabenspektrum ist die eine oder andere Infrastruktur besser geeignet. In der Regel wird ein geclustertes System dort eingesetzt, wo hohe Verfügbarkeit oder gut parallelisierbare Aufgaben vorherrschen. Bei netzwerkintensiven Aufgaben, wie z.B. als Webserver oder Datenbanksystem sollten in der Regel besser Installationen auf einem autonomen System eingesetzt werden \citelit{clus1}.   
 
 Ein Rechner-Cluster besteht in der Regel aus mehr oder weniger eng miteinander verbundenen Computern, wobei hier im Gegensatz zu Mainframes jeder Rechner über eigene Ressourcen wie Hauptspeicher, Massenspeicher, etc. verfügt. Ein Cluster, bzw. ein Verteiltes System ist nach Andrew S. Tanenbaum \citelit{tan1} folgendermaßen definert: 
 
 \enquote{A distributed system is a collection of independent computers that appears to its users as a single coherent system.}
 
-Dies be
+Bei der Verwendung eines Clusters sind einige Besonderheiten zu beachten, die bei der Ausführung auf gewöhnlichen Systemen nicht ins Gewicht fallen \citelit{tan1}. Unter Anderem sind die Tasks so gestalten, dass möglichst wenig Wartezeit durch Abhängigkeiten entsteht und diese möglichst autonom verarbeitet werden können. Außerdem muss beachtet werden, dass die einzelnen Knoten eines Clusters über Messaging-Mechanismen miteinander kommunizieren und dies insbesondere hohe Anforderungen an die Netzwerkinfrastruktur stellt. Eine typische Clustertopologie besteht aus mehreren Worker-Knoten und einem Masterknoten. Der Masterknoten deligiert die Tasks an die einzelnen Worker-Knoten und stellt das gesamte Cluster nach außen hin als ein geschlossenes System dar. Sämtliche Kommunikation mit dem Cluster findet grundsätzlich nur über den Masterknoten statt.
 
 
  
-\section{Statistikanwendungen}
-\label{section:statstikanwendungen}
+\section{Anwendungen für Big Data Analytics}
+\label{section:anwendungen für big data analytics}
 
-Blablba
+Im folgenden Unterkapitel werden exemplarisch einige Anwendungsfälle für \textit{Big Data Analytics} (auch \textit{Data Mining}) dargestellt, um zu klären, für welche Einsatzbereiche \textit{Frameworks} wie \textit{Apache Spark} und die darauf aufbauenden Bibliotheken in der Praxis benötigt werden.  
 
-\subsection{Log Analysen}
-\label{section:log analysen}
+Laut Arvind Sathi \citelit{bda1} zeichnet sich \textit{Big Data} unter Anderem durch ein mögliches Vorkommen von unstrukturierten Daten aus. Die Autoren Chakraborty und Pagolu gehen in ihrem Artikel \citeint{ckb11} davon aus, dass mittlerweile mehr als 80\% der gesamten Daten im digitalen Raum in unstrukturierter Form vorliegen. In der Vergangenheit mussten für Analysetätigkeiten in aller Regel strukturierte Datensätze vorliegen. Grundsätzlich ist es mit den gängigen \textit{Data Analytics Frameworks} nach wie vor möglich, beispielsweise quantitative Analysen auf strukturierten Datensätzen durchzuführen oder unstrukturierte Datensätze nachträglich zu strukturieren, um wiederum quantitative Analysen darauf anwenden zu können.
 
-Blablba
+Das Potential dieser \textit{Frameworks} zeigt sich jedoch dann in vollem Umfang, wenn auf unstrukturierten Daten diverse Analysemethoden oder Verarbeitungen angewendet werden. In jüngerer Vergangenheit ist das Aufkommen unstrukturierter Daten, wie bereits erwähnt, erheblich gestiegen. Dies wird nicht zuletzt durch die massive Verbreitung von Sensoren aller Art verursacht. Dies können \textit{Logdaten}, Bewegungsdaten, Sensorwerte zur Überwachung von technischen Einrichtungen, Messwerte aus Wetterstationen und unzähligen weiteren Quellen sein. Auch viele Internetanwendungen, besonders wenn es sich um laufende Datenströme handelt, verursachen erhebliche Datenmengen, die entweder \textit{persistiert} oder sogar zur Laufzeit analysiert werden können.  
 
-\subsection{Messreihen}
-\label{section:messreihen}
+\textit{Data Mining}\footnote{Ein Großteil der Literatur verwendet die Begriffe \textit{Big Data Analytics }und \textit{Data Mining} synonym.} ist laut \citelit{cl14} ein analytischer Prozess mit dem Zweck, große Datenmengen nach konsistenten Mustern oder systematischen Beziehungen zu untersuchen. Die Ergebnisse werden in der Regel validiert, in dem gefundene Muster oder Ähnlichkeiten auf einer Teilmenge der ermittelten Daten angewendet werden. Ein weiteres Ziel von \textit{Data-Mining-Prozessen} sind Vorhersagen von Ereignissen mittels geeigneter Algorithmen (Vergleich \citelit{cl14} und \ref{section:machine learning}). 
 
-Blablba
+Der Prozess des Data Mining setzt sich nach \citelit{mit96} im Wesentlichen aus einem oder mehreren der folgenden Aufgabenbereiche zusammen:
+
+\begin{itemize}
+		\item \textbf{Klassenbeschreibung:} Eine knappe Beschreibung der Charakterisierung der Datensätze, um sie eindeutig von anderen Daten unterscheiden zu können. 
+		\item \textbf{Assoziation:} Die Untersuchung der Daten nach assoziativen Verbindungen oder Korrelationen zwischen einzelnen Daten oder Datengruppen.   
+		\item \textbf{Klassifizierung:} Hier wird ein definierter Satz von Trainingsdaten\footnote{Trainingsdaten können beispielsweise Daten sein, die bereits im Vorfeld manuell klassifiziert wurden, deren Klassenzugehörigkeit also bekannt ist.} analysiert und anhand deren Beschaffenheit ein Modell generiert. Durch die Klassifizierung werden Entscheidungsbäume (siehe Kapitel \ref{section:machine learning}) oder Klassifizierungsregeln generiert, die schließlich für die Klassifizierung folgender Daten verwendet werden \citelit{pdl97}. 
+		\item \textbf{Vorhersage:} Die Vorhersage bezieht sich auf mögliche Werte von nicht-vorhandenen Daten oder Datenspektren, die wiederum durch \textit{Approximation} einer Funktion mittels Beispielen durchgeführt wird \citelit{cl14}. Dies sind ebenfalls Trainingsdaten, die aus Datensätzen mit den dazugehörigen berechneten Funktionswerten bestehen. 
+		\item \textbf{Cluster-Analyse:} Diese dient dazu, \textit{Cluster} innerhalb von Datensätzen zu ermitteln. Dies sind Daten, die definierte Ähnlichkeiten zueinander aufweisen. 
+		\item \textbf{Zeitreihenanalysen:} Hier werden in der Regel große Mengen an Zeitreihendaten analysiert, um nach Ähnlichkeiten oder Mustern innerhalb der Daten zu suchen.  
+		
+\end{itemize}	
+
+
+
 
 \section{Machine Learning}
 \label{section:machine learning}
+
+Blablba
+
+\subsection{Klassifizierungsalgorithmen}
+\label{section:klassifizierungsalgorithmen}
 
 Blablba
 

@@ -11,20 +11,25 @@
  *     ../../data/apache.accesslog
  */
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function2;
 import scala.Tuple2;
 
+
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Calendar;
 
 
 public class SparkLogAnalyzer {
 
-
+    static Logger logger = Logger.getRootLogger();
 
     private static Function2<Long, Long, Long> SUM_REDUCER = (a, b) -> a + b;
 
@@ -43,8 +48,29 @@ public class SparkLogAnalyzer {
     }
 
     public static void main(String[] args) {
-        // Create a Spark Context.
+
+        Long a, b;
+
+        // Log4j-Konfiguration laden
+        PropertyConfigurator.configure("log4j.properties");
+        logger.setLevel(Level.INFO);
+        logger.warn("DEBUG: TESTSTART __________________________________________________________");
+        a= System.currentTimeMillis();
+
+        logger.warn("Current timestamp: " + a.toString());
+
+        // Create a Spark Context on local prestarted Spark Master
+        //SparkConf conf = new SparkConf().setMaster("spark://Saschas-MacBook-Pro.local:7077").setAppName("Log Analyzer");
+        // Create a Spark Context on local individual Spark instance (life cycle == runtime)
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
+
+
+        //SparkConf conf = new SparkConf()
+        //        .setMaster("mesos://localhost:5050")
+        //        .setAppName("Log Analyzer")
+        //        .set("spark.executor.uri", "../../../Applications/spark-1.1.0.tar.gz");
+
+
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         // Load the text file into Spark.
@@ -57,6 +83,7 @@ public class SparkLogAnalyzer {
 
         // Convert the text log lines to ApacheAccessLog objects and cache them
         //   since multiple transformations and actions will be called on that data.
+        logger.warn("Current timestamp: " + a.toString());
         JavaRDD<ApacheAccessLog> accessLogs =
                 logLines.map(ApacheAccessLog::parseFromLogLine).cache();
 
@@ -95,6 +122,11 @@ public class SparkLogAnalyzer {
 
         // Stop the Spark Context before exiting.
         sc.stop();
+        logger.warn("DEBUG: TESTEND __________________________________________________________");
+        b= System.currentTimeMillis();
+        logger.warn("Current timestamp: " + a.toString());
+
+        logger.warn("Total execution time was: " + (b-a));
     }
 }
 
