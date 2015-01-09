@@ -27,7 +27,7 @@ Laut Arvind Sathi \citelit{bda1} zeichnet sich \textit{Big Data} unter Anderem d
 
 Das Potential dieser \textit{Frameworks} zeigt sich jedoch dann in vollem Umfang, wenn auf unstrukturierten Daten diverse Analysemethoden oder Verarbeitungen angewendet werden. In jüngerer Vergangenheit ist das Aufkommen unstrukturierter Daten, wie bereits erwähnt, erheblich gestiegen. Dies wird nicht zuletzt durch die massive Verbreitung von Sensoren aller Art verursacht. Dies können \textit{Logdaten}, Bewegungsdaten, Sensorwerte zur Überwachung von technischen Einrichtungen, Messwerte aus Wetterstationen und unzähligen weiteren Quellen sein. Auch viele Internetanwendungen, besonders wenn es sich um laufende Datenströme handelt, verursachen erhebliche Datenmengen, die entweder \textit{persistiert} oder sogar zur Laufzeit analysiert werden können.  
 
-\textit{Data Mining}\footnote{Ein Großteil der Literatur verwendet die Begriffe \textit{Big Data Analytics }und \textit{Data Mining} synonym.} ist laut \citelit{cl14} ein analytischer Prozess mit dem Zweck, große Datenmengen nach konsistenten Mustern oder systematischen Beziehungen zu untersuchen. Die Ergebnisse werden in der Regel validiert, in dem gefundene Muster oder Ähnlichkeiten auf einer Teilmenge der ermittelten Daten angewendet werden. Ein weiteres Ziel von \textit{Data-Mining-Prozessen} sind Vorhersagen von Ereignissen mittels geeigneter Algorithmen (Vergleich \citelit{cl14} und \ref{section:machine learning}). 
+\textit{Data Mining}\footnote{Ein Großteil der Literatur verwendet die Begriffe \textit{Big Data Analytics }und \textit{Data Mining} synonym. \textit{Machine Learning} wird jedoch von \textit{Data Mining} abgegrenzt, da letzteres eine explorative Datenanalyse darstellt.} ist laut \citelit{cl14} ein analytischer Prozess mit dem Zweck, große Datenmengen nach konsistenten Mustern oder systematischen Beziehungen zu untersuchen. Die Ergebnisse werden in der Regel validiert, in dem gefundene Muster oder Ähnlichkeiten auf einer Teilmenge der ermittelten Daten angewendet werden. Ein weiteres Ziel von \textit{Data-Mining-Prozessen} sind Vorhersagen von Ereignissen mittels geeigneter Algorithmen (Vergleich \citelit{cl14} und \ref{section:machine learning}). 
 
 Der Prozess des Data Mining setzt sich nach \citelit{mit96} im Wesentlichen aus einem oder mehreren der folgenden Aufgabenbereiche zusammen:
 
@@ -47,7 +47,61 @@ Der Prozess des Data Mining setzt sich nach \citelit{mit96} im Wesentlichen aus 
 \section{Machine Learning}
 \label{section:machine learning}
 
-Blablba
+\enquote{Learning denotes changes in the system that are adaptive in the sense that they enable the system to do the same task (or tasks drawn from a population of similar tasks) more effectively the next time.} \citelit{sim83}
+
+Unter \textit{Machine Learning} wird ein interdisziplinärer Teilbereich der Informatik und der Statistik verstanden. Ziel ist die Erstellung von Algorithmen, die in der Lage sind, selbstständig auf Grund von Daten gemäß der oben zitierten Definition zu lernen. Um dies zu erreichen, erstellen diese Algorithmen basierend auf den jeweiligen Eingabedaten Modelle, die Entscheidungen oder Vorhersagen treffen können \citelit{isl13}. In den Abbildungen \ref{fig:MLP1} und \ref{fig:MLP2} wird dies veranschaulicht. 
+
+
+\begin{figure}[htb!]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+\tikzstyle{line} = [draw, -latex']
+
+\node (start) [startstop] {Training Data};
+\node (pro2b) [block, right of=start, xshift=2cm] {\textbf{Pre-processing} \\-Normalization \\ -Dimension reduction};
+\node (pro3b) [block, right of=pro2b, xshift=2cm] {\textbf{Learning} \\-Supervised \\ -Unsupervised};
+\node (pro4b) [block, right of=pro3b, xshift=2cm] {\textbf{Error Analysis}\\ -Precision/recall \\ -Over fitting};
+\node (pro5b) [process, below of=start] {Model};
+
+\path [line] (start) |- (pro2b);
+\path [line] (pro2b) |- (pro3b);
+\path [line] (pro3b) |- (pro4b);
+\path [line] (pro4b) |- (pro5b);
+
+
+\end{tikzpicture}
+\caption{Der Machine-Learning-Prozess: Phase 1 - Lernphase}
+\label{fig:MLP1}
+\end{figure}
+
+
+\begin{figure}[htb!]
+\centering
+
+\begin{tikzpicture}[node distance=2cm]
+\tikzstyle{line} = [draw, -latex']
+
+\node (pro5b) [process] {Model};
+\node (pro6b) [startstop, below of=pro5b] {Data};
+\node (pro7b) [block, right of=pro5b, xshift=2cm, yshift=-1cm] {\textbf{Prediction}};
+\node (pro8b) [startstop, right of=pro7b, xshift=2cm] {Predicted Data};
+
+\path [line] (pro5b) |- (pro7b);
+\path [line] (pro6b) |- (pro7b);
+\path [line] (pro7b) |- (pro8b);
+
+\end{tikzpicture}
+\caption{Der Machine-Learning-Prozess: Phase 2 - Prediction-Phase (Vorhersage)}
+\label{fig:MLP2}
+\end{figure}
+
+Das erste Diagramm \ref{fig:MLP1} zeigt den Lernprozess. Zunächst werden definierte Trainingsdaten einem \textit{Pre-Processing}\footnote{Das Pre-Processing kann aus \textit{Normalisierung, Dimensionsreduktion, Bildverarbeitung} oder anderen Vorarbeiten bestehen.} zugeführt (Vergleich Unterkapitel \ref{section:klassifizierungsalgorithmen}). 
+
+Danach folgt der eigentliche Lernprozess, der mit oder ohne \textit{Überwachung}, als \textit{Minimalisierungsfunktion} oder mit anderen Lernalgorithmen durchgeführt wird (Vergleich Unterkapitel \ref{section:vorhersagealgorithmen}).
+
+Die Hauptanwendungsgebiete für \textit{Machine Learning} sind sämtliche Bereiche, in denen eine Anwendung von strikten, regelbasierten Algorithmen nicht in Frage kommt \citelit{pdl97}. Beispiele für diese Bereiche sind laut \citelit{pml06} Suchmaschinen, Sprach- und Musikerkennung, Handschriftenerkennung, Spamfilter, Umgebungserkennungen und viele mehr. 
+
+
 
 \subsection{Klassifizierungsalgorithmen}
 \label{section:klassifizierungsalgorithmen}
