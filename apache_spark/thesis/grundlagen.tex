@@ -2,7 +2,7 @@
 \label{chapter:allgemeine Grundlagen}
 
 
-Das nachfolgende Kapitel behandelt die Grundlagen, die für ein Verständnis der Anwendungsbereiche von Apache Spark, dem Berkeley Data Analytics Stack und im Allgemeinen des Themenkomplexes Big Data Analytics nötig sind. Im ersten Unterkapitel werden die grundsätzlichen Eigenschaften eines verteilten Systems beschrieben um die Basis für die in der Arbeit beschriebenen Besonderheiten von Verarbeitungen im Clusterbetrieb zu legen. Hier wird ein exemplarischer Clusteraufbau skizziert, Probleme mit Concurrency und Netzwerkverkehr beschrieben und welche Möglichkeiten es hier gibt.  Im darauf folgenden Unterkapitel werden grundlegende Problemstellungen und Technologien  beschrieben, die im Rahmen von Big Data Analytics im Allgemeinen vorkommen. Unter anderem werden hier Grundlagen und Begriffe aus den Themengebieten Loganalysen, Machine Learning, statistische Analysen, Graph-Suchen, Datenbankabfragen und Streaming-Frameworks in Kurzform erklärt. In einer Zusammenfassung werde diese Grundlagen nochmals auf einen Blick dargestellt. 
+Das nachfolgende Kapitel behandelt die Grundlagen, die für ein Verständnis der Anwendungsbereiche von Apache Spark, dem Berkeley Data Analytics Stack und im Allgemeinen des Themenkomplexes Big Data Analytics nötig sind. Im ersten Unterkapitel werden die grundsätzlichen Eigenschaften eines verteilten Systems beschrieben um die Basis für die in der Arbeit beschriebenen Besonderheiten von Verarbeitungen im Clusterbetrieb zu legen. Hier wird ein exemplarischer Clusteraufbau skizziert, Probleme mit Concurrency und Netzwerkverkehr beschrieben und welche Möglichkeiten es hier gibt.  Im darauf folgenden Unterkapitel werden grundlegende Problemstellungen und Technologien beschrieben, die im Rahmen von Big Data Analytics im Allgemeinen vorkommen. Unter anderem werden hier Grundlagen und Begriffe aus den Themengebieten Anwendungen von Big Data Analytics, Machine Learning, Klassifikation, Vorhersagen, statistische Analysen, Graph-Suchen und Streaming-Frameworks in Kurzform erklärt. In einer Zusammenfassung werde diese Grundlagen nochmals auf einen Blick dargestellt. 
  
 
 \section{Cluster Computing}
@@ -97,7 +97,9 @@ Unter \textit{Machine Learning} wird ein interdisziplinärer Teilbereich der Inf
 
 Das erste Diagramm \ref{fig:MLP1} zeigt den Lernprozess. Zunächst werden definierte Trainingsdaten einem \textit{Pre-Processing}\footnote{Das Pre-Processing kann aus \textit{Normalisierung, Dimensionsreduktion, Bildverarbeitung} oder anderen Vorarbeiten bestehen.} zugeführt (Vergleich Unterkapitel \ref{section:klassifizierungsalgorithmen}). 
 
-Danach folgt der eigentliche Lernprozess, der mit oder ohne \textit{Überwachung}, als \textit{Minimalisierungsfunktion} oder mit anderen Lernalgorithmen durchgeführt wird (Vergleich Unterkapitel \ref{section:vorhersagealgorithmen}).
+Danach folgt der eigentliche Lernprozess, der mit oder ohne \textit{Überwachung}, als \textit{Minimalisierungsfunktion} oder mit anderen Lernalgorithmen durchgeführt wird (Vergleich Unterkapitel \ref{section:vorhersagealgorithmen}). Nach dem Lernprozess werden das erzeugte Modell einem Validierungsprozess zugeführt. Dies können \textit{Precision/Recall}\footnote{\textit{Precision:} Wie viele der ausgewählten Datensätze sind relevant. \textit{Recall:} Wieviele relevante Datensätze wurden ausgewählt. }, \textit{Overfitting}\footnote{\textit{Overfitting} bezeichnet einen Zustand, in dem bekannte Daten (Trainingsdaten) von einem Algorithmus generell akkurater erkannt werden, als Daten, die von dem Algorithmus erkannt werden sollen (Predicitions).}, oder andere Validierungsfunktionen sein. Am Ende der Prozesse entsteht ein Modell, dass für verschiedenste Aufgaben eingesetzt werden kann. 
+
+In Abbildung \ref{fig:MLP2} wird das erzeugte Modell zusammen mit produktiven Daten genutzt, um mittels geeigneter Vorhersagealgorithmen (siehe Unterkapitel \ref{section:vorhersagealgorithmen}) bisher noch nicht vorhandene Datensätze erzeugen zu können.  
 
 Die Hauptanwendungsgebiete für \textit{Machine Learning} sind sämtliche Bereiche, in denen eine Anwendung von strikten, regelbasierten Algorithmen nicht in Frage kommt \citelit{pdl97}. Beispiele für diese Bereiche sind laut \citelit{pml06} Suchmaschinen, Sprach- und Musikerkennung, Handschriftenerkennung, Spamfilter, Umgebungserkennungen und viele mehr. 
 
@@ -106,7 +108,25 @@ Die Hauptanwendungsgebiete für \textit{Machine Learning} sind sämtliche Bereic
 \subsection{Klassifizierungsalgorithmen}
 \label{section:klassifizierungsalgorithmen}
 
-Blablba
+
+Im Gegensatz zu herkömmlichen \textit{Business-Intelligence-Anwendungen}\footnote{Laut \citelit{bi12} versteht man unter \textit{Business Intelligence (BI)} die Sammlung, Auswertung und Darstellung von Daten anhand definierter Prozesse.} zeichnen sich Big-Data-Anwendungen in erster Linie durch Unterschiede in der Herangehensweise und in der Formulierung der primären Fragestellungen aus. In der Vergangenheit wurden zu Beginn einer Analyse zunächst Problemstellungen formuliert und aufgrund dessen Prozesse und vor allen Dingen die zu sammelnden Daten definiert \citelit{bi12}. Mit der steigenden Etablierung von Big-Data-Anwendungen hat sich dieser Ansatz gewandelt. Hier werden zunächst sämtliche anfallenden Daten gespeichert. Auf diese Datensätze, deren Größe in relativ kurzer Zeit massiv anwachsen kann, werden erweiterte Analyseprozesse\footnote{Unter dem Begriff \textit{Advanced Analytics} sind verschiedene Werkzeugtypen aus der vorhersagenden Analyse (\textit{Predictive Analytics}), aus dem Data Mining, aus der Statistik, der Künstlichen Intelligenz, der Sprachverarbeitung und weiteren Disziplinen zusammengefasst \citelit{tdwi11}.} angewendet, die unter anderem auch Vorhersagen erlauben \citelit{tdwi11}. 
+So liegen also bei Big-Data-Analytics große Datenmengen vor, ohne dass das Ziel der Analyse im Vorfeld bekannt ist. 
+
+Nun gibt es verschiedene Herangehensweisen, wie sich relevante Fragestellungen aus den vorliegenden Daten ableiten lassen. Ein sinnvoller Ansatz besteht darin, sogenannte Cluster innerhalb der Daten zu ermitteln, also ähnliche Datensätze zu entsprechenden Gruppen zusammenzufassen. Es werden aus diesen Gruppen Klassen gebildet, in dem ihnen aussagekräftige Namen zugeordnet werden\citelit{cl14}. 
+
+Ein Cluster zeichnet sich dadurch aus, dass die Objekte innerhalb eines Clusters möglichst ähnlich sind, die Cluster untereinander jedoch möglichst unähnliche Inhalte besitzen. Um Ähnlichkeiten zwischen Datensätzen oder Clustern feststellen zu können, bedarf es einer Distanzfunktion, zur Ermittlung und Sicherstellung der Clustergüte einer Qualitätsfunktion (siehe \citelit{cl14}). 
+
+Laut \citelit{cl14} sind für Distanz- und Qualitätsfunktionen folgende Annahmen zu treffen:  
+
+
+
+\begin{flalign*}
+&X \text { (Instanzenraum) }&  \\
+&E \subseteq X \text{ (Instanzenmenge) }& \\
+&X\times X \to \mathbb{R}^+ \text{ (Abstandsfunktion) }&  \\
+&2^2\textasciicircum x \to \mathbb{R} \text{ (Qualitätsfunktion) }& 
+\end{flalign*}
+
 
 \subsection{Vorhersagealgorithmen}
 \label{section:vorhersagealgorithmen}
