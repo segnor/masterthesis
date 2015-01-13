@@ -49,7 +49,7 @@ Der Prozess des Data Mining setzt sich nach \citelit{mit96} im Wesentlichen aus 
 
 \enquote{Learning denotes changes in the system that are adaptive in the sense that they enable the system to do the same task (or tasks drawn from a population of similar tasks) more effectively the next time.} \citelit{sim83}
 
-Unter \textit{Machine Learning} wird ein interdisziplinärer Teilbereich der Informatik und der Statistik verstanden. Ziel ist die Erstellung von Algorithmen, die in der Lage sind, selbstständig auf Grund von Daten gemäß der oben zitierten Definition zu lernen. Um dies zu erreichen, erstellen diese Algorithmen basierend auf den jeweiligen Eingabedaten Modelle, die Entscheidungen oder Vorhersagen treffen können \citelit{isl13}. In den Abbildungen \ref{fig:MLP1} und \ref{fig:MLP2} wird dies veranschaulicht. 
+Unter \textit{Machine Learning} wird ein interdisziplinärer Teilbereich der Informatik und der Statistik verstanden. Ziel ist die Erstellung von Algorithmen, die in der Lage sind, selbstständig auf Grund von Daten iterativ zu lernen gemäß der oben zitierten Definition. Um dies zu erreichen, erstellen diese Algorithmen basierend auf den jeweiligen Eingabedaten Modelle, die Entscheidungen oder Vorhersagen treffen können \citelit{isl13}. In den Abbildungen \ref{fig:MLP1} und \ref{fig:MLP2} wird dies veranschaulicht. 
 
 
 \begin{figure}[htb!]
@@ -97,7 +97,7 @@ Unter \textit{Machine Learning} wird ein interdisziplinärer Teilbereich der Inf
 
 Das erste Diagramm \ref{fig:MLP1} zeigt den Lernprozess. Zunächst werden definierte Trainingsdaten einem \textit{Pre-Processing}\footnote{Das Pre-Processing kann aus \textit{Normalisierung, Dimensionsreduktion, Bildverarbeitung} oder anderen Vorarbeiten bestehen.} zugeführt (Vergleich Unterkapitel \ref{section:klassifizierungsalgorithmen}). 
 
-Danach folgt der eigentliche Lernprozess, der mit oder ohne \textit{Überwachung}, als \textit{Minimalisierungsfunktion} oder mit anderen Lernalgorithmen durchgeführt wird (Vergleich Unterkapitel \ref{section:vorhersagealgorithmen}). Nach dem Lernprozess werden das erzeugte Modell einem Validierungsprozess zugeführt. Dies können \textit{Precision/Recall}\footnote{\textit{Precision:} Wie viele der ausgewählten Datensätze sind relevant. \textit{Recall:} Wieviele relevante Datensätze wurden ausgewählt. }, \textit{Overfitting}\footnote{\textit{Overfitting} bezeichnet einen Zustand, in dem bekannte Daten (Trainingsdaten) von einem Algorithmus generell akkurater erkannt werden, als Daten, die von dem Algorithmus erkannt werden sollen (Predicitions).}, oder andere Validierungsfunktionen sein. Am Ende der Prozesse entsteht ein Modell, dass für verschiedenste Aufgaben eingesetzt werden kann. 
+Danach folgt der eigentliche Lernprozess, der mit oder ohne \textit{Überwachung}. \textit{Überwachtes Lernen (Supervised Learning):} Hier liegen der Analyse vorher angelegte Trainingsdaten zugrunde. \citeint{ul04}}, als \textit{Minimalisierungsfunktion} oder mit anderen Lernalgorithmen durchgeführt wird (Vergleich Unterkapitel \ref{section:vorhersagealgorithmen}). Nach dem Lernprozess werden das erzeugte Modell einem Validierungsprozess zugeführt. Dies können \textit{Precision/Recall}\footnote{\textit{Precision:} Wie viele der ausgewählten Datensätze sind relevant. \textit{Recall:} Wieviele relevante Datensätze wurden ausgewählt. }, \textit{Overfitting}\footnote{\textit{Overfitting} bezeichnet einen Zustand, in dem bekannte Daten (Trainingsdaten) von einem Algorithmus generell akkurater erkannt werden, als Daten, die von dem Algorithmus erkannt werden sollen (Predicitions).}, oder andere Validierungsfunktionen sein. Am Ende der Prozesse entsteht ein Modell, dass für verschiedenste Aufgaben eingesetzt werden kann. 
 
 In Abbildung \ref{fig:MLP2} wird das erzeugte Modell zusammen mit produktiven Daten genutzt, um mittels geeigneter Vorhersagealgorithmen (siehe Unterkapitel \ref{section:vorhersagealgorithmen}) bisher noch nicht vorhandene Datensätze erzeugen zu können.  
 
@@ -112,20 +112,46 @@ Die Hauptanwendungsgebiete für \textit{Machine Learning} sind sämtliche Bereic
 Im Gegensatz zu herkömmlichen \textit{Business-Intelligence-Anwendungen}\footnote{Laut \citelit{bi12} versteht man unter \textit{Business Intelligence (BI)} die Sammlung, Auswertung und Darstellung von Daten anhand definierter Prozesse.} zeichnen sich Big-Data-Anwendungen in erster Linie durch Unterschiede in der Herangehensweise und in der Formulierung der primären Fragestellungen aus. In der Vergangenheit wurden zu Beginn einer Analyse zunächst Problemstellungen formuliert und aufgrund dessen Prozesse und vor allen Dingen die zu sammelnden Daten definiert \citelit{bi12}. Mit der steigenden Etablierung von Big-Data-Anwendungen hat sich dieser Ansatz gewandelt. Hier werden zunächst sämtliche anfallenden Daten gespeichert. Auf diese Datensätze, deren Größe in relativ kurzer Zeit massiv anwachsen kann, werden erweiterte Analyseprozesse\footnote{Unter dem Begriff \textit{Advanced Analytics} sind verschiedene Werkzeugtypen aus der vorhersagenden Analyse (\textit{Predictive Analytics}), aus dem Data Mining, aus der Statistik, der Künstlichen Intelligenz, der Sprachverarbeitung und weiteren Disziplinen zusammengefasst \citelit{tdwi11}.} angewendet, die unter anderem auch Vorhersagen erlauben \citelit{tdwi11}. 
 So liegen also bei Big-Data-Analytics große Datenmengen vor, ohne dass das Ziel der Analyse im Vorfeld bekannt ist. 
 
-Nun gibt es verschiedene Herangehensweisen, wie sich relevante Fragestellungen aus den vorliegenden Daten ableiten lassen. Ein sinnvoller Ansatz besteht darin, sogenannte Cluster innerhalb der Daten zu ermitteln, also ähnliche Datensätze zu entsprechenden Gruppen zusammenzufassen. Es werden aus diesen Gruppen Klassen gebildet, in dem ihnen aussagekräftige Namen zugeordnet werden\citelit{cl14}. 
+Nun gibt es verschiedene Herangehensweisen, wie sich relevante Fragestellungen aus den vorliegenden Daten ableiten lassen. Ein sinnvoller Ansatz besteht darin, sogenannte Cluster innerhalb der Daten zu ermitteln, also ähnliche Datensätze zu entsprechenden Gruppen zusammenzufassen. Es werden aus diesen Gruppen Klassen gebildet, in dem ihnen aussagekräftige Namen zugeordnet werden\citelit{cl14}. Cluster werden beispielsweise benötigt, um Kunden nach bestimmten Interessen zu gruppieren, um Zeichen auf Ähnlichkeiten für die automatischen Zeichenerkennung zu untersuchen, also generell überall, wo nach Ähnlichkeiten gesucht wird. 
 
 Ein Cluster zeichnet sich dadurch aus, dass die Objekte innerhalb eines Clusters möglichst ähnlich sind, die Cluster untereinander jedoch möglichst unähnliche Inhalte besitzen. Um Ähnlichkeiten zwischen Datensätzen oder Clustern feststellen zu können, bedarf es einer Distanzfunktion, zur Ermittlung und Sicherstellung der Clustergüte einer Qualitätsfunktion (siehe \citelit{cl14}). 
 
 Laut \citelit{cl14} sind für Distanz- und Qualitätsfunktionen folgende Annahmen zu treffen:  
 
 
-
+\begin{framed}
 \begin{flalign*}
+&\textbf{Vorbedingungen}& \\
 &X \text { (Instanzenraum) }&  \\
 &E \subseteq X \text{ (Instanzenmenge) }& \\
 &X\times X \to \mathbb{R}^+ \text{ (Abstandsfunktion) }&  \\
-&2^2\textasciicircum x \to \mathbb{R} \text{ (Qualitätsfunktion) }& 
+&2^{2^x} \to \mathbb{R} \text{ (Qualitätsfunktion) }& 
 \end{flalign*}
+
+Gesucht wird eine Clustermenge C = \{C_1,...,C_k\} \text{mit folgenden Eigenschaften:} \\
+
+C_i \subseteq E \\
+quality(C) \to max \\
+C_i \cap C_j = \emptyset \\
+C_1 \cup...\cup C_k = E \\
+
+
+
+Die Abstandsfunktion \textit{dist}, die gegebene Objekte so in Teilmengen zerlegt, dass der Abstand der Objekte innerhalb einer Teilmenge (Cluster) kleiner ist, als der Abstand zu Objekten anderer Teilmengen: \\
+
+\forall C_i, C_j \in C(i \neq j) : \forall x_k, x_l \in C_i, x_m \in C_j : dist(x_k, x_l) < dist(x_k, x_m)\\
+
+Die Qualitätsfunktion \textit{quality} beschreibt die Qualität des Clusterings basierend auf der Abstandsfunktion \textit{dist}: \\
+
+\textit{quality}(C = \{C_1 \subseteq E,...,C_k \subseteq E\}) \to \mathbb{R} \\ \\
+\end{framed}
+
+Die Clusteranalyse zählt zu den \textit{unüberwachten Lernalgorithmen (Unsupervised Learning)}. Zoubin Ghahramani beschreibt dies in seinem Artikel \textit{Unsupervised Learning} \citeint{ul04} wie folgt: 
+
+\enquote{Consider a machine (or living organism) which receives some sequence of inputs x1, x2, x3,..., where xt is the sensory input at time t. This input, which we will often call the data, could correspond to an image on the retina, the pixels in a camera, or a sound waveform. It could also correspond to less obviously sensory data, for example the words in a news story, or the list of items in a supermarket shopping basket. \[...\] In supervised learning the machine1 is also given a sequence of desired outputs y1, y2,..., and the goal of the machine is to learn to produce the correct output given a new input. This output could be a class label (in classification) or a real number (in regression).}
+
+
+
 
 
 \subsection{Vorhersagealgorithmen}
