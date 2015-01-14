@@ -97,7 +97,7 @@ Unter \textit{Machine Learning} wird ein interdisziplinärer Teilbereich der Inf
 
 Das erste Diagramm \ref{fig:MLP1} zeigt den Lernprozess. Zunächst werden definierte Trainingsdaten einem \textit{Pre-Processing}\footnote{Das Pre-Processing kann aus \textit{Normalisierung, Dimensionsreduktion, Bildverarbeitung} oder anderen Vorarbeiten bestehen.} zugeführt (Vergleich Unterkapitel \ref{section:klassifizierungsalgorithmen}). 
 
-Danach folgt der eigentliche Lernprozess, der mit oder ohne \textit{Überwachung}. \textit{Überwachtes Lernen (Supervised Learning):} Hier liegen der Analyse vorher angelegte Trainingsdaten zugrunde. \citeint{ul04}}, als \textit{Minimalisierungsfunktion} oder mit anderen Lernalgorithmen durchgeführt wird (Vergleich Unterkapitel \ref{section:vorhersagealgorithmen}). Nach dem Lernprozess werden das erzeugte Modell einem Validierungsprozess zugeführt. Dies können \textit{Precision/Recall}\footnote{\textit{Precision:} Wie viele der ausgewählten Datensätze sind relevant. \textit{Recall:} Wieviele relevante Datensätze wurden ausgewählt. }, \textit{Overfitting}\footnote{\textit{Overfitting} bezeichnet einen Zustand, in dem bekannte Daten (Trainingsdaten) von einem Algorithmus generell akkurater erkannt werden, als Daten, die von dem Algorithmus erkannt werden sollen (Predicitions).}, oder andere Validierungsfunktionen sein. Am Ende der Prozesse entsteht ein Modell, dass für verschiedenste Aufgaben eingesetzt werden kann. 
+Danach folgt der eigentliche Lernprozess, der mit oder ohne \textit{Überwachung}\footnote{Beim überwachten Lernen (Supervised Learning) liegen der Analyse vorher angelegte Trainingsdaten zugrunde, das unüberwachte Lernen (Unsupervised Learning) erzeugt vorher gänzlich unbekannte Modelle aus gefundenen Mustern \citeint{ul04}}, als \textit{Minimalisierungsfunktion} oder mit anderen Lernalgorithmen durchgeführt wird (siehe Unterkapitel \ref{section:clusterverfahren} und  \ref{section:klassifikationsalgorithmen}). Nach dem Lernprozess werden das erzeugte Modell einem Validierungsprozess zugeführt. Dies können \textit{Precision/Recall}\footnote{\textit{Precision:} Wie viele der ausgewählten Datensätze sind relevant. \textit{Recall:} Wieviele relevante Datensätze wurden ausgewählt. }, \textit{Overfitting}\footnote{\textit{Overfitting} bezeichnet einen Zustand, in dem bekannte Daten (Trainingsdaten) von einem Algorithmus generell akkurater erkannt werden, als Daten, die von dem Algorithmus erkannt werden sollen (Predicitions).}, oder andere Validierungsfunktionen sein. Am Ende der Prozesse entsteht ein Modell, das für verschiedenste Aufgaben eingesetzt werden kann. 
 
 In Abbildung \ref{fig:MLP2} wird das erzeugte Modell zusammen mit produktiven Daten genutzt, um mittels geeigneter Vorhersagealgorithmen (siehe Unterkapitel \ref{section:vorhersagealgorithmen}) bisher noch nicht vorhandene Datensätze erzeugen zu können.  
 
@@ -105,14 +105,17 @@ Die Hauptanwendungsgebiete für \textit{Machine Learning} sind sämtliche Bereic
 
 
 
-\subsection{Klassifizierungsalgorithmen}
-\label{section:klassifizierungsalgorithmen}
+\subsection{Klassifizierung von Daten}
+\label{section:klassifizierung von daten}
 
 
 Im Gegensatz zu herkömmlichen \textit{Business-Intelligence-Anwendungen}\footnote{Laut \citelit{bi12} versteht man unter \textit{Business Intelligence (BI)} die Sammlung, Auswertung und Darstellung von Daten anhand definierter Prozesse.} zeichnen sich Big-Data-Anwendungen in erster Linie durch Unterschiede in der Herangehensweise und in der Formulierung der primären Fragestellungen aus. In der Vergangenheit wurden zu Beginn einer Analyse zunächst Problemstellungen formuliert und aufgrund dessen Prozesse und vor allen Dingen die zu sammelnden Daten definiert \citelit{bi12}. Mit der steigenden Etablierung von Big-Data-Anwendungen hat sich dieser Ansatz gewandelt. Hier werden zunächst sämtliche anfallenden Daten gespeichert. Auf diese Datensätze, deren Größe in relativ kurzer Zeit massiv anwachsen kann, werden erweiterte Analyseprozesse\footnote{Unter dem Begriff \textit{Advanced Analytics} sind verschiedene Werkzeugtypen aus der vorhersagenden Analyse (\textit{Predictive Analytics}), aus dem Data Mining, aus der Statistik, der Künstlichen Intelligenz, der Sprachverarbeitung und weiteren Disziplinen zusammengefasst \citelit{tdwi11}.} angewendet, die unter anderem auch Vorhersagen erlauben \citelit{tdwi11}. 
 So liegen also bei Big-Data-Analytics große Datenmengen vor, ohne dass das Ziel der Analyse im Vorfeld bekannt ist. 
 
-Nun gibt es verschiedene Herangehensweisen, wie sich relevante Fragestellungen aus den vorliegenden Daten ableiten lassen. Ein sinnvoller Ansatz besteht darin, sogenannte Cluster innerhalb der Daten zu ermitteln, also ähnliche Datensätze zu entsprechenden Gruppen zusammenzufassen. Es werden aus diesen Gruppen Klassen gebildet, in dem ihnen aussagekräftige Namen zugeordnet werden\citelit{cl14}. Cluster werden beispielsweise benötigt, um Kunden nach bestimmten Interessen zu gruppieren, um Zeichen auf Ähnlichkeiten für die automatischen Zeichenerkennung zu untersuchen, also generell überall, wo nach Ähnlichkeiten gesucht wird. 
+\subsubsection{Clusterverfahren}
+\label{section:clusterverfahren}
+
+Nun gibt es verschiedene Herangehensweisen, wie sich relevante Fragestellungen aus den vorliegenden Daten ableiten lassen. Ein sinnvoller Ansatz besteht darin, sogenannte Cluster innerhalb der Daten zu ermitteln, also ähnliche Datensätze zu entsprechenden Gruppen zusammenzufassen. Aus diesen Gruppen werden Klassen gebildet, in dem ihnen aussagekräftige Namen zugeordnet werden\citelit{cl14}. Cluster werden beispielsweise benötigt, um Kunden nach bestimmten Interessen zu gruppieren, um Zeichen auf Ähnlichkeiten für die automatischen Zeichenerkennung zu untersuchen, oder Bilder auf vergleichbare Bildpunktanordnungen oder Farbspektren, also generell überall, wo nach Ähnlichkeiten gesucht wird. 
 
 Ein Cluster zeichnet sich dadurch aus, dass die Objekte innerhalb eines Clusters möglichst ähnlich sind, die Cluster untereinander jedoch möglichst unähnliche Inhalte besitzen. Um Ähnlichkeiten zwischen Datensätzen oder Clustern feststellen zu können, bedarf es einer Distanzfunktion, zur Ermittlung und Sicherstellung der Clustergüte einer Qualitätsfunktion (siehe \citelit{cl14}). 
 
@@ -148,11 +151,23 @@ Die Qualitätsfunktion \textit{quality} beschreibt die Qualität des Clusterings
 
 Die Clusteranalyse zählt zu den \textit{unüberwachten Lernalgorithmen (Unsupervised Learning)}. Zoubin Ghahramani beschreibt dies in seinem Artikel \textit{Unsupervised Learning} \citeint{ul04} wie folgt: 
 
-\enquote{Consider a machine (or living organism) which receives some sequence of inputs x1, x2, x3,..., where xt is the sensory input at time t. This input, which we will often call the data, could correspond to an image on the retina, the pixels in a camera, or a sound waveform. It could also correspond to less obviously sensory data, for example the words in a news story, or the list of items in a supermarket shopping basket. \[...\] In supervised learning the machine1 is also given a sequence of desired outputs y1, y2,..., and the goal of the machine is to learn to produce the correct output given a new input. This output could be a class label (in classification) or a real number (in regression).}
+\enquote{[...]in unsupervised learning the machine simply receives inputs x1, x2,..., but obtains neither supervised target outputs, nor rewards from its environment. It may seem somewhat mysterious to imagine what the machine could possibly learn given that it doesn’t get any feedback from its environment. However, it is possible to develop of formal framework for unsupervised learning based on the notion that the machine’s goal is to build representations of the input that can be used for decision making, predicting future inputs, efficiently communicating the inputs to another machine, etc. In a sense, unsupervised learning can be thought of as finding patterns in the data above and beyond what would be considered pure unstructured noise.}
 
+Zu den Cluster-Verfahren zählen laut \citelit{ams03} und \citelit{cl14} unter Anderem folgende Algorithmen:
 
+\begin{itemize}
+		\item \textbf{klassischer k-Means-Algorithmus (partitionierendes Verfahren):} Wie bei allen partitionierenden Verfahren werden zunächst die Clusterzahl und je Cluster ein Zentrum definiert. Die Zentrumsdefinition findet zufällig statt. Eine Fehlerfunktion wird durch Verschieben der Zentren iterativ minimiert, indem die euklidischen Abstände der Inhaltsobjekte zu den Zentren quadriert und anschließend minimiert werden. Nach jedem Iterationsschritt werden durch Mittelwertbildung die Zentren neu definiert. 
+		\item \textbf{k-Medoid-Verfahren (PAM und CLARANS, partitionierende Verfahren):} 
+		\item \textbf{k-Median-Algorithmus (partitionierendes Verfahren)}
+		\item \textbf{EM-Clustering (partitionierendes Verfahren)}
+		\item \textbf{Fuzzy C-Means (partitionierendes Verfahren)}
+		\item \textbf{divisive Clusterverfahren (hierarchisches Verfahren)}
+		\item \textbf{agglomerative Clusterverfahren (hierarchisches Verfahren)}
+		\item \textbf{sowie dichtebasierte Clusterverfahren }
+\end{itemize}	
 
-
+\subsubsection{Klassifikationsalgorithmen}
+\label{section:klassifikationsalgorithmen}
 
 \subsection{Vorhersagealgorithmen}
 \label{section:vorhersagealgorithmen}
