@@ -131,23 +131,53 @@ Laut \citelit{cl14} sind für Distanz- und Qualitätsfunktionen folgende Annahme
 &2^{2^x} \to \mathbb{R} \text{ (Qualitätsfunktion) }& 
 \end{flalign*}
 
-Gesucht wird eine Clustermenge C = \{C_1,...,C_k\} \text{mit folgenden Eigenschaften:} \\
+Gesucht wird eine Clustermenge \(C = \{C_1,...,C_k\}\) \text{mit folgenden Eigenschaften:} \\
 
-C_i \subseteq E \\
-quality(C) \to max \\
-C_i \cap C_j = \emptyset \\
-C_1 \cup...\cup C_k = E \\
+\(C_i \subseteq E\) \\
+\(quality(C) \to max\) \\
+\(C_i \cap C_j = \emptyset\) \\
+\(C_1 \cup...\cup C_k = E\) \\
 
 
 
-Die Abstandsfunktion \textit{dist}, die gegebene Objekte so in Teilmengen zerlegt, dass der Abstand der Objekte innerhalb einer Teilmenge (Cluster) kleiner ist, als der Abstand zu Objekten anderer Teilmengen: \\
+Die Abstandsfunktion \(dist\), die gegebene Objekte so in Teilmengen zerlegt, dass der Abstand der Objekte innerhalb einer Teilmenge (Cluster) kleiner ist, als der Abstand zu Objekten anderer Teilmengen: \\
 
-\forall C_i, C_j \in C(i \neq j) : \forall x_k, x_l \in C_i, x_m \in C_j : dist(x_k, x_l) < dist(x_k, x_m)\\
+\(\forall C_i, C_j \in C(i \neq j) : \forall x_k, x_l \in C_i, x_m \in C_j : dist(x_k, x_l) < dist(x_k, x_m)\)\\
 
-Die Qualitätsfunktion \textit{quality} beschreibt die Qualität des Clusterings basierend auf der Abstandsfunktion \textit{dist}: \\
+Die Qualitätsfunktion \(quality\) beschreibt die Qualität des Clusterings basierend auf der Abstandsfunktion \(dist\): \\
 
-\textit{quality}(C = \{C_1 \subseteq E,...,C_k \subseteq E\}) \to \mathbb{R} \\ \\
+\({quality}(C = \{C_1 \subseteq E,...,C_k \subseteq E\}) \to \mathbb{R}\) \\ \\
 \end{framed}
+
+\newpage
+
+Exemplarisch werden im Folgenden einige Distanzfunktionen dargestellt, die für die Clusteranalyse wichtig sind (Vergleich \citelit{uma14},  \citelit{bro98}).
+
+\textbf{Hamming-Distanz:} Hier werden die Vektorelemente der Position \(i\) zweier Vektoren miteinander verglichen. Wenn sich diese unterscheiden, wird die Distanz auf den Wert 1 gesetzt, bei gleichen Werten 0. Nachdem alle Elemente der Vektoren miteinander verglichen wurden, werden diese summiert. Ein Vorteil der Hamming-Distanz ist, dass sich Abstände zwischen metrischen, ordinalen und sogar nominalen Daten berechnen lassen. Der Nachteil dieser Distanzfunktion ist, dass Abstandsverhältnisse nicht erkannt werden, also ist beispielsweise der Abstand zwischen 2 und 3 für diese Funktion gleichwertig zum Abstand von 2000 zu 2001.
+
+\(dist_H(x,y) = count_i(x_i \neq y_i) \)
+
+\textbf{Manhattan-Distanz:} Diese Distanzfunktion hat ihren Namen aufgrund der blockweisen Anordnung der Straßenzüge in Manhattan. Distanzen werden, wie auf einem Schachbrett, durch vertikale und horizontale Bewegungen und Richtungsänderungen beschrieben. Um die Ergebnisse der verschiedenen Distanzfunktionen untereinander vergleichbar zu machen, wird der Betrag der Distanzwerte verwendet. Die Manhattan-Distanz ist nur auf metrische Daten anwendbar. Diese Distanzfunktion ist auch unter dem Namen \textit{Block-Distanz} bekannt.   
+
+\(dist_M(x,y) = \sum_{i} \mid x_i - y_i \mid \)
+
+
+\textbf{Euklidische Distanz:} Hier wird der direkte Abstand zwischen zwei Vektoren beschrieben, also zweier Punkte im n-dimensionalen Raum. Diese Funktion lässt sich nur auf metrische Daten anwenden. Auch hier wird durch Quadrieren und der Quadratwurze der Differenzen eine Normalisierung erreicht, die die Distanzwerte vergleichbar macht. 
+
+\(dist_E(x,y) = \sqrt{\sum_{i}(x_i - y_i)^2} \)
+
+\textbf{Tschebyscheff-Distanz:}  Auch hier wird der Abstand zwischen zwei Punkten im n-dimensionalen Raum betrachtet. Im Unterschied zu den beiden vorhergehenden Verfahren wird hier jedoch der größtmögliche absolute Abstand zwischen allen Attributen ermittelt. Deshalb wird diese Distanzfunktion auch als \textit{Maximum-Distanz}  bezeichnet. 
+
+\(dist_T(x,y) = max_i(\mid x_i - y_i \mid) \)
+
+\textbf{Minkowski-Distanz:}  Diese Distanz-Funktion ist ähnlich zur Euklidischen Distanz. Allerdings entspricht hier der Abstand der \(n\)-ten Wurzel der Summe der  \(n\)-ten Potenzen der Differenzen. Auch diese Funktion lässt sich nur auf metrische Daten anwenden.
+
+\(dist_K(x,y) = \sqrt[n]{\sum_{i}(x_i - y_i)^n} \)
+
+Darüber hinaus existieren noch zahlreiche weitere Distanzfunktionen, die je nach Einsatzzweck besser oder schlechter geeignet sein können, als die dargestellten. 
+
+\newpage
+
 
 Die Clusteranalyse zählt zu den \textit{unüberwachten Lernalgorithmen (Unsupervised Learning)}. Zoubin Ghahramani beschreibt dies in seinem Artikel \textit{Unsupervised Learning} \citeint{ul04} wie folgt: 
 
@@ -179,6 +209,8 @@ Zu den Cluster-Verfahren zählen laut \citelit{ams03} und \citelit{cl14} unter A
 
 \subsubsection{Klassifikationsalgorithmen}
 \label{section:klassifikationsalgorithmen}
+
+
 
 \subsection{Vorhersagealgorithmen}
 \label{section:vorhersagealgorithmen}

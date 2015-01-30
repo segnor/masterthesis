@@ -2,15 +2,49 @@
 \label{chapter:funktionsweise von Spark}
 
 
+Im vohergehenden Kapitel wurde der Berkeley Data Analytics Stack vorgestellt. Es wurde gezeigt, dass dieser aus einer Reihe von Bibliotheken, Infrastrukturkomponenten und dem eigentlich Kern, Apache Spark, besteht.
 
-Wie in Abbildung 3 dargestellt, werden die Daten bei einer Verarbeitung durch Spark zunächst aus dem HDFS geladen, in Resilient Distributed Datasets (RDD) verpackt, und dann im Hauptspeicher für Verarbeitung- oder Analysefunktionen zur Verfügung gestellt. Abfragen werden direkt entweder via Scala REPL oder SQL-artige Abfragen zur Laufzeit, über Batch-Jobs oder via Spark Streaming/Storm an die im RAM befindlichen RDDs geleitet.
+In diesem Kapitel werden die grundlegenden Konzepte von Spark vorgestellt und dessen Funktionsweise betrachtet. Einleitend wird gezeigt, wie eine Spark-Infrastruktur aufgebaut sein kann, wie diese intern Abfragen und eigene Spark-Programme verarbeitet und wie der \textit{Spark-Context} sich als Cluster-Repräsentant gegenüber dem Anwender und der API exponiert. Im nächsten Unterkapitel wird die eigentliche Basis von Apache Spark vorgestellt. Spark basiert im Wesentlichen auf einer verteilten Datenstruktur, den \textit{Resilient Distributed Datasets}. Deren Konzept wird sowohl theoretisch, als auch im Anwendungskontext dargestellt. 
+
+Ein weiteres Kernelement der Spark-Implementierung bildet das \textit{In-Memory-Processing} der Daten. Spark ist in der Lage, je nach Konfiguration des Host-Systems, große Teile der Analysen und Verarbeitungen äußerst flexibel im Hauptspeicher durchzuführen und so massive Performanceverbesserungen gegenüber festspeicherbasierter Verarbeitung zu generieren. Hierzu bietet Spark spezielle \textit{In-Memory-Primitives} an. In einem weiteren Unterkapitel werden dieses detailliert vorgestellt. 
+
+\section{Spark im Cluster}
+\label{section:spark im cluster}
+
+%Diesen Abschnitt noch mit Referenzen untermauern
+Eine große Herausforderung im Umfeld verteilter und nebenläufiger Analyse und Verarbeitung großer Datenmengen stellt der Netzwerkverkehr da. Der klassische Aufbau einer verteilten Anwendung hält die Daten auf einer dafür vorgesehen Plattform im Netzwerk. Häufig ist dies ein dedizierter File- oder Datenbankserver, der mit möglichst großer Bandbreite mit dem Applikationsserver verbunden ist (Vergleich Oracle InfinyBand). 
+
+%Hier muss noch eine Grafik eines herkömmlichen Netzwerks rein
+
+In diesem Aufbau entsteht in der Regel eine sehr hohe Netzwerklast, da die für die Applikation benötigten Daten dieser zunächst zur Verfügung gestellt werden müssen. 
+
+Spark geht hier einen anderen Weg. Ein Spark-Cluster besteht typischerweise aus einem zentralen \textit{Master} und n \textit{Worker-Nodes}. Diese können aus einfachen Servern bestehen, aber auch aus Clustern von Großrechnern (beispielsweise IBM Z, Oracle Exa). Das Hadoop Distributed File System und Spark skalieren über Cluster beliebiger Größenordnung. Über ein verteiltes Dateisystem werden die Daten auf dem Cluster gehalten und sowohl dem \textit{Master}, als auch den \textit{Worker-Nodes} so zur Verfügung gestellt. 
+
+%Hier Grafik zum Aufbau eines Spark Clusters. 
+
+
+
+Spark-Anwendungen laufen als unabhängiges Set von Prozessen auf Cluster-Infrastrukturen. Das Hauptprogramm, der sogenannte \textit{Spark Driver}, instanziert das\textit{ SparkContext-Objekt}, das die einzelnen Prozesse koordiniert. Auf Clustersystemen hält der \textit{SparkContext} die Verbindung zum jeweiligen \textit{Cluster-Ressource-Manager} (Mesos, Yarn), im Standalone-Betrieb instanziert der Context selbst einen Dummy-Manager und allokiert in beiden Fällen die für die Anwendung nötigen Hardware-Ressourcen. Die Cluster-Manager liefern ihren aktuellen Status an Spark zurück und melden Auslastung und Gesundheitszustand der einzelnen Knoten. Über interne \textit{Load-Balancing-Systeme}\footnote{Load-Balancing-Systeme sind Überwachungsmechanismen in verteilten Systemen. Jedes Teilsystem meldet seine eigene Auslastung und seine Verfügbarkeit an den Load-Balancer. Dieser verteilt anstehenden Aufgaben so auf die Ressourcen, dass eine möglichst gleichmäßige Verteilung über die gesamte Infrastruktur möglich ist.} wird ermittelt, welche Worker-Nodes die jeweiligen Tasks aus dem Spark-Kontext zugewiesen bekommen. Der SparkContext repräsentiert sowohl für die Spark-Konsole REPL, als auch in eigenen Spark-Programmen innerhalb der APIs das gesamte Cluster. Dem SparkContext wird bei der Initialisierung über ein Konfigurationsobjekt mitgeteilt, welche Ressourcen ihm für das aktuelle Programm zur Verfügung stehen. Die Entscheidung, welche, der initial zur Verfügung gestellten Nodes oder Ressourcen des Clusters von Spark wann in Anspruch genommen werden, obliegt der Kombination aus Spark und \textit{Cluster-Ressource-Manager}. 
+
+%gesamten Abschnitt mit Referenzen belegen!    
+
+%fußnote nochmal überdenken
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=1.0\textwidth]{bilder/3_spark.png}
-\caption{Schematische Darstellung der Funktionsweise von Spark [VA14]}
-\label{fig:sparkfunkt}
-\end{figure}
+\includegraphics[width=1.0\textwidth]{bilder/3_2_cluster.png}
+\caption{Clusteraufbau mit Spark [SP14]}
+\label{fig:sparkcluster}
+\end{figure} 
+
+
+
+
+
+Wenn ein SparkContext initialisiert wurde, installiert der Spark sogenannte \textit{Executors} auf sämtlichen Worker-Nodes des Clusters. Der Applikationscode wird nun als JAR\footnote{Ein JAR (Java ARchive) ist ein gepacktes und auf einer Java Virtual Machine ausführbares (Java, Scala, Clojure) Programmpaket, häufig inklusive der benötigten Bibliotheken.} direkt an die Executors verteilt und dieser anschließend durch entsprechende Tasks ausgeführt. 
+
+
+
   
 \section{Das Konzept der RDD}
 \label{section:rdd}
@@ -33,27 +67,16 @@ RDDs können prinzipiell auf drei Arten gespeichert werden [SP14]:
 
 
 
-
-
-\section{Spark im Cluster}
-\label{section:spark im cluster}
-
-
-Spark-Anwendungen laufen als unabhängiges Set von Prozessen auf Cluster-Infrastrukturen. Das Hauptprogramm (Driver-Program) enthält das SparkContext-Objekt, das die einzelnen Prozesse koordiniert. Auf Clustersystemen hält der SparkContext die Verbindung zum jeweiligen Cluster-Manager (Mesos, Yarn), im Standalone-Betrieb instanziert der Context selbst einen Dummy-Manager und allokiert in beiden Fällen die für die Anwendung nötigen Hardware-Ressourcen.    
+Wie in Abbildung \ref{section:rdd} dargestellt, werden die Daten bei einer Verarbeitung durch Spark zunächst aus dem HDFS geladen, in Resilient Distributed Datasets (RDD) verpackt, und dann im Hauptspeicher für Verarbeitung- oder Analysefunktionen zur Verfügung gestellt. Abfragen werden direkt entweder via Scala REPL oder SQL-artige Abfragen zur Laufzeit, über Batch-Jobs oder via Spark Streaming/Storm an die im RAM befindlichen RDDs geleitet.
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=1.0\textwidth]{bilder/3_2_cluster.png}
-\caption{Clusteraufbau mit Spark [SP14]}
-\label{fig:sparkcluster}
-\end{figure} 
+\includegraphics[width=1.0\textwidth]{bilder/3_spark.png}
+\caption{Schematische Darstellung der Funktionsweise von Spark \refint{va14}}
+\label{fig:sparkfunkt}
+\end{figure}
 
 
-
-
-
-
-Wenn eine Verbindung aufgebaut ist, installiert Spark sogenannte Executors auf den Knoten des Clusters. Der Applikationscode wird nun als JAR direkt an die Executors geschickt und dieser anschließend durch entsprechende Tasks ausgeführt. 
 
 
 

@@ -7,7 +7,7 @@
 		revision="1.0"
 		conf="test"
 		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool"
-		date="20150106171134"/>
+		date="20150123235804"/>
 	<dependencies>
 		<module organisation="org.scala-lang" name="scalap">
 			<revision name="2.10.4" status="release" pubdate="20140318224827" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" downloaded="false" searched="false" default="false" conf="master(*), compile, runtime(*), runtime, compile(*), master" position="70">
@@ -83,11 +83,11 @@
 			</revision>
 		</module>
 		<module organisation="org.apache.spark" name="spark-core_2.10">
-			<revision name="1.1.1" status="release" pubdate="20141119211524" resolver="public" artresolver="public" homepage="http://spark.apache.org/" downloaded="true" searched="true" default="false" conf="default, compile, runtime, default(compile), master" position="1">
-				<metadata-artifact status="successful" details="" size="10819" time="488" location="/Users/contexagon-SL01/.ivy2/cache/org.apache.spark/spark-core_2.10/ivy-1.1.1.xml" searched="true" original-local-location="/Users/contexagon-SL01/.ivy2/cache/org.apache.spark/spark-core_2.10/ivy-1.1.1.xml.original" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/apache/spark/spark-core_2.10/1.1.1/spark-core_2.10-1.1.1.pom"/>
+			<revision name="1.1.1" status="release" pubdate="20141119211524" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://spark.apache.org/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="1">
+				<metadata-artifact status="no" details="" size="36735" time="0" location="/Users/contexagon-SL01/.ivy2/cache/org.apache.spark/spark-core_2.10/ivy-1.1.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/apache/spark/spark-core_2.10/1.1.1/spark-core_2.10-1.1.1.pom"/>
 				<caller organisation="simple-project" name="simple-project_2.10" conf="test, compile, runtime" rev="1.1.1" rev-constraint-default="1.1.1" rev-constraint-dynamic="1.1.1" callerrev="1.0"/>
 				<artifacts>
-					<artifact name="spark-core_2.10" type="jar" ext="jar" status="successful" details="" size="6526979" time="5357" location="/Users/contexagon-SL01/.ivy2/cache/org.apache.spark/spark-core_2.10/jars/spark-core_2.10-1.1.1.jar">
+					<artifact name="spark-core_2.10" type="jar" ext="jar" status="no" details="" size="6526979" time="0" location="/Users/contexagon-SL01/.ivy2/cache/org.apache.spark/spark-core_2.10/jars/spark-core_2.10-1.1.1.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/apache/spark/spark-core_2.10/1.1.1/spark-core_2.10-1.1.1.jar"/>
 					</artifact>
 				</artifacts>

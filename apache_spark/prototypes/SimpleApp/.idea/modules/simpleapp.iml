@@ -23,6 +23,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../../src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../target/scala-2.10/resource_managed/test" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../src/test/resources" type="java-test-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/../../target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -48,7 +49,6 @@
     <orderEntry type="library" name="SBT: com.typesafe:config:1.0.2" level="project" />
     <orderEntry type="library" name="SBT: commons-beanutils:commons-beanutils:1.7.0" level="project" />
     <orderEntry type="library" name="SBT: commons-beanutils:commons-beanutils-core:1.8.0" level="project" />
-    <orderEntry type="library" name="SBT: commons-codec:commons-codec:1.5" level="project" />
     <orderEntry type="library" name="SBT: commons-collections:commons-collections:3.2.1" level="project" />
     <orderEntry type="library" name="SBT: commons-configuration:commons-configuration:1.6" level="project" />
     <orderEntry type="library" name="SBT: commons-digester:commons-digester:1.8" level="project" />
@@ -77,8 +77,6 @@
     <orderEntry type="library" name="SBT: org.apache.mesos:mesos:0.18.1" level="project" />
     <orderEntry type="library" name="SBT: org.apache.spark:spark-core_2.10:1.1.1" level="project" />
     <orderEntry type="library" name="SBT: org.apache.zookeeper:zookeeper:3.4.5" level="project" />
-    <orderEntry type="library" name="SBT: org.codehaus.jackson:jackson-core-asl:1.8.8" level="project" />
-    <orderEntry type="library" name="SBT: org.codehaus.jackson:jackson-mapper-asl:1.8.8" level="project" />
     <orderEntry type="library" name="SBT: org.eclipse.jetty:jetty-continuation:8.1.14.v20131031" level="project" />
     <orderEntry type="library" name="SBT: org.eclipse.jetty:jetty-http:8.1.14.v20131031" level="project" />
     <orderEntry type="library" name="SBT: org.eclipse.jetty:jetty-io:8.1.14.v20131031" level="project" />
@@ -116,6 +114,15 @@
     <orderEntry type="library" name="SBT: org.xerial.snappy:snappy-java:1.0.5.3" level="project" />
     <orderEntry type="library" name="SBT: oro:oro:2.0.8" level="project" />
     <orderEntry type="library" name="SBT: xmlenc:xmlenc:0.52" level="project" />
+    <orderEntry type="library" name="SBT: com.sematext.ag:ag-player:0.1.4" level="project" />
+    <orderEntry type="library" name="SBT: com.yammer.metrics:metrics-core:2.1.2" level="project" />
+    <orderEntry type="library" name="SBT: commons-codec:commons-codec:1.6" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.httpcomponents:httpclient:4.2" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.httpcomponents:httpcore:4.2" level="project" />
+    <orderEntry type="library" name="SBT: org.codehaus.jackson:jackson-core-asl:1.9.8" level="project" />
+    <orderEntry type="library" name="SBT: org.codehaus.jackson:jackson-mapper-asl:1.9.8" level="project" />
+    <orderEntry type="library" name="SBT: org.fluttercode.datafactory:datafactory:0.8" level="project" />
+    <orderEntry type="library" name="SBT: pl.solr.datamodel:datamodel:0.0.4" level="project" />
   </component>
 </module>
 
