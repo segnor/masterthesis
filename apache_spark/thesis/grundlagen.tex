@@ -58,9 +58,9 @@ Unter \textit{Machine Learning} wird ein interdisziplinärer Teilbereich der Inf
 \tikzstyle{line} = [draw, -latex']
 
 \node (start) [startstop] {Training Data};
-\node (pro2b) [block, right of=start, xshift=2cm] {\textbf{Pre-processing} \\-Normalization \\ -Dimension reduction};
+\node (pro2b) [block, right of=start, xshift=2cm] {\textbf{Pre-Processing} \\-Normalization \\ -Dimension Reduction};
 \node (pro3b) [block, right of=pro2b, xshift=2cm] {\textbf{Learning} \\-Supervised \\ -Unsupervised};
-\node (pro4b) [block, right of=pro3b, xshift=2cm] {\textbf{Error Analysis}\\ -Precision/recall \\ -Over fitting};
+\node (pro4b) [block, right of=pro3b, xshift=2cm] {\textbf{Error Analysis}\\ -Precision/Recall \\ -Overfitting};
 \node (pro5b) [process, below of=start] {Model};
 
 \path [line] (start) |- (pro2b);
@@ -117,7 +117,7 @@ So liegen also bei Big-Data-Analytics große Datenmengen vor, ohne dass das Ziel
 
 Nun gibt es verschiedene Herangehensweisen, wie sich relevante Fragestellungen aus den vorliegenden Daten ableiten lassen. Ein sinnvoller Ansatz besteht darin, sogenannte Cluster innerhalb der Daten zu ermitteln, also ähnliche Datensätze zu entsprechenden Gruppen zusammenzufassen. Aus diesen Gruppen werden Klassen gebildet, in dem ihnen aussagekräftige Namen zugeordnet werden\citelit{cl14}. Cluster werden beispielsweise benötigt, um Kunden nach bestimmten Interessen zu gruppieren, um Zeichen auf Ähnlichkeiten für die automatischen Zeichenerkennung zu untersuchen, oder Bilder auf vergleichbare Bildpunktanordnungen oder Farbspektren, also generell überall, wo nach Ähnlichkeiten gesucht wird. 
 
-Ein Cluster zeichnet sich dadurch aus, dass die Objekte innerhalb eines Clusters möglichst ähnlich sind, die Cluster untereinander jedoch möglichst unähnliche Inhalte besitzen. Um Ähnlichkeiten zwischen Datensätzen oder Clustern feststellen zu können, bedarf es einer Distanzfunktion, zur Ermittlung und Sicherstellung der Clustergüte einer Qualitätsfunktion (siehe \citelit{cl14}). 
+Ein Cluster zeichnet sich dadurch aus, dass die Objekte innerhalb eines Clusters möglichst ähnlich sind, die Cluster untereinander jedoch möglichst unähnliche Inhalte besitzen. Um Ähnlichkeiten zwischen Datensätzen oder Clustern feststellen zu können, bedarf es einer Distanzfunktion, zur Ermittlung und Sicherstellung der Clustergüte einer Qualitätsfunktion (Vergleich \citelit{cl14}). 
 
 Laut \citelit{cl14} sind für Distanz- und Qualitätsfunktionen folgende Annahmen zu treffen:  
 
@@ -151,30 +151,34 @@ Die Qualitätsfunktion \(quality\) beschreibt die Qualität des Clusterings basi
 
 \newpage
 
-Exemplarisch werden im Folgenden einige Distanzfunktionen dargestellt, die für die Clusteranalyse wichtig sind (Vergleich \citelit{uma14},  \citelit{bro98}).
+Exemplarisch werden im Folgenden einige Distanzfunktionen dargestellt, die für die Clusteranalyse wichtig sind (Vergleich \citelit{uma14},  \citelit{bro98}):
 
-\textbf{Hamming-Distanz:} Hier werden die Vektorelemente der Position \(i\) zweier Vektoren miteinander verglichen. Wenn sich diese unterscheiden, wird die Distanz auf den Wert 1 gesetzt, bei gleichen Werten 0. Nachdem alle Elemente der Vektoren miteinander verglichen wurden, werden diese summiert. Ein Vorteil der Hamming-Distanz ist, dass sich Abstände zwischen metrischen, ordinalen und sogar nominalen Daten berechnen lassen. Der Nachteil dieser Distanzfunktion ist, dass Abstandsverhältnisse nicht erkannt werden, also ist beispielsweise der Abstand zwischen 2 und 3 für diese Funktion gleichwertig zum Abstand von 2000 zu 2001.
+\begin{itemize}
+\item \textbf{Hamming-Distanz:} Hier werden die Vektorelemente der Position \(i\) zweier Vektoren miteinander verglichen. Wenn sich diese unterscheiden, wird die Distanz auf den Wert 1 gesetzt, bei gleichen Werten 0. Nachdem alle Elemente der Vektoren miteinander verglichen wurden, werden diese summiert. Ein Vorteil der Hamming-Distanz ist, dass sich Abstände zwischen metrischen, ordinalen und sogar nominalen Daten berechnen lassen. Der Nachteil dieser Distanzfunktion ist, dass Abstandsverhältnisse nicht erkannt werden, also ist beispielsweise der Abstand zwischen 2 und 3 für diese Funktion gleichwertig zum Abstand von 2000 zu 2100.
 
 \(dist_H(x,y) = count_i(x_i \neq y_i) \)
 
-\textbf{Manhattan-Distanz:} Diese Distanzfunktion hat ihren Namen aufgrund der blockweisen Anordnung der Straßenzüge in Manhattan. Distanzen werden, wie auf einem Schachbrett, durch vertikale und horizontale Bewegungen und Richtungsänderungen beschrieben. Um die Ergebnisse der verschiedenen Distanzfunktionen untereinander vergleichbar zu machen, wird der Betrag der Distanzwerte verwendet. Die Manhattan-Distanz ist nur auf metrische Daten anwendbar. Diese Distanzfunktion ist auch unter dem Namen \textit{Block-Distanz} bekannt.   
+\item \textbf{Manhattan-Distanz:} Diese Distanzfunktion hat ihren Namen aufgrund der blockweisen Anordnung der Straßenzüge in Manhattan. Distanzen werden, wie auf einem Schachbrett, durch vertikale und horizontale Bewegungen und Richtungsänderungen beschrieben. Um die Ergebnisse der verschiedenen Distanzfunktionen untereinander vergleichbar zu machen, wird der Betrag der Distanzwerte verwendet. Die Manhattan-Distanz ist nur auf metrische Daten anwendbar. Diese Distanzfunktion ist auch unter dem Namen \textit{Block-Distanz} bekannt.   
 
 \(dist_M(x,y) = \sum_{i} \mid x_i - y_i \mid \)
 
 
-\textbf{Euklidische Distanz:} Hier wird der direkte Abstand zwischen zwei Vektoren beschrieben, also zweier Punkte im n-dimensionalen Raum. Diese Funktion lässt sich nur auf metrische Daten anwenden. Auch hier wird durch Quadrieren und der Quadratwurze der Differenzen eine Normalisierung erreicht, die die Distanzwerte vergleichbar macht. 
+\item \textbf{Euklidische Distanz:} Hier wird der direkte Abstand zwischen zwei Vektoren beschrieben, also zweier Punkte im n-dimensionalen Raum. Diese Funktion lässt sich nur auf metrische Daten anwenden. Auch hier wird durch Quadrieren und der Quadratwurze der Differenzen eine Normalisierung erreicht, die die Distanzwerte vergleichbar macht. 
 
 \(dist_E(x,y) = \sqrt{\sum_{i}(x_i - y_i)^2} \)
 
-\textbf{Tschebyscheff-Distanz:}  Auch hier wird der Abstand zwischen zwei Punkten im n-dimensionalen Raum betrachtet. Im Unterschied zu den beiden vorhergehenden Verfahren wird hier jedoch der größtmögliche absolute Abstand zwischen allen Attributen ermittelt. Deshalb wird diese Distanzfunktion auch als \textit{Maximum-Distanz}  bezeichnet. 
+\item \textbf{Tschebyscheff-Distanz:}  Auch hier wird der Abstand zwischen zwei Punkten im n-dimensionalen Raum betrachtet. Im Unterschied zu den beiden vorhergehenden Verfahren wird hier jedoch der größtmögliche absolute Abstand zwischen allen Attributen ermittelt. Deshalb wird diese Distanzfunktion auch als \textit{Maximum-Distanz}  bezeichnet. 
 
 \(dist_T(x,y) = max_i(\mid x_i - y_i \mid) \)
 
-\textbf{Minkowski-Distanz:}  Diese Distanz-Funktion ist ähnlich zur Euklidischen Distanz. Allerdings entspricht hier der Abstand der \(n\)-ten Wurzel der Summe der  \(n\)-ten Potenzen der Differenzen. Auch diese Funktion lässt sich nur auf metrische Daten anwenden.
+\item \textbf{Minkowski-Distanz:}  Diese Distanz-Funktion ist ähnlich zur Euklidischen Distanz. Allerdings entspricht hier der Abstand der \(n\)-ten Wurzel der Summe der  \(n\)-ten Potenzen der Differenzen. Auch diese Funktion lässt sich nur auf metrische Daten anwenden.
 
 \(dist_K(x,y) = \sqrt[n]{\sum_{i}(x_i - y_i)^n} \)
 
+\end{itemize}
+
 Darüber hinaus existieren noch zahlreiche weitere Distanzfunktionen, die je nach Einsatzzweck besser oder schlechter geeignet sein können, als die dargestellten. 
+
 
 \newpage
 
@@ -199,7 +203,10 @@ Zu den Cluster-Verfahren zählen laut \citelit{ams03} und \citelit{cl14} unter A
 \begin{itemize}
 		\item \textbf{klassischer k-Means-Algorithmus (partitionierendes Verfahren):} Wie bei allen partitionierenden Verfahren werden zunächst die Clusterzahl \textit{k} und je Cluster ein Zentrum definiert. Die Zentrumsdefinition, und somit die Clusterbildung findet zufällig statt. Die Repräsentation des Clusters erfolgt durch den Centroid, also den Schwerpunkt. Eine Fehlerfunktion wird iterativ minimiert, indem die euklidischen quadrierten Abstände der Inhaltsobjekte zu den Centroiden hin verschoben werden. Nach jedem Iterationsschritt werden durch Mittelwertbildung die Centroiden neu definiert. Dieses Verfahren wird so lange iterativ durchgeführt, bis kein Datenobjekt mehr sein Cluster wechselt. Der k-Means-Algorithmus setzt metrische Werte\footnote{\textit{Metrisch}: Merkmal, das aus einer Zahl besteht und Dimension, sowie Nullpunkt besitzt (z.B. Geschwindigkeit, Einkommen, Alter), \textit{ordinal}: Merkmal mit natürlicher Ordnung (z.B. Schulnoten sehr gut, gut, befriedigend,...), \textit{nominal}: Merkmal ohne natürliche Ordnung (z.B. Geschlecht, Name)} voraus. Die Umwandlung von ordinalen Daten in metrische ist meist einfach umzusetzen, nominale Daten können mittels \textit{Binarisierung} in numerische Werte gewandelt werden. Alternativ kann auch ein modifiziertes k-Means-Verfahren eingesetzt werden (Vergleich \citelit{cl14}, Kapitel 8).
 		\item \textbf{k-Medoid-Verfahren (partitionierende Verfahren):} Im Unterschied zum k-Means-Algorithmus wird hier nicht der Centroid, sondern der Medoid als Stellvertreter für ein Cluster definiert. Ein Medoid muss immer ein Element der Datenobjekte sein. Durch Vertauschung wird nun iterativ nach qualitativ hochwertigeren Medoiden gesucht, also solchen, deren mittlere Distanz zu den anderen Datenobjekten im Cluster geringer ist. Dies wird so lange durchgeführt, bis kein Tausch der Medoiden mehr stattfindet, also jedes Cluster seinen qualitativ hochwertigsten Medoid besitzt. Die beiden wichtigsten k-Mediod-Verfahren sind PAM (Partitoning Around Medoids) und CLARANS (Clustering Large Applications based on RANdomized Search) (Vergleich \citelit{cl02}). Bei PAM wird jeweils nach dem besten neuen Mediod mit Hilfe einer Qualitätsverbesserung durch graphische Repräsentation der Datenobjektverteilung und -häufigkeit gesucht. Allerdings ist PAM nur für kleine Datenmengen zu verwenden. CLARANS ist für große Datenmengen besser geeignet, da hier nicht sämtliche Datenobjekte durchsucht werden. Statt dessen beschränkt sich die Suche auf Teilmengen.   
-		\item \textbf{k-Median-Algorithmus (partitionierendes Verfahren)} Im Gegensatz zu den k-Means-Verfahren wird beim k-Median nicht mit der Euklidschen Distanz der Abstand zu den Zentren ermittelt, sondern die Summen der Manhattan-Distanzen (1-Norm-Distanzen) werden iterativ minimiert \citelit{ncs06}.
+		\item \textbf{k-Median-Algorithmus (partitionierendes Verfahren)} Im Gegensatz zu den k-Means-Verfahren wird beim k-Median nicht mit der Euklidischen Distanz der Abstand zu den Zentren ermittelt, sondern die Summen der Manhattan-Distanzen (1-Norm-Distanzen) werden iterativ minimiert \citelit{ncs06}.
+
+\newpage		
+		
 		\item \textbf{EM-Clustering (partitionierendes Verfahren):} Dieses Verfahren basiert auf dem Expectation-Maximization-Alogrithmus. Dieser arbeitet nach dem Prinzip, zunächst mit einem zufällig gewählten Modell zu starten. In der Expectation-Phase werden die Zuteilungen der Datenobjekte zum Modell verbessert, in Maximization-Phase werden die Modellparameter entsprechend der aktuellen Zuteilung verbessert, also das Modell wird analog der Datenobjekte angepasst \citelit{ma08}. Das EM-Clustering ist im Gegensatz zum k-Means-Algorithmus in seiner Zuordnung unscharf, da prinzipiell jedes Datenobjekt jedem Cluster zugehörig sein könnte, sowie jedes Datenobjekt jeden Parameter verändern könnte.  
 		\item \textbf{Fuzzy C-Means (partitionierendes Verfahren):} Die Entfernung vom Clusterzentrum bestimmt über den Zugehörigkeitsgrad eines Datenobjekts. Der Zugehörigkeitsgrad wird mittels eines Intervalls zwischen 0 und 1 angegeben, wobei 1 eine totale Zugehörigkeit zum jeweiligen Clusterzentrum bedeutet. Die Verschiebung der Zentren findet im Gegensatz zum k-Means-Algorithmus jedoch abhängig vom Zuordnungsgrad ab. So werden Datenobjekte mit dem Zuordnungsgrad 1 vollständig bei der Berechnung berücksichtigt, während kleinere Zugehörigkeitsgrade den Einfluss entsprechen minimieren \citelit{cm05}.
 		\item \textbf{divisive Clusterverfahren (hierarchisches Verfahren):} Wie bei der Vorstellung der prinzipiellen Clusterverfahren beschrieben, wird beim divisiven Clustering zunächst mit einem Cluster begonnen, das sämtliche Datenobjekte beinhaltet. In diesem wird nun nach genau dem Datenobjekt gesucht, bei dem die Ähnlichkeit zu den anderen Datenobjekten im Cluster minimal, also die mittlere Distanz maximal ist. In jeder Iteration wird um das so ermittelte Zentrum ein neues Cluster aus den Datenobjekten gebildet, die eine geringe Distanz zum jeweiligen Clusterzentrum aufweisen. Die Iteration läuft genau so lange, bis jedes Cluster nur noch ein Datenobjekt enthält.      
@@ -210,12 +217,39 @@ Zu den Cluster-Verfahren zählen laut \citelit{ams03} und \citelit{cl14} unter A
 \subsubsection{Klassifikationsalgorithmen}
 \label{section:klassifikationsalgorithmen}
 
+Die Klassifikation hat zum Ziel, die Daten in Klassen einzuteilen (Vergleich Abbildung \ref{fig:MLP1}). Die Klassifikation ist Teil des überwachten Lernens (supervised Learning) \citelit{rml90}. Das Training findet anhand von Beispielen statt, bei denen die Einordnung der Daten in Klassen bereits manuell vorgenommen wurde.  
 
+Grundsätzlich existieren zwei Arten der Klassifikation (Vergleich \citelit{cl14}). Die \textit{instanzenbasierten} Klassifikationsverfahren führen eine direkte Klassifizierung auf Grund von Beispieldaten auf den noch zu klassifizierenden Daten durch. Diese Verfahren sind verhältnismäßig einfach aufgebaut, da ein zu untersuchendes Datenobjekt mit den vorhandenen Testobjekten anhand einer Distanzfunktion verglichen und der Klasse mit der größten Ähnlichkeit zugeordnet wird. 
+
+Im Gegensatz dazu erstellt das \textit{modellbasierte} Klassifikationsverfahren aus den zur Verfügung gestellten Testdaten ein Modell als Metaebene. Die Testdaten werden nach Erstellung und Verifizierung des Modells für die Durchführung des Klassifikationsprozesses nicht mehr benötigt.  
+
+Im folgenden Abschnitt werden einige wichtige Klassifikationsverfahren vorgestellt, die auch Teil der Implementierungen der Machine-Learning-Bibliotheken MLlib und H2O sind.
 
 \subsection{Vorhersagealgorithmen}
 \label{section:vorhersagealgorithmen}
 
 Blablba
+
+\section{Das MapReduce-Paradigma}
+\label{section:das mapreduce-paradigma}
+
+Alternativ zu Spark lässt sich im BDAS auch Hadoop als Kernimplementierung für die Datenanalyse oder -verarbeitung im Cluster einsetzen. Dies könnte beispielsweise sinnvoll sein, wenn die Infrastruktur des Clusters über relativ wenig Hauptspeicher verfügt, so dass Spark seinen In-Memory-Vorteil nicht ausspielen kann und die Aufgaben ohnehin den im ersten Kapitel beschriebenen einfachen statistischen Problemen entsprechen. 
+ 
+Hadoop besteht in erster Linie aus dem Hadoop File System (HDFS) und dem MapReduce-Programmiermodell. Dieses wurde von Google speziell entwickelt, um große Datensätze parallel in Clustersystemen verarbeiten und generieren zu können. 
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=1.0\textwidth]{bilder/2_6_1_wordcount.png}
+\caption{Ein konkretes Word-Count-Beispiel für MapReduce  \protect\citeint{xi12}}
+\label{fig:wordcount}
+\end{figure}   
+ 
+
+
+In Abbildung \ref{fig:wordcount} wird das MapReduce-Modell an einem praktischen Beispiel zur Wortzählung gezeigt. Bei MapReduce wird zunächst eine problemspezifische Map-Funktion definiert. Diese splittet die Ursprungsmenge in gleichgroße Teile, versieht unstrukturierte Worte in einem ersten Schritt mit Standardwerten, um so aus jedem unstrukturierten Datensatz ein Key-Value-Pair zu generieren. Im gezeigten Beispiel wird hier jedem Wert eine Eins als Anzahl zugeordnet. Im nächsten Schritt werden diese so gewonnenen Zwischen-Key-Value-Paare in einem Shuffling-Prozess klassifiziert und die so homogenisierten Pakete auf die Knoten im Cluster verteilt. Nun enthält jede Ausführungseinheit nur noch gleiche Wörter. Im Reduce-Schritt schließlich, werden die gleichartigen Wörter zu Gesamtmengen zusammengefasst, addiert und im Endergebnis aggregiert. 
+
+An dem gezeigten Beispiel lässt sich gut erkennen, dass die einzelnen Ausführungsschritte jeweils parallelisiert und auf separate Knoten im Cluster verteilt werden können. Das Laufzeitsystem kümmert sich um die Details der Partitionierung der Eingabedaten, die Ressourcenverwaltung innerhalb des Clusters, das Behandeln von Fehlern und die Kommunikation zwischen den einzelnen Knoten. 
+ 
 
 \section{Streaming Frameworks}
 \label{section:streaming framworks}
