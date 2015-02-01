@@ -2,7 +2,7 @@
 \label{chapter:allgemeine Grundlagen}
 
 
-Das nachfolgende Kapitel behandelt die Grundlagen, die für ein Verständnis der Anwendungsbereiche von Apache Spark, dem Berkeley Data Analytics Stack und im Allgemeinen des Themenkomplexes Big Data Analytics nötig sind. Im ersten Unterkapitel werden die grundsätzlichen Eigenschaften eines verteilten Systems beschrieben um die Basis für die in der Arbeit beschriebenen Besonderheiten von Verarbeitungen im Clusterbetrieb zu legen. Hier wird ein exemplarischer Clusteraufbau skizziert, Probleme mit Concurrency und Netzwerkverkehr beschrieben und welche Möglichkeiten es hier gibt.  Im darauf folgenden Unterkapitel werden grundlegende Problemstellungen und Technologien beschrieben, die im Rahmen von Big Data Analytics im Allgemeinen vorkommen. Unter anderem werden hier Grundlagen und Begriffe aus den Themengebieten Anwendungen von Big Data Analytics, Machine Learning, Klassifikation, Vorhersagen, statistische Analysen, Graph-Suchen und Streaming-Frameworks in Kurzform erklärt. In einer Zusammenfassung werde diese Grundlagen nochmals auf einen Blick dargestellt. 
+Das nachfolgende Kapitel behandelt die Grundlagen, die für ein Verständnis der Anwendungsbereiche von Apache Spark, dem Berkeley Data Analytics Stack und im Allgemeinen des Themenkomplexes Big Data Analytics und insbesondere für Machine-Learning-Anwendungen nötig sind. Im ersten Unterkapitel werden die grundsätzlichen Eigenschaften eines verteilten Systems beschrieben um die Basis für die in der Arbeit beschriebenen Besonderheiten von Verarbeitungen im Clusterbetrieb zu legen. Hier wird ein exemplarischer Clusteraufbau skizziert, Probleme mit Concurrency und Netzwerkverkehr beschrieben und welche Möglichkeiten es hier gibt.  Im darauf folgenden Unterkapitel werden grundlegende Problemstellungen und Technologien beschrieben, die im Rahmen von Big Data Analytics im Allgemeinen vorkommen. Unter anderem werden hier Grundlagen und Begriffe aus den Themengebieten Anwendungen von Big Data Analytics, Machine Learning, Klassifikation, Vorhersagen, statistische Analysen, Graph-Suchen und Streaming-Frameworks in erklärt. Besonders die Algorithmen, die in den Machine-Learning-Implementierungen MLibs und H20 zum Einsatz kommen, werden hier detaillierter vorgestellt. In einer Zusammenfassung werde diese Grundlagen nochmals auf einen Blick dargestellt. 
  
 
 \section{Cluster Computing}
@@ -214,16 +214,89 @@ Zu den Cluster-Verfahren zählen laut \citelit{ams03} und \citelit{cl14} unter A
 		\item \textbf{DBSCAN (dichtebasiertes Clusterverfahren):} Cluster werden hier als Areale behandelt, in denen Datenobjekte nah voneinander entfernt lokalisiert sind. Die Cluster werden getrennt durch Areale, in denen die Datenobjekte eine größere Entfernung aufweisen. Ein Cluster wird gebildet, sobald die Dichte der Datenobjekte einen definierten Schwellenwert überschreitet. Kernobjekte sind Datenobjekte, die innerhalb eines definierten Abstandes mindestens k Nachbardatenobjekte besitzen. Randobjekte sind Datenobjekte, die einem Cluster nahe sind und werden in dieses eingeschlossen, alle anderen Datenobjekte werden als \textit{Rauschen} nicht berücksichtigt \citelit{kd06}.
 \end{itemize}	
 
-\subsubsection{Klassifikationsalgorithmen}
+\subsubsection{Klassifikations- und Regressionsalgorithmen}
 \label{section:klassifikationsalgorithmen}
 
-Die Klassifikation hat zum Ziel, die Daten in Klassen einzuteilen (Vergleich Abbildung \ref{fig:MLP1}). Die Klassifikation ist Teil des überwachten Lernens (supervised Learning) \citelit{rml90}. Das Training findet anhand von Beispielen statt, bei denen die Einordnung der Daten in Klassen bereits manuell vorgenommen wurde.  
+Die Klassifikations- und Ressionsalgorithmen haben zum Ziel, die Daten in Klassen einzuteilen (Vergleich Abbildung \ref{fig:MLP1}). Beides sind gebräuchliche Formen des überwachten Lernens (supervised Learning) \citelit{rml90}. Das Training findet also anhand von Beispielen statt, bei denen die Einordnung der Daten in Klassen bereits manuell vorgenommen wurde. Der Unterschied zwischen Klassifikation und Regression liegt in erster Linie in der Art der Variablen, die bestimmt wird. Bei der Regression werden kontinuierliche Werte für die Variablen bestimmt, bei der Klassifikation werden dagegen diskrete Werte erwartet. 
 
 Grundsätzlich existieren zwei Arten der Klassifikation (Vergleich \citelit{cl14}). Die \textit{instanzenbasierten} Klassifikationsverfahren führen eine direkte Klassifizierung auf Grund von Beispieldaten auf den noch zu klassifizierenden Daten durch. Diese Verfahren sind verhältnismäßig einfach aufgebaut, da ein zu untersuchendes Datenobjekt mit den vorhandenen Testobjekten anhand einer Distanzfunktion verglichen und der Klasse mit der größten Ähnlichkeit zugeordnet wird. 
 
 Im Gegensatz dazu erstellt das \textit{modellbasierte} Klassifikationsverfahren aus den zur Verfügung gestellten Testdaten ein Modell als Metaebene. Die Testdaten werden nach Erstellung und Verifizierung des Modells für die Durchführung des Klassifikationsprozesses nicht mehr benötigt.  
 
-Im folgenden Abschnitt werden einige wichtige Klassifikationsverfahren vorgestellt, die auch Teil der Implementierungen der Machine-Learning-Bibliotheken MLlib und H2O sind.
+Im folgenden Abschnitt werden einige wichtige Klassifikations- und Regressionsverfahren vorgestellt, die auch Teil der Implementierungen der Machine-Learning-Bibliotheken MLlib und H2O sind. 
+
+\begin{itemize}
+
+\item \textbf{Linear Regression:} Bei den Linear-Regression-Algorithmen handelt es sich um eine der gebräuchlichsten Regressionsmethoden. Hier wird eine statistisch abhängige Variable durch 1 bis n unabhängige Variablen beschrieben \citeint{ri13}. Die Regressionskoeffizienten werden in erster Potenz im Modell berücksichtigt. Deshalb wird dieses Verfahren als \textit{Linear Regression} bezeichnet. 
+
+Zusammengefasst durch die \textit{Simple Linear Regression} lässt sich das Verfahren wie folgt darstellen \citeint{lr14}:
+
+Die Ausprägung einer Variablen ist bekannt, es soll die Ausprägung einer anderen Variablen vorhergesagt werden.
+Die vorherzusagende Variable (abhängige Variable) ist das \textit{Kriterium}.
+Die zur Vorhersage genutzte Variable (unabhängige Variable) ist der \textit{Prädiktor}.
+Ziel der Regression ist nun, die lineare Funktion zu finden, welche die Abhängigkeit zwischen Pädiktor und Kriterium beschreibt. 
+
+Als einfachste Vorhersagefunktion wird hier ein lineares Gelichungssytem betrachtet. Hier werden die Werte von Y geschätzt, indem die Werte von X linear transformiert werden:
+
+\(\hat{y} = a_y_x + b_y_x * x  \) 
+
+mit \(\hat{y}\) = Schätzwert des Kriteriums \\
+\(a_y_x\) = Schätzwert des Kriteriums wenn der Prädiktor den Wert 0 hat (\textit{Intercept}) \\
+\(b_y_x\) = Regressionskoeffizient, Steigung der Linie zum vorhergesagten Wert des Kriteriums (\textit{Slope}) \\ 
+\(x\) = Wert des Kriteriums zur Schätzung des Prädiktors. 
+
+So kann durch die Koeffizienten die Änderung in den abhängigen Variablen durch die Änderung um eine Einheit in der unabhängigen Variablen vorausgesagt werden.  
+
+Nun wird noch ein Maß für die Schätzfehler benötigt. Hierzu wird bei den \textit{Linear-Regression-Algorithmen} auf die \textit{Least-Squares} zurückgegriffen, also die summierten, quadrierten Abweichungen der tatsächlichen von den vorhergesagten Werten. \textit{Intercept} und \textit{Slope} werden so bestimmt, dass die \textit{Least-Squares} minimal sind. 
+
+\(\sum(y-\hat{y})^2 = min \) (\textit{Ordinary Least Squares - OLS})
+
+So wird die Linie für das Modell bestimmt, die aufgrund der geringen Schätzfehlers am Besten passt. 
+
+  
+
+\item \textbf{Logisitic Regression:} Die \textit{Logistic Regression} ist in Ihrem prinzipiellen Zweck der \textit{Linear Regression} sehr ähnlich. Auch hier wird die Beziehung zwischen einer oder mehreren unabhängigen und einer abhängigen Variable modelliert. Im Gegensatz zur \textit{Linear Regression} wird bei der \textit{Logistic Regression} jedoch die Eintrittswahrscheinlichkeit eines Ereignisses berechnet. Somit wird also kein linearer Zusammenhang zwischen den abhängigen und den unabhängigen Variablen hergestellt, in dem die abhängige Variable einen präzisen numerischen Wert erhält. Statt dessen wird mittels der \textit{Logistic Regression} ein Wahrscheinlichkeitswert zwischen 0 und 1 erwartet \citeint{lr12}. 
+Die entsprechende Funktion stellt sich folgendermaßen dar: 
+
+\(P = \frac{e^{\alpha+\beta x}}{1+e^{\alpha+\beta x}}\)
+
+mit \(P\) als Eintrittswahrscheinlichkeit für das Ereignis \\
+\(\alpha, \beta\) als Koeffizienten des Modells (Vergleich \textit{Linear Regression}), die von \(x\) abhängig sind. Wenn \(x\) den Wert 0 hat, erreicht \(\alpha\) den Wert von \(P\). \(\beta\) zeigt die Wahrscheinlichkeit, dass sich eine 1 ändert, wenn \(x\) sich um eine Einheit ändert.
+
+Ein weiterer Bestandteil der Logistic Regression sind die \textit{Odds}, also die Verhältnisse der Wahrscheinlichkeit zu ihrer jeweiligen Gegenwahrscheinlichkeit. Diese werden im Logistic-Regression-Alogrithmus als \textit{Logit} (Logarithmus eines Odds) bezeichnet und stellen hier die abhängige Variable dar. 
+Ein Logit ist folgendermaßen definiert: 
+
+\(logit(p) = ln( \frac{P}{1-P})\)
+
+\item \textbf{Support Vector Machines:}
+
+\item \textbf{Naive Bayes:} Hierbei handelt es sich um einen wahrscheinlichkeitsbasierten Algorithmus, dessen Zweck die Vorhersage der Klasse mit der höchsten Wahrscheinlichkeit ist. Da es sich um ein instanzenbasiertes Klassifikationsverfahren handelt, ist hier keine Modellentwicklung durch die Trainingsdaten nötig. Beim Naive-Bayes-Verfahren wird von der Annahme ausgegangen, dass sämtliche Datenattribute untereinander statistisch unabhängig sind. Dieser Algorithmus basiert auf der Bayesschen Formel (Vergleich: \citelit{ml15}):
+
+\(P(X \mid Y) = \frac{P(Y \mid X) * P(X)}{P(Y)} \)
+
+Laut \citeint{tud06} lässt sich die Naive-Bayes-Klassifikation für mittlere bis große Trainingsmengen für Diagnose oder Klassifikation für Dokumente wie folgt anwenden:
+
+Das Ziel besteht darin, jede Instanz \(X\) in der Funktion \(f: X \to V\) durch die Attributwerte \([a_1, a_2...a_n]\) zu beschreiben. 
+Hierzu wird der wahrscheinlichste Wert von \(f(x)\) ermittelt durch: \\  
+\(f(x) = argmax P(a_1, a_2...a_n) \mid v_i)P(v_i) \to v_i \in V \) \\
+Beim Naive-Bayes-Algorithmus wird folgende Annahme getroffen: \\ 
+ \(f(x) = P(a_1, a_2...a_n) \mid v_i) = \prod_i P(a_i \mid v_i) \) \\
+Somit wird die Naive-Bayes-Klassifikation zu:  \\
+\(v_N_B = argmax P(v_i) \prod_i P(a_i \mid v_i) \to v_i \in V \)  \\
+
+Also wird für jeden der Klassikationswerte \(v_i\) die Wahrscheinlichkeit \(P(v_i)\) berechnet und für jeden Attributwert \(a_i\) die von \(v_i\) abhängige Wahrscheinlichkeit \(P(a_i \mid v_i)\).  
+\item \textbf{Decision Trees:}
+
+\item \textbf{Random Forests:}
+
+
+
+
+
+
+
+
+\end{itemize}
 
 \subsection{Vorhersagealgorithmen}
 \label{section:vorhersagealgorithmen}
