@@ -253,7 +253,7 @@ Nun wird noch ein Maß für die Schätzfehler benötigt. Hierzu wird bei den \te
 
 So wird die Linie für das Modell bestimmt, die aufgrund der geringen Schätzfehlers am Besten passt. 
 
-  
+ 
 
 \item \textbf{Logisitic Regression:} Die \textit{Logistic Regression} ist in Ihrem prinzipiellen Zweck der \textit{Linear Regression} sehr ähnlich. Auch hier wird die Beziehung zwischen einer oder mehreren unabhängigen und einer abhängigen Variable modelliert. Im Gegensatz zur \textit{Linear Regression} wird bei der \textit{Logistic Regression} jedoch die Eintrittswahrscheinlichkeit eines Ereignisses berechnet. Somit wird also kein linearer Zusammenhang zwischen den abhängigen und den unabhängigen Variablen hergestellt, in dem die abhängige Variable einen präzisen numerischen Wert erhält. Statt dessen wird mittels der \textit{Logistic Regression} ein Wahrscheinlichkeitswert zwischen 0 und 1 erwartet \citeint{lr12}. 
 Die entsprechende Funktion stellt sich folgendermaßen dar: 
@@ -268,7 +268,21 @@ Ein Logit ist folgendermaßen definiert:
 
 \(logit(p) = ln( \frac{P}{1-P})\)
 
-\item \textbf{Support Vector Machines:}
+\item \textbf{Support Vector Machines:} Eine \textit{Support Vector Machine} (SVM) ist ein Verfahren zur Klassifikation und Regression. Ziel ist, eine Menge von zu kassifizierenden Datenobjekten derart aufzuteilen, dass um die Trennlinie herum ein möglichst breiter Korridor frei von Datenobjekten bleibt. Einen solchen Korridor nennt man deshalb \textit{Large Margin Classifier} \citeint{sv03}.
+
+Um die Klassen voneinander trennen zu können, wird eine sogenannte Hyper Plane (Hyperebene) konstruiert. diese ist definiert durch den Normalenvektor \(w\) und die Verschiebung \(b\). Die Definition der Hyperebene ist somit: 
+
+\(H = {x \mid \langle w,x \rangle+b=0}\)
+
+\textit{Support Vectors} sind die Punkte, die zu der generierten \textit{Hyper Plane} den geringsten Abstand aufweisen. Diese Stützungsvektoren haben exklusiv Einfluss auf die Lage der \textit{Hyper Plane}, Punkte die nicht als Stützungsvektoren definiert wurden, sind für deren Lage irrelevant.  
+
+Die Vorhersage der Klasse für ein neues Objekt findet statt, indem zunächst für einen Trainingslauf \(w\) und \(b\) so gewählt werden, dass die Hyper Pane die Trainingsdatensätze trennt. Im Vorhersageschritt wird nun untersucht, auf welcher Seite des Hyper Pane das Objekt liegt. Objekte, die in Richtung des Normalenvektors der Hyper Pane liegen, werden als positiv klassifiziert, alle anderen als negativ. Fehler, also Daten, die sich nicht trennen lassen, lassen den Abstand zur Hyperebene mit dem Fehlergewicht \(C\) multiplizieren.  
+
+Der optimale Stützvektor wird konstruiert, indem die quadratische Norm \(\mid \mid w \mid \mid\) minimal wird unter der Bedingung, dass für alle \(i = 1...m\) gilt: 
+
+\(k_i*(w^T * x_i+b) \geq 1 -C_i \ \to 1 \leq i \leq m\), wobei \(C\) hier als Fehlergewicht eine positive Schlupfvariable\footnote{Schlupfvariablen werden für die für die Lösung eines Problems eingeführt, ihr Wert ist aber nicht von Interesse. Die eingeführte Schlupfvariable führt ein Problem auf ein einfacheres Problem zurück.} darstellt.  
+
+Mit dem sogenannten Kernel-Verfahren wird aus einer Trennung, deren Realisierung im zweidimensionalen Raum komplex ist, eine dreidimensionale Darstellung. Eine Fläche besitzt umfangreichere Trennmöglichkeiten, als eine Gerade. Die Kernel-Funktion dient als Maß der Ähnlichkeit. Somit muss keine tatsächliche Transformation in die dritte Dimension vollzogen werden.  
 
 \item \textbf{Naive Bayes:} Hierbei handelt es sich um einen wahrscheinlichkeitsbasierten Algorithmus, dessen Zweck die Vorhersage der Klasse mit der höchsten Wahrscheinlichkeit ist. Da es sich um ein instanzenbasiertes Klassifikationsverfahren handelt, ist hier keine Modellentwicklung durch die Trainingsdaten nötig. Beim Naive-Bayes-Verfahren wird von der Annahme ausgegangen, dass sämtliche Datenattribute untereinander statistisch unabhängig sind. Dieser Algorithmus basiert auf der Bayesschen Formel (Vergleich: \citelit{ml15}):
 
@@ -284,8 +298,20 @@ Beim Naive-Bayes-Algorithmus wird folgende Annahme getroffen: \\
 Somit wird die Naive-Bayes-Klassifikation zu:  \\
 \(v_N_B = argmax P(v_i) \prod_i P(a_i \mid v_i) \to v_i \in V \)  \\
 
-Also wird für jeden der Klassikationswerte \(v_i\) die Wahrscheinlichkeit \(P(v_i)\) berechnet und für jeden Attributwert \(a_i\) die von \(v_i\) abhängige Wahrscheinlichkeit \(P(a_i \mid v_i)\).  
-\item \textbf{Decision Trees:}
+Also wird für jeden der Klassifikationswerte \(v_i\) die Wahrscheinlichkeit \(P(v_i)\) berechnet und für jeden Attributwert \(a_i\) die von \(v_i\) abhängige Wahrscheinlichkeit \(P(a_i \mid v_i)\).  
+
+\item \textbf{Decision Trees:} Ein Decision Tree (Entscheidungsbaum) ist ein Klassifikationsverfahren, das als hierarchischer Baum für den Merkmalsraum \(X\) und den Klassenraum \(K\) aufgebaut ist \citeint{dt09}. An jedem Knoten wird den Ästen jeweils eindeutig ein Element \(x \in X\) zugeteilt. Jedes Blatt ist einer Klasse aus  \(K\) zugeteilt. \citeint{eb03}
+
+Ein Entscheidungsbaum wird generiert, indem man aus einer Attributmenge \(A\) und einer Beipielmenge \(B\) ein Attribut \(a \in A\) als Wurzel des Entscheidungsbaumes bestimmt. Wenn nun \(x_a\) die Menge aller Werte von  \(a\) repräsentiert, so wird für jede Ausprägung dieses Attributs die Menge \(B^x \subseteq B\) gebildet \citelit{cl14}. Für diese gilt:
+
+\(\forall b \in B^x : x_a(b)=x\)
+
+Danach wird eine so markierte Kante an die entsprechende Wurzel gelegt. Wenn \(B^x) = \varnothing \), wird die entsprechende Kante beendet. 
+Wenn alle Elemente aus  \(B\) in der gleichen Klasse sind, endet die Kante mit einem entsprechenden Blatt.
+
+Für ein Objekt wird eine Klasse vorhergesagt, indem der Baum von der Wurzel beginnend traversiert wird, jedem Knoten ein Ast angehängt wird, der die Zuordnung des Objekts \(x\) erhält und schließlich bei den erreichten Blättern die jeweilige Klasse abgelesen wird. Die Anzahl der Blätter entspricht der Anzahl von Entscheidungsregeln. 
+
+
 
 \item \textbf{Random Forests:}
 
