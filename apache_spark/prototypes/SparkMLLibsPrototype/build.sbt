@@ -1,7 +1,11 @@
-name := "SparkWikiLogAnalyzer"
+name := "SparkMLLibTest"
 
 version := "1.0"
 
 scalaVersion := "2.10.4"
 
-libraryDependencies += "org.apache.spark" %% "spark-core" % "1.1.1"
+libraryDependencies ++= Seq(
+    "org.apache.spark" % "spark-core_2.10" % "1.1.0",
+    "org.apache.spark" % "spark-mllib_2.10" % "1.1.0",
+    "com.github.scopt" % "scopt_2.9.3" % "3.3.0"
+)

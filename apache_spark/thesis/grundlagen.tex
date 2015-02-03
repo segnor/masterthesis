@@ -97,7 +97,7 @@ Unter \textit{Machine Learning} wird ein interdisziplinärer Teilbereich der Inf
 
 Das erste Diagramm \ref{fig:MLP1} zeigt den Lernprozess. Zunächst werden definierte Trainingsdaten einem \textit{Pre-Processing}\footnote{Das Pre-Processing kann aus \textit{Normalisierung, Dimensionsreduktion, Bildverarbeitung} oder anderen Vorarbeiten bestehen.} zugeführt (Vergleich Unterkapitel \ref{section:klassifikationsalgorithmen}). 
 
-Danach folgt der eigentliche Lernprozess, der mit oder ohne \textit{Überwachung}\footnote{Beim überwachten Lernen (Supervised Learning) liegen der Analyse vorher angelegte Trainingsdaten zugrunde, das unüberwachte Lernen (Unsupervised Learning) erzeugt vorher gänzlich unbekannte Modelle aus gefundenen Mustern \citeint{ul04}}, als \textit{Minimalisierungsfunktion} oder mit anderen Lernalgorithmen durchgeführt wird (siehe Unterpunkte Clusterverfahren und Klassifikationsalgorithmen). Nach dem Lernprozess werden das erzeugte Modell einem Validierungsprozess zugeführt. Dies können \textit{Precision/Recall}\footnote{\textit{Precision:} Wie viele der ausgewählten Datensätze sind relevant. \textit{Recall:} Wieviele relevante Datensätze wurden ausgewählt. }, \textit{Overfitting}\footnote{\textit{Overfitting} bezeichnet einen Zustand, in dem bekannte Daten (Trainingsdaten) von einem Algorithmus generell akkurater erkannt werden, als Daten, die von dem Algorithmus erkannt werden sollen (Predicitions).}, oder andere Validierungsfunktionen sein. Am Ende der Prozesse entsteht ein Modell, das für verschiedenste Aufgaben eingesetzt werden kann. 
+Danach folgt der eigentliche Lernprozess, der mit oder ohne \textit{Überwachung}\footnote{Beim überwachten Lernen (Supervised Learning) liegen der Analyse vorher angelegte Trainingsdaten zugrunde, das unüberwachte Lernen (Unsupervised Learning) erzeugt vorher gänzlich unbekannte Modelle aus gefundenen Mustern \citeint{ul04}}, als \textit{Minimalisierungsfunktion} oder mit anderen Lernalgorithmen durchgeführt wird (siehe Unterpunkte Clusterverfahren und Klassifikationsalgorithmen). Der Lernprozess kann entweder mit einem bestimmten Lernalogrithmus durchgeführt werden, oder mit sogenannten \textit{Ensemble-Learning-Methods}. Dies ist die Zusammenfassung von unterschiedlichen Lernalgorithmen zu einem Lernprozess, um die Vorhersageleistung zu steigern. Nach dem Lernprozess werden das erzeugte Modell einem Validierungsprozess zugeführt. Dies können \textit{Precision/Recall}\footnote{\textit{Precision:} Wie viele der ausgewählten Datensätze sind relevant. \textit{Recall:} Wieviele relevante Datensätze wurden ausgewählt. }, \textit{Overfitting}\footnote{\textit{Overfitting} bezeichnet einen Zustand, in dem bekannte Daten (Trainingsdaten) von einem Algorithmus generell akkurater erkannt werden, als Daten, die von dem Algorithmus erkannt werden sollen (Predicitions).}, oder andere Validierungsfunktionen sein. Am Ende der Prozesse entsteht ein Modell, das für verschiedenste Aufgaben eingesetzt werden kann. 
 
 In Abbildung \ref{fig:MLP2} wird das erzeugte Modell zusammen mit produktiven Daten genutzt, um mittels geeigneter Vorhersagealgorithmen (siehe Unterkapitel \ref{section:vorhersagealgorithmen}) bisher noch nicht vorhandene Datensätze erzeugen zu können.  
 
@@ -146,7 +146,7 @@ Die Abstandsfunktion \(dist\), die gegebene Objekte so in Teilmengen zerlegt, da
 
 Die Qualitätsfunktion \(quality\) beschreibt die Qualität des Clusterings basierend auf der Abstandsfunktion \(dist\): \\
 
-\({quality}(C = \{C_1 \subseteq E,...,C_k \subseteq E\}) \to \mathbb{R}\) \\ \\
+\({quality}(C = \{C_1 \subseteq E,...,C_k \subseteq E\}) \to \mathbb{R}\) \\ 
 \end{framed}
 
 \newpage
@@ -236,7 +236,7 @@ Die vorherzusagende Variable (abhängige Variable) ist das \textit{Kriterium}.
 Die zur Vorhersage genutzte Variable (unabhängige Variable) ist der \textit{Prädiktor}.
 Ziel der Regression ist nun, die lineare Funktion zu finden, welche die Abhängigkeit zwischen Pädiktor und Kriterium beschreibt. 
 
-Als einfachste Vorhersagefunktion wird hier ein lineares Gelichungssytem betrachtet. Hier werden die Werte von Y geschätzt, indem die Werte von X linear transformiert werden:
+Als einfachste Vorhersagefunktion wird hier ein lineares Gleichungssytem betrachtet. Hier werden die Werte von Y geschätzt, indem die Werte von X linear transformiert werden:
 
 \(\hat{y} = a_y_x + b_y_x * x  \) 
 
@@ -253,9 +253,9 @@ Nun wird noch ein Maß für die Schätzfehler benötigt. Hierzu wird bei den \te
 
 So wird die Linie für das Modell bestimmt, die aufgrund der geringen Schätzfehlers am Besten passt. 
 
- 
+Im Gegensatz zu den \textit{Ordinary Least Squares} kommen insbesondere im Kontext der Bilbliotheken von MLLibs und H2O auch die \textit{Alternating Least Squares Methoden} (ALS) zum Einsatz. Diese Methode basiert auf dem Grundsatz, dass eine algebraische Lösung einer Optimierung erheblich vereinfacht wird, wenn die Hälfte der Funktionsparameter unverändert sind. Bei den ALS werden also in den Optimierungsläufen alternierend je eine Hälfte der Attribute angepasst, die andere Hälfte wird nicht verändert \citelit{als14}. 
 
-\item \textbf{Logisitic Regression:} Die \textit{Logistic Regression} ist in Ihrem prinzipiellen Zweck der \textit{Linear Regression} sehr ähnlich. Auch hier wird die Beziehung zwischen einer oder mehreren unabhängigen und einer abhängigen Variable modelliert. Im Gegensatz zur \textit{Linear Regression} wird bei der \textit{Logistic Regression} jedoch die Eintrittswahrscheinlichkeit eines Ereignisses berechnet. Somit wird also kein linearer Zusammenhang zwischen den abhängigen und den unabhängigen Variablen hergestellt, in dem die abhängige Variable einen präzisen numerischen Wert erhält. Statt dessen wird mittels der \textit{Logistic Regression} ein Wahrscheinlichkeitswert zwischen 0 und 1 erwartet \citeint{lr12}. 
+\item \textbf{Logisitic Regression:} Die \textit{Logistic Regression} ist in Ihrem prinzipiellen Zweck der \textit{Linear Regression} sehr ähnlich. Auch hier wird die Beziehung zwischen einer oder mehreren unabhängigen und einer abhängigen Variablen modelliert. Im Gegensatz zur \textit{Linear Regression} wird bei der \textit{Logistic Regression} jedoch die Eintrittswahrscheinlichkeit eines Ereignisses berechnet. Somit wird also kein linearer Zusammenhang zwischen den abhängigen und den unabhängigen Variablen hergestellt, in dem die abhängige Variable einen präzisen numerischen Wert erhält. Statt dessen wird mittels der \textit{Logistic Regression} ein Wahrscheinlichkeitswert zwischen 0 und 1 erwartet \citeint{lr12}. 
 Die entsprechende Funktion stellt sich folgendermaßen dar: 
 
 \(P = \frac{e^{\alpha+\beta x}}{1+e^{\alpha+\beta x}}\)
@@ -306,28 +306,20 @@ Ein Entscheidungsbaum wird generiert, indem man aus einer Attributmenge \(A\) un
 
 \(\forall b \in B^x : x_a(b)=x\)
 
-Danach wird eine so markierte Kante an die entsprechende Wurzel gelegt. Wenn \(B^x) = \varnothing \), wird die entsprechende Kante beendet. 
+Danach wird eine so markierte Kante an die entsprechende Wurzel gelegt. Wenn \(B^x = \varnothing \), wird die entsprechende Kante beendet. 
 Wenn alle Elemente aus  \(B\) in der gleichen Klasse sind, endet die Kante mit einem entsprechenden Blatt.
 
 Für ein Objekt wird eine Klasse vorhergesagt, indem der Baum von der Wurzel beginnend traversiert wird, jedem Knoten ein Ast angehängt wird, der die Zuordnung des Objekts \(x\) erhält und schließlich bei den erreichten Blättern die jeweilige Klasse abgelesen wird. Die Anzahl der Blätter entspricht der Anzahl von Entscheidungsregeln. 
 
+Entscheidungsbäume können als Klassifikationsverfahren in Betracht gezogen werden, wenn die Instanzen durch Attribut-Wertpaare beschreibbar sind, die Zielfunktion einen diskreten Wert besitzt, \textit{disjunkte Hypothesen} zur Klassifikation erstellt werden sollen, oder wenn die Trainingsdaten möglicherweise starkes Rauschen aufweisen. \textit{Decision Trees} neigen leicht zu einem \textit{Overfitting} der Testdaten.
 
-
-\item \textbf{Random Forests:}
-
-
-
-
-
+\item \textbf{Random Forests:}  Bei den \textit{Random Forests} handelt es sich um eine Form der \textit{Ensemble-Learning-Methoden} \citeint{rf06}. Diese bauen während des Trainings eine Menge unterschiedlicher \textit{Decision Trees} auf, um aufgrund verschiedener Teile der Trainingsdaten Durchschnitte auf verschieden großen Decision Trees zu bilden. Ziel ist, die Varianz zu reduzieren und damit die Modellleistung erheblich zu steigern. Allerdings steigen gegenüber einfachen \textit{Decision Trees} der \textit{Bias}\footnote{Ein Bias (auch Trend) bezeichnet einen systematischen Störeffekt, der bei Messungen auftreten kann und eine steigende oder fallende Tendenz aufweist \citeint{rf06}.} und durch gesteigerte Komplexität sind diese oft nicht mehr einfach interpretierbar.  
 
 
 
 \end{itemize}
 
-\subsection{Vorhersagealgorithmen}
-\label{section:vorhersagealgorithmen}
 
-Blablba
 
 \section{Das MapReduce-Paradigma}
 \label{section:das mapreduce-paradigma}
