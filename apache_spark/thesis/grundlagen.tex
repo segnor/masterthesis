@@ -253,7 +253,15 @@ Nun wird noch ein Maß für die Schätzfehler benötigt. Hierzu wird bei den \te
 
 So wird die Linie für das Modell bestimmt, die aufgrund der geringen Schätzfehlers am Besten passt. 
 
-Im Gegensatz zu den \textit{Ordinary Least Squares} kommen insbesondere im Kontext der Bilbliotheken von MLLibs und H2O auch die \textit{Alternating Least Squares Methoden} (ALS) zum Einsatz. Diese Methode basiert auf dem Grundsatz, dass eine algebraische Lösung einer Optimierung erheblich vereinfacht wird, wenn die Hälfte der Funktionsparameter unverändert sind. Bei den ALS werden also in den Optimierungsläufen alternierend je eine Hälfte der Attribute angepasst, die andere Hälfte wird nicht verändert \citelit{als14}. 
+Im Gegensatz zu den \textit{Ordinary Least Squares} kommen insbesondere im Kontext der Bilbliotheken von MLLibs und H2O auch die \textit{Alternating Least Squares Methoden} (ALS) zum Einsatz. Diese Methode basiert auf dem Grundsatz, dass eine algebraische Lösung einer Optimierung erheblich vereinfacht wird, wenn die Hälfte der Funktionsparameter unverändert sind \citelit{als09}. Bei den ALS werden also in den Optimierungsläufen alternierend je eine Hälfte der Attribute angepasst, die andere Hälfte wird nicht verändert \citelit{als14}. 
+
+Die Funktion für einen \textit{Alternating Least Squares Algorithmus} kann sich folgendermaßen darstellen lassen \citeint{mrec14}:
+
+\(f[i] = arg min \sum(r_i_j - w^T f[j])^2 + \lambda \mid \mid w \mid \mid_2^2 \) mit \(w \in \mathbb{R}^d\) und \(j \in N brs(i)\) \
+
+Jedoch existieren auch eine ganze Reihe von verfeinerten und veränderten ALS-Methoden, die die Modellleistung teils erheblich steigern können oder vielversprechende Ansätze liefern. 
+
+\textit{Die Least-Squares-Algorithmen} zählen zu den \textit{kollaborativen Filtermethoden}. Diese finden unter Anderem in Empfehlungssystemen Verwendung. 
 
 \item \textbf{Logisitic Regression:} Die \textit{Logistic Regression} ist in Ihrem prinzipiellen Zweck der \textit{Linear Regression} sehr ähnlich. Auch hier wird die Beziehung zwischen einer oder mehreren unabhängigen und einer abhängigen Variablen modelliert. Im Gegensatz zur \textit{Linear Regression} wird bei der \textit{Logistic Regression} jedoch die Eintrittswahrscheinlichkeit eines Ereignisses berechnet. Somit wird also kein linearer Zusammenhang zwischen den abhängigen und den unabhängigen Variablen hergestellt, in dem die abhängige Variable einen präzisen numerischen Wert erhält. Statt dessen wird mittels der \textit{Logistic Regression} ein Wahrscheinlichkeitswert zwischen 0 und 1 erwartet \citeint{lr12}. 
 Die entsprechende Funktion stellt sich folgendermaßen dar: 
@@ -280,7 +288,7 @@ Die Vorhersage der Klasse für ein neues Objekt findet statt, indem zunächst f�
 
 Der optimale Stützvektor wird konstruiert, indem die quadratische Norm \(\mid \mid w \mid \mid\) minimal wird unter der Bedingung, dass für alle \(i = 1...m\) gilt: 
 
-\(k_i*(w^T * x_i+b) \geq 1 -C_i \ \to 1 \leq i \leq m\), wobei \(C\) hier als Fehlergewicht eine positive Schlupfvariable\footnote{Schlupfvariablen werden für die für die Lösung eines Problems eingeführt, ihr Wert ist aber nicht von Interesse. Die eingeführte Schlupfvariable führt ein Problem auf ein einfacheres Problem zurück.} darstellt.  
+\(k_i*(w^T * x_i+b) \geq 1 -C_i \) mit \(1 \leq i \leq m\), wobei \(C\) hier als Fehlergewicht eine positive Schlupfvariable\footnote{Schlupfvariablen werden für die für die Lösung eines Problems eingeführt, ihr Wert ist aber nicht von Interesse. Die eingeführte Schlupfvariable führt ein Problem auf ein einfacheres Problem zurück.} darstellt.  
 
 Mit dem sogenannten Kernel-Verfahren wird aus einer Trennung, deren Realisierung im zweidimensionalen Raum komplex ist, eine dreidimensionale Darstellung. Eine Fläche besitzt umfangreichere Trennmöglichkeiten, als eine Gerade. Die Kernel-Funktion dient als Maß der Ähnlichkeit. Somit muss keine tatsächliche Transformation in die dritte Dimension vollzogen werden.  
 
@@ -292,11 +300,11 @@ Laut \citeint{tud06} lässt sich die Naive-Bayes-Klassifikation für mittlere bi
 
 Das Ziel besteht darin, jede Instanz \(X\) in der Funktion \(f: X \to V\) durch die Attributwerte \([a_1, a_2...a_n]\) zu beschreiben. 
 Hierzu wird der wahrscheinlichste Wert von \(f(x)\) ermittelt durch: \\  
-\(f(x) = argmax P(a_1, a_2...a_n) \mid v_i)P(v_i) \to v_i \in V \) \\
+\(f(x) = argmax P(a_1, a_2...a_n) \mid v_i)P(v_i) \) mit  \(v_i \in V \) \\
 Beim Naive-Bayes-Algorithmus wird folgende Annahme getroffen: \\ 
  \(f(x) = P(a_1, a_2...a_n) \mid v_i) = \prod_i P(a_i \mid v_i) \) \\
 Somit wird die Naive-Bayes-Klassifikation zu:  \\
-\(v_N_B = argmax P(v_i) \prod_i P(a_i \mid v_i) \to v_i \in V \)  \\
+\(v_N_B = argmax P(v_i) \prod_i P(a_i \mid v_i) \) mit \( v_i \in V \)  \\
 
 Also wird für jeden der Klassifikationswerte \(v_i\) die Wahrscheinlichkeit \(P(v_i)\) berechnet und für jeden Attributwert \(a_i\) die von \(v_i\) abhängige Wahrscheinlichkeit \(P(a_i \mid v_i)\).  
 
