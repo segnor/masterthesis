@@ -34,7 +34,7 @@ Der Prozess des Data Mining setzt sich nach \citelit{mit96} im Wesentlichen aus 
 \begin{itemize}
 		\item \textbf{Klassenbeschreibung:} Eine knappe Beschreibung der Charakterisierung der Datensätze, um sie eindeutig von anderen Daten unterscheiden zu können. 
 		\item \textbf{Assoziation:} Die Untersuchung der Daten nach assoziativen Verbindungen oder Korrelationen zwischen einzelnen Daten oder Datengruppen.   
-		\item \textbf{Klassifizierung:} Hier wird ein definierter Satz von Trainingsdaten\footnote{Trainingsdaten können beispielsweise Daten sein, die bereits im Vorfeld manuell klassifiziert wurden, deren Klassenzugehörigkeit also bekannt ist.} analysiert und anhand deren Beschaffenheit ein Modell generiert. Durch die Klassifizierung werden Entscheidungsbäume (siehe Kapitel \ref{section:machine learning}) oder Klassifizierungsregeln generiert, die schließlich für die Klassifizierung folgender Daten verwendet werden \citelit{pdl97}. 
+		\item \textbf{Klassifizierung:} Hier wird ein definierter Satz von Trainingsdaten\footnote{Trainingsdaten können beispielsweise Daten sein, die bereits im Vorfeld manuell klassifiziert wurden, deren Klassenzugehörigkeit also bekannt ist.} analysiert und anhand deren Beschaffenheit ein Modell generiert. Durch die Klassifizierung werden Entscheidungsbäume (Vergleich Kapitel \ref{section:machine learning}) oder Klassifizierungsregeln generiert, die schließlich für die Klassifizierung folgender Daten verwendet werden \citelit{pdl97}. 
 		\item \textbf{Vorhersage:} Die Vorhersage bezieht sich auf mögliche Werte von nicht-vorhandenen Daten oder Datenspektren, die wiederum durch \textit{Approximation} einer Funktion mittels Beispielen durchgeführt wird \citelit{cl14}. Dies sind ebenfalls Trainingsdaten, die aus Datensätzen mit den dazugehörigen berechneten Funktionswerten bestehen. 
 		\item \textbf{Cluster-Analyse:} Diese dient dazu, \textit{Cluster} innerhalb von Datensätzen zu ermitteln. Dies sind Daten, die definierte Ähnlichkeiten zueinander aufweisen. 
 		\item \textbf{Zeitreihenanalysen:} Hier werden in der Regel große Mengen an Zeitreihendaten analysiert, um nach Ähnlichkeiten oder Mustern innerhalb der Daten zu suchen.  
@@ -97,9 +97,9 @@ Unter \textit{Machine Learning} wird ein interdisziplinärer Teilbereich der Inf
 
 Das erste Diagramm \ref{fig:MLP1} zeigt den Lernprozess. Zunächst werden definierte Trainingsdaten einem \textit{Pre-Processing}\footnote{Das Pre-Processing kann aus \textit{Normalisierung, Dimensionsreduktion, Bildverarbeitung} oder anderen Vorarbeiten bestehen.} zugeführt (Vergleich Unterkapitel \ref{section:klassifikationsalgorithmen}). 
 
-Danach folgt der eigentliche Lernprozess, der mit oder ohne \textit{Überwachung}\footnote{Beim überwachten Lernen (Supervised Learning) liegen der Analyse vorher angelegte Trainingsdaten zugrunde, das unüberwachte Lernen (Unsupervised Learning) erzeugt vorher gänzlich unbekannte Modelle aus gefundenen Mustern \citeint{ul04}}, als \textit{Minimalisierungsfunktion} oder mit anderen Lernalgorithmen durchgeführt wird (siehe Unterpunkte Clusterverfahren und Klassifikationsalgorithmen). Der Lernprozess kann entweder mit einem bestimmten Lernalogrithmus durchgeführt werden, oder mit sogenannten \textit{Ensemble-Learning-Methods}. Dies ist die Zusammenfassung von unterschiedlichen Lernalgorithmen zu einem Lernprozess, um die Vorhersageleistung zu steigern. Nach dem Lernprozess werden das erzeugte Modell einem Validierungsprozess zugeführt. Dies können \textit{Precision/Recall}\footnote{\textit{Precision:} Wie viele der ausgewählten Datensätze sind relevant. \textit{Recall:} Wieviele relevante Datensätze wurden ausgewählt. }, \textit{Overfitting}\footnote{\textit{Overfitting} bezeichnet einen Zustand, in dem bekannte Daten (Trainingsdaten) von einem Algorithmus generell akkurater erkannt werden, als Daten, die von dem Algorithmus erkannt werden sollen (Predicitions).}, oder andere Validierungsfunktionen sein. Am Ende der Prozesse entsteht ein Modell, das für verschiedenste Aufgaben eingesetzt werden kann. 
+Danach folgt der eigentliche Lernprozess, der mit oder ohne \textit{Überwachung}\footnote{Beim überwachten Lernen (Supervised Learning) liegen der Analyse vorher angelegte Trainingsdaten zugrunde, das unüberwachte Lernen (Unsupervised Learning) erzeugt vorher gänzlich unbekannte Modelle aus gefundenen Mustern \citeint{ul04}}, als \textit{Minimalisierungsfunktion} oder mit anderen Lernalgorithmen durchgeführt wird (Vergleich Unterpunkte Clusterverfahren und Klassifikationsalgorithmen). Der Lernprozess kann entweder mit einem bestimmten Lernalogrithmus durchgeführt werden, oder mit sogenannten \textit{Ensemble-Learning-Methods}. Dies ist die Zusammenfassung von unterschiedlichen Lernalgorithmen zu einem Lernprozess, um die Vorhersageleistung zu steigern. Nach dem Lernprozess werden das erzeugte Modell einem Validierungsprozess zugeführt. Dies können \textit{Precision/Recall}\footnote{\textit{Precision:} Wie viele der ausgewählten Datensätze sind relevant. \textit{Recall:} Wieviele relevante Datensätze wurden ausgewählt. }, \textit{Overfitting}\footnote{\textit{Overfitting} bezeichnet einen Zustand, in dem bekannte Daten (Trainingsdaten) von einem Algorithmus generell akkurater erkannt werden, als Daten, die von dem Algorithmus erkannt werden sollen (Predicitions).}, oder andere Validierungsfunktionen sein. Am Ende der Prozesse entsteht ein Modell, das für verschiedenste Aufgaben eingesetzt werden kann. 
 
-In Abbildung \ref{fig:MLP2} wird das erzeugte Modell zusammen mit produktiven Daten genutzt, um mittels geeigneter Vorhersagealgorithmen (siehe Unterkapitel \ref{section:vorhersagealgorithmen}) bisher noch nicht vorhandene Datensätze erzeugen zu können.  
+In Abbildung \ref{fig:MLP2} wird das erzeugte Modell zusammen mit produktiven Daten genutzt, um mittels geeigneter Vorhersagealgorithmen (Vergleich Unterkapitel \ref{section:klassifikationsalgorithmen}) bisher noch nicht vorhandene Datensätze erzeugen zu können.  
 
 Die Hauptanwendungsgebiete für \textit{Machine Learning} sind sämtliche Bereiche, in denen eine Anwendung von strikten, regelbasierten Algorithmen nicht in Frage kommt \citelit{pdl97}. Beispiele für diese Bereiche sind laut \citelit{pml06} Suchmaschinen, Sprach- und Musikerkennung, Handschriftenerkennung, Spamfilter, Umgebungserkennungen und viele mehr. 
 
@@ -253,13 +253,13 @@ Nun wird noch ein Maß für die Schätzfehler benötigt. Hierzu wird bei den \te
 
 So wird die Linie für das Modell bestimmt, die aufgrund der geringen Schätzfehlers am Besten passt. 
 
-Im Gegensatz zu den \textit{Ordinary Least Squares} kommen insbesondere im Kontext der Bilbliotheken von MLLibs und H2O auch die \textit{Alternating Least Squares Methoden} (ALS) zum Einsatz. Diese Methode basiert auf dem Grundsatz, dass eine algebraische Lösung einer Optimierung erheblich vereinfacht wird, wenn die Hälfte der Funktionsparameter unverändert sind \citelit{als09}. Bei den ALS werden also in den Optimierungsläufen alternierend je eine Hälfte der Attribute angepasst, die andere Hälfte wird nicht verändert \citelit{als14}. 
+Im Gegensatz zu den \textit{Ordinary Least Squares} kommen insbesondere im Kontext der Bilbliotheken von MLLibs und H2O auch die \textit{Alternating Least Squares Methoden} (ALS) zum Einsatz. Diese Methode basiert auf dem Grundsatz, dass eine algebraische Lösung einer Optimierung erheblich vereinfacht wird, wenn die Hälfte der Funktionsparameter in einem Optimierungsschritt unverändert verbleibt \citelit{als09}. Bei den ALS werden also in den Optimierungsläufen alternierend je eine Hälfte der Attribute angepasst, die andere Hälfte wird nicht verändert \citelit{als14}. 
 
 Die Funktion für einen \textit{Alternating Least Squares Algorithmus} kann sich folgendermaßen darstellen lassen \citeint{mrec14}:
 
 \(f[i] = arg min \sum(r_i_j - w^T f[j])^2 + \lambda \mid \mid w \mid \mid_2^2 \) mit \(w \in \mathbb{R}^d\) und \(j \in N brs(i)\) \
 
-Jedoch existieren auch eine ganze Reihe von verfeinerten und veränderten ALS-Methoden, die die Modellleistung teils erheblich steigern können oder vielversprechende Ansätze liefern. 
+Jedoch existieren auch eine ganze Reihe von verfeinerten und veränderten ALS-Methoden, welche die Modellleistung teils erheblich steigern können oder hier zumindest vielversprechende Ansätze liefern. 
 
 \textit{Die Least-Squares-Algorithmen} zählen zu den \textit{kollaborativen Filtermethoden}. Diese finden unter Anderem in Empfehlungssystemen Verwendung. 
 
@@ -332,20 +332,33 @@ Entscheidungsbäume können als Klassifikationsverfahren in Betracht gezogen wer
 \section{Das MapReduce-Paradigma}
 \label{section:das mapreduce-paradigma}
 
-Alternativ zu Spark lässt sich im BDAS auch Hadoop als Kernimplementierung für die Datenanalyse oder -verarbeitung im Cluster einsetzen. Dies könnte beispielsweise sinnvoll sein, wenn die Infrastruktur des Clusters über relativ wenig Hauptspeicher verfügt, so dass Spark seinen In-Memory-Vorteil nicht ausspielen kann und die Aufgaben ohnehin den im ersten Kapitel beschriebenen einfachen statistischen Problemen entsprechen. 
- 
-Hadoop besteht in erster Linie aus dem Hadoop File System (HDFS) und dem MapReduce-Programmiermodell. Dieses wurde von Google speziell entwickelt, um große Datensätze parallel in Clustersystemen verarbeiten und generieren zu können. 
+Bei \textit{MapReduce} handelt es sich um ein Programmierparadigma, das von \textit{Google, Inc.} entwickelt wurde, um große Datensätze mittels eines auf einem Cluster verteilten und nebenläufig ausführbaren Algorithmus analysieren und verarbeiten zu können. \citelit{mr04} Dieses Paradigma eignet sich sowohl für strukturierte, als auch unstrukturierte Daten, Voraussetzung für die erfolgreiche Verarbeitung ist allerdings, dass die \textit{Tasks} einen hohen Parallelisierbarkeitsgrad aufweisen.  
+
+MapReduce nimmt einen Satz von Eingabe Key/Value-Pairs entgegen und produziert daraus einen Satz von Ausgabe \textit{Key/Value-Pairs}. Das Paradigma besteht aus drei jeweils parallelisierbaren Einzelschritten, von denen der Anwender selbst zwei festlegen kann:
+
+\begin{itemize}
+
+\item \textbf{Map:} Hier wird aus den Eingabedaten mittels durchgehend gleicher Berechnungen ein temporär relevantes \textit{Key/Value-Pair} erzeugt. Für jedes Wertepaar aus der Eingabeliste wird die \textit{Map-Funktion} separat und unabhängig aufgerufen. Die Ausführung erfolgt nebenläufig und verteilt. Die Be
+
+\item \textbf{Shuffle:} In diesem Schritt werden die Ergebnisse vor dem Aufruf der Reduce-Funktion nach ihrem duch Map erzeugten neuen Schlüssel in \textit{Collections} gruppiert. Da in diesem Schritt bei verteilten Systemen und großen Datenmengen gegebenenfalls extreme Last im Netzwerk erzeugt werden kann, kommt hier oft vorher noch ein Combine-Schritt zur Anwendung. 
+
+\item \textbf{Reduce:} Auf jede im Shuffle-Schritt erzeugten Collection wird hier eine beliebige, durch den Anwender definierte Funktion ausgeführt. Ziel dieser Funktion ist die Reduktion der vorhandenen Datensätze. Diese Funktion erstellt eine Ausgabe-Collection mit den Ergebnissen und ist ebenfalls je Collection nebenläufig und verteilt anwendbar.
+
+\end{itemize}
+
+
+
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=1.0\textwidth]{bilder/2_6_1_wordcount.png}
-\caption{Ein konkretes Word-Count-Beispiel für MapReduce  \protect\citeint{xi12}}
+\includegraphics[width=1.0\textwidth]{bilder/mapreduce.eps}
+\caption{Ein konkretes Word-Count-Beispiel für MapReduce}
 \label{fig:wordcount}
 \end{figure}   
  
 
 
-In Abbildung \ref{fig:wordcount} wird das MapReduce-Modell an einem praktischen Beispiel zur Wortzählung gezeigt. Bei MapReduce wird zunächst eine problemspezifische Map-Funktion definiert. Diese splittet die Ursprungsmenge in gleichgroße Teile, versieht unstrukturierte Worte in einem ersten Schritt mit Standardwerten, um so aus jedem unstrukturierten Datensatz ein Key-Value-Pair zu generieren. Im gezeigten Beispiel wird hier jedem Wert eine Eins als Anzahl zugeordnet. Im nächsten Schritt werden diese so gewonnenen Zwischen-Key-Value-Paare in einem Shuffling-Prozess klassifiziert und die so homogenisierten Pakete auf die Knoten im Cluster verteilt. Nun enthält jede Ausführungseinheit nur noch gleiche Wörter. Im Reduce-Schritt schließlich, werden die gleichartigen Wörter zu Gesamtmengen zusammengefasst, addiert und im Endergebnis aggregiert. 
+In Abbildung \ref{fig:wordcount} wird das MapReduce-Modell an einem praktischen Beispiel zur Wortzählung gezeigt. Bei MapReduce wird zunächst eine problemspezifische Map-Funktion definiert. Diese splittet die Ursprungsmenge in gleichgroße Teile, versieht unstrukturierte Worte in einem ersten Schritt mit Standardwerten, um so aus jedem unstrukturierten Datensatz ein Key-Value-Pair zu generieren citeint{xi12}. Im gezeigten Beispiel wird hier jedem Wert eine Eins als Anzahl zugeordnet. Im nächsten Schritt werden diese so gewonnenen Zwischen-Key-Value-Paare in einem Shuffling-Prozess klassifiziert und die so homogenisierten Pakete auf die Knoten im Cluster verteilt. Nun enthält jede Ausführungseinheit nur noch gleiche Wörter. Im Reduce-Schritt schließlich, werden die gleichartigen Wörter zu Gesamtmengen zusammengefasst, addiert und im Endergebnis aggregiert. 
 
 An dem gezeigten Beispiel lässt sich gut erkennen, dass die einzelnen Ausführungsschritte jeweils parallelisiert und auf separate Knoten im Cluster verteilt werden können. Das Laufzeitsystem kümmert sich um die Details der Partitionierung der Eingabedaten, die Ressourcenverwaltung innerhalb des Clusters, das Behandeln von Fehlern und die Kommunikation zwischen den einzelnen Knoten. 
  
