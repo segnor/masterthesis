@@ -1,9 +1,11 @@
-\chapter{Exemplarischer Architekturaufbau einer Apache Spark Infrastruktur }
+\chapter{Exemplarischer Architekturaufbau und Inbetriebhnahme einer Apache Spark Infrastruktur }
 \label{chapter:architektur}
 
 
 
-Blablba
+Im folgenden Kapitel wird ein exemplarischer Architekturaufbau eines lokalen Entwicklungs- und Testsystems für Apache Spark vorgestellt. Wie in den vorangegangen Kapiteln gezeigt wurde, handelt es sich bei Spark in erster Linie um ein Framework für leistungsstarke Clustersysteme. Dennoch muss Spark auch auf entsprechend kleiner dimensionierten System betrieben werden können. Häufig ist in einem professionellen Umfeld beispielsweise nur ein Cluster für Produktionsaufgaben vorhanden, die Test- und vor allem auch die Entwicklersysteme stellen sich häufig in Form sogenannter \textit{SIngle-Node-Cluster} dar. 
+
+Besonders der Aspekt der Entwicklungsarbeitsplätze rückt hier in den Vordergrund. Da Spark lediglich über den Master-Node und hier über den Spark-Context innerhalb des Driver-Program für die Entwickler zugreifbar ist und die interne Verteilung der Tasks auf die jeweiligen Nodes von Spark und den Clustermanagement-Systemen übernommen und maskiert wird, stellt sich die Fehleranalyse mittels klassischem \textit{Debugging}\footnote{Unter klassischem Debugging wird hier das Setzen von Breakpoints und das explizite Überwachen von Variablenwerten zur Laufzeit durch Entwickler verstanden.} als sehr große Herausforderung dar. 
 
 \section{Ausführungscontainer: Docker}
 \label{section:docker}
