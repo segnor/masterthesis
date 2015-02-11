@@ -120,7 +120,7 @@ object SparkMLLibTest {
         algorithm.optimizer
           .setNumIterations(params.numIterations)
           .setStepSize(params.stepSize)
-          .setUpdater(updater)
+          .setUpdater(updater)rr
           .setRegParam(params.regParam)
         algorithm.run(training).clearThreshold()
     }
