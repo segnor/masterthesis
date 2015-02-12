@@ -14,8 +14,8 @@ Des weiteren wird die Installation und die grundsätzliche Anwendung der Bibliot
 \section{Prinzipieller Aufbau einer lokalen Spark Infrastruktur}
 \label{section:prinzipiell}
 
-Eine Spark-Infrastruktur besteht immer aus verschiedenen Schichten, von denen einige zwingend notwendig sind, einige optional und andere durch Alternativimplementierungen ersetzt werden können.  
-In Abbildung \ref{fig:bdas]} ist der Aufbau des BDAS schematisch dargestellt. Die grün hinterlegten Elemente markieren die Bestandteile des aktuellen BDAS, die violett hinterlegten zeigen alternative Implementierungen auf der jeweiligen Schicht. Grün schraffiert ist die Applikationsschicht, wo Applikationen oberhalb von Spark und den direkten Anwendungen angesiedelt sind. 
+Eine Spark-Infrastruktur besteht immer aus verschiedenen Schichten, welche im BDAS definiert sind und von denen einige zwingend notwendig sind, einige optional und andere durch Alternativimplementierungen ersetzt werden können.  
+In Abbildung \ref{fig:bdas]} ist der Aufbau des BDAS schematisch dargestellt. Die grün hinterlegten Elemente markieren die Bestandteile des aktuellen BDAS, die violett hinterlegten zeigen alternative Implementierungen auf der jeweiligen Schicht. Grün schraffiert ist die Applikationsschicht, in der Applikationen oberhalb von Spark und dessen direkten Bibliotheken angesiedelt sind. 
 
 \begin{figure}[htb!]
 \centering
@@ -52,9 +52,11 @@ Bereits konfigurierte Docker-Container können in einer eigenen Plattform, dem s
 
 Im Folgenden wird exemplarisch gezeigt, wie ein Docker Container für Apache Spark aufgebaut, konfiguriert und deployt werden kann \citeint{ms15}. Dieser Container wurde auf einem Windows Hostrechner innerhalb einer VirtualBox-Instanz erstellt. Diese virtuelle Maschine wurde mit einer leichtgewichtigen CentOS-Installation aufgebaut. 
 
-Da CentOS auf einer RedHat-Linuxdistribution aufsetzt, wird als Paketmanager \textit{YUM} eingesetzt. Für die einfache Provisionierung der Docker Container bietet sich Vagrant ab Version 1.6 an \citeint{vag14}. So lassen sich die Docker Container mittels entsprechender Scripts einfach konfigurieren. 
+Da CentOS auf einer RedHat-Linuxdistribution aufsetzt, wird als Paketmanager \textit{YUM} eingesetzt. Für die einfache Provisionierung der Docker Container bietet sich du Nutzung von Vagrant an \citeint{vag14}. Dies ist eine Konfigurations- und Provisionierungslösung für virtuelle Maschinen und bietet seit Version 1.6 eine native Unterstützung von Docker. So lassen sich die Docker Container mittels entsprechender Scripts einfach konfigurieren und auf beliebige Umgebungen verteilen. 
 
-\begin{lstlisting}[label=vagrant setup jvm-spark,caption=Setup JVM with Spark]
+
+
+\begin{lstlisting}[label=vagrant setup jvm-spark,caption=Setup Spark mit eigener JVM]
 FROM jvm
 RUN yum clean all
 RUN yum install -y tar yum-utils wget
@@ -68,27 +70,26 @@ RUN echo "JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/" >> /opt/spark-1.2.0-bin-ha
 
 \end{lstlisting}
 
-\begin{lstlisting}[label=vagrant setup jvm-spark,caption=Setup JVM with Spark]
-# number of instances : First one is master.
+\begin{lstlisting}[label=setup spark,caption=Vagrant Provisionierungs-Skript für Spark]
+# First instance is spark master.
 $spark_num_instances = 2
-$cassandra_num_instances = 1
 Vagrant.configure("2") do |config|
     # nodes definition
     (1..$spark_num_instances).each do |i|
         config.vm.define "scale#{i}" do |scale|
             scale.vm.provider "docker" do |d|
                 d.build_dir = "spark/"
-                d.name = "scale#{i}"
+                d.name = "node#{i}"
                 d.create_args = ["--privileged=true"]
                 d.remains_running = true
                 if "#{i}" == "1"
-                    d.ports = [ "4040:4040", "7707:7707" ] 
+                    d.ports = [ "4040:4040", "7704:7704" ] 
                 else
-                    d.create_args = d.create_args << "--link" << "scale1:scale1.docker"
+                    d.create_args = d.create_args << "--link" << "node1:node1.dockerspark"
                 end
             end
-            scale.vm.synced_folder "./", "/scale-shared/"
-            scale.vm.hostname = "scale#{i}.docker"
+            scale.vm.synced_folder "./", "/spark_infrastructure/"
+            scale.vm.hostname = "node#{i}.dockerspark"
        end 
     end
 
