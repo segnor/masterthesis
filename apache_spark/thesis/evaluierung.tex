@@ -1,9 +1,47 @@
 \chapter{Evaluierung der Komponenten und Alternativen }
 \label{chapter:evaluierung}
 
+Im vorhergehenden Kapitel wurden die Implementierungen von Prototypen für einzelne Bibliotheken des BDAS vorgestellt. Nachfolgend werden diese Bibliotheken hinsichtlich ihres spezifischen Laufzeitverhaltens untersucht. Zu diesem Zweck wurden für die einzelnen Anwendungsbereiche zunächst Metriken definiert, die Aussagen über die relative Leistungsfähigkeit zulassen. 
+
+Für diese Beurteilung wurden unterschiedliche Umgebungen eingesetzt, wobei hier die relativen Performancewerte gegenüber den absoluten prioritär betrachtet werden.
+
+Zum Einsatz für die Evaluierung kamen für diese Untersuchung unterschiedliche Ansätze für Clusterinfrastrukturen. Es kamen diverse lokale Installationen, sowie ein leistungsfähiges Rechnercluster an der Beuth Hochschule Berlin zum Einsatz.  
+
+Die Tabelle \ref{tab:lokale hardware} gibt eine detaillierte Übersicht über die lokal verwendeten Hardwarekonfigurationen. Alle lokal eingesetzten Maschinen verfügen über SSDs (Solid State Drives) als Festspeicher.
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{| p{3cm} | p{2.2cm} |  p{3cm} |  p{1.2cm} | p{3cm} | }
+\hline
+System & CPU & Anzahl Cores & RAM & OS\\ \hline \hline
+MacBook Pro Mid 2014 & Intel i7 & 4 physisch, 8 mit Hyperthreading & 16 GB & Mac OS-X 10.10.2 Yosemite \\ \hline
+Apple iMac Mid 2011 & Intel i5 & 4 physisch, 8 mit Hyperthreading & 16 GB & Mac OS-X 10.10.2 Yosemite \\ \hline
+Xeon Workstation & Intel Xeon 1230 & 4 physisch, 8 mit Hyperthreading & 32 GB & Windows 8.1,  VirtualBox Instanzen mit CentOS  \\ \hline 
+Lenovo ThinkPad 410T & Intel i5 & 4 physisch & 8 GB & Windows 8.1, VirtualBox Instanzen mit CentOS  \\ \hline 
+
+\end{tabular}
+\caption{Übersicht der lokal verwendeten Hardware}
+	\label{tab:lokale hardware}
+\end{table}  
+
+Die Tabelle \ref{cluster} zeigt die Konfiguration des verwendeten Clustersystems an der Beuth Hochschule Berlin (Konfigurationsstand Dezember 2014)
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{| p{3cm} | p{2.2cm} |  p{3cm} |  p{1.2cm} | p{3cm} | }
+\hline
+System & CPU & Anzahl Cores & RAM & OS\\ \hline \hline
+Master Node & AMD 6320 & 2 * 8  & 128 GB & Debian Linux \\ \hline
+Worker Node 1 & AMD 6378 & 4 * 16 & 512 GB &  Debian Linux\\ \hline
+Worker Node 2 & AMD 6378 & 4 * 16 & 512 GB &  Debian Linux\\ \hline
+Worker Node 3 & AMD 6378 & 4 * 16 & 512 GB &  Debian Linux\\ \hline
+
+\end{tabular}
+\caption{Übersicht über das Cluster der Beuth Hochschule Berlin}
+	\label{tab:cluster}
+\end{table}  
 
 
-Blablba
 
 \section{Definition von Metriken für die Bibliotheken des BDAS}
 \label{section:definition der metriken}

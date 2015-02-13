@@ -334,7 +334,9 @@ Entscheidungsbäume können als Klassifikationsverfahren in Betracht gezogen wer
 
 Bei \textit{MapReduce} handelt es sich um ein Programmierparadigma, das von \textit{Google, Inc.} entwickelt wurde, um große Datensätze mittels eines auf einem Cluster verteilten und nebenläufig ausführbaren Algorithmus analysieren und verarbeiten zu können \citelit{mr04}. Dieses Paradigma eignet sich sowohl für strukturierte, als auch unstrukturierte Daten, Voraussetzung für die erfolgreiche Verarbeitung ist allerdings, dass die \textit{Tasks} einen hohen Parallelisierbarkeitsgrad aufweisen (Vergleich \citelit{mr04}).  
 
-MapReduce nimmt einen Satz von Eingabe Key/Value-Pairs entgegen und produziert daraus einen Satz von Ausgabe \textit{Key/Value-Pairs}. Das Paradigma besteht aus drei jeweils parallelisierbaren Einzelschritten, von denen durch den Anwender selbst zwei definiert werden müssen \citeint{ap11}:
+MapReduce nimmt einen Satz von Eingabe Key/Value-Pairs entgegen und produziert daraus einen Satz von Ausgabe \textit{Key/Value-Pairs}. Das Paradigma besteht aus drei jeweils parallelisierbaren Einzelschritten, map, shuffle und reduce von denen map und reduce durch den Anwender selbst definiert werden müssen \citeint{ap11}. 
+
+Diese Schritte von MapReduce in der Übersicht: 
 
 \begin{itemize}
 
@@ -342,7 +344,7 @@ MapReduce nimmt einen Satz von Eingabe Key/Value-Pairs entgegen und produziert d
 
 \item \textbf{Shuffle:} In diesem Schritt werden die Ergebnisse vor dem Aufruf der \textit{Reduce-Funktion} nach ihrem duch \textit{Map} erzeugten neuen Schlüssel in \textit{Collections} gruppiert. Da in diesem Schritt bei verteilten Systemen und großen Datenmengen gegebenenfalls extreme Last im Netzwerk erzeugt werden kann, kommt hier oft vorher noch ein \textit{Combine-Schritt} zur Anwendung. Dieser sorgt mittels einer Vorreduktion dafür, dass die Datenmenge, die beim Shuffle über das Netzwerk transferiert wird, bereits auf den jeweiligen Nodes möglichst stark reduziert wird.  
 
-\item \textbf{Reduce:} Auf jede im \textit{Shuffle-Schritt} erzeugten \textit{Collection} wird hier eine beliebige, durch den Anwender definierte Funktion ausgeführt. Ziel dieser Funktion ist die Reduktion der vorhandenen Datensätze. Diese Funktion erstellt eine Ausgabe-Collection mit den Ergebnissen und ist ebenfalls je Collection nebenläufig und verteilt anwendbar.
+\item \textbf{Reduce:} Auf jede im \textit{Shuffle-Schritt} erzeugten \textit{Collection} wird hier eine beliebige, durch den Anwender in Form eines Clojure definierte Funktion ausgeführt. Ziel dieser Funktion ist die Reduktion der vorhandenen Datensätze. Diese Funktion erstellt eine Ausgabe-Collection mit den Ergebnissen und ist ebenfalls je Collection nebenläufig und verteilt anwendbar.
 
 \end{itemize}
 
@@ -365,10 +367,14 @@ An dem gezeigten Beispiel ist deutlich erkennbar, dass die einzelnen Ausführung
 
 \section{Streaming Frameworks}
 \label{section:streaming framworks}
-
-Blablba
+asdfasdf
 
 \section{Anwendungen von Graphen}
 \label{section:anwendungen von graphen}
+
+Graphen sind geeignet, um Beziehungsstrukturen innerhalb von Daten zu modellieren. Graphen können in Baum oder Netzform vorliegen und mittels verschiedener Strategien traversiert werden. Dies kann mittels Tiefensuche, Breitensuche oder anhand von priorisierten Wegen durchgeführt werden. Prinzipiell werden Daten und deren Beziehungen in Form von Kanten, Knoten und Blättern dargestellt. Den Kanten können Gewichte zugeordnet werden, um Relevanz zwischen Beziehungen oder Wegen umzusetzen. 
+
+\section{Zusammenfassung}
+\label{section:streaming framworks}
 
 Blablba
