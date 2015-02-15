@@ -1,19 +1,9 @@
 \chapter{Einführung}
 \label{chapter:einfuehrung}
 
+\blockquote{Big Data is notable not because of its size, but because of its relationality to other data. Due to efforts to mine and aggregate data, Big Data is fundamentally networked. Its value comes from the patterns that can be derived by making connections between pieces of data, about an individual, about individuals in relation to others, about groups of people, or simply about the structure of information itself. \citelit{six11}} 
+
 \textit{Big Data} ist insbesondere in den letzten Jahren immer stärker in den verschiedensten Zusammenhängen in den allgemeinen Sprachgebrauch vorgedrungen und ist hier einem ständigen Bedeutungswandel ausgesetzt. Besonders in letzter Zeit wird dieses Thema auch verstärkt kontrovers diskutiert.  
-
-Im ersten Kapitel soll der Begriff \textit{Big Data} jenseits von Management-Hype und Skepsis rational definiert werden. Des Weiteren werden einige grundlegende Konzepte des Umgangs mit sehr großen und unstrukturierten Datensätzen diskutiert und im Speziellen die Motivation hinter den Apache Frameworks Hadoop und Spark vorgestellt.  
-
-Das zweite Kapitel beschäftigt sich mit dem Berkeley Data Analytics Stack (BDAS), mit dem von der UCLA Berkeley rund um Hadoop ein leistungsfähiger Infrastruktur-Stack für die Einsatzbereiche von Big Data Analytics geschaffen wurde. 
-
-Innerhalb vom BDAS etabliert sich langsam auch eine schnellere und flexiblere Alternative zu Hadoop: Apache Spark. Im dritten Kapitel wird diese neue Kerntechnologie vorgestellt, die zugleich auch den Hauptteil dieses Wissenschaftlichen Projektes darstellt. 
-
-Im vierten Teil dieser Ausarbeitung wird Spark in der praktischen Anwendung gezeigt inklusive Installation und ersten kleineren Beispielen sowohl direkt in Spark, als auch aus darüber liegenden Schichten aus dem Stack. 
-
-\section{Was versteht man unter Big Data?}
-\label{section:was versteht man unter Big Data?}
-
 
 Der Begriff \textit{Big Data} wurde vermutlich zum ersten Mal Ende des 20. Jahrhunderts von John R. Marshey, damals Chefwissenschaftler bei Silicon Graphics, im Rahmen einer Usenix-Konferenz öffentlich erwähnt \citeint{jt11}. Mittlerweile ziert dieser Begriff gefühlt jedes zweite Cover von IT-Zeitschriften mit Business-Fokus und auch Manager und \textit{Sales-Professionals} werten Ihre Produktpräsentationen gerne mit diesem Buzzword auf.  Aber dieser Begriff ist nicht nur positiv assoziiert. Besonders seit Bekanntwerden der Tätigkeiten des Amerikanischen Auslandsgeheimdienstes weckt die Vorstellung des Datensammelns in großen Dimensionen auch Misstrauen. 
 
@@ -103,17 +93,18 @@ So lassen sich mit Hadoop einfachere statistische Aufgabenstellungen sehr gut um
 
 
 
-Für linear-algebraische Berechnungen (lineare Regression, Eigenwertproblem, Hauptkomponentenanalyse), generalisierte n-Körper-Probleme (mit einer Komplexität 
-von O(n²) oder O(n³)), Graphentheorie, Optimierungsprobleme (Verlust-, Kosten- oder Energiefunktionen, sowie  Inte-grations- und Ausrichtungsfunktionen ist \textit{Hadoop} nur in jeweils einfacher Problemausprägung einsetzbar. Auch für Interaktive Abfragen ist \textit{Hadoop} nur bedingt geeignet, da es ursprünglich für die \textit{Batch-Verarbeitung} entwickelt wurde.
+Bei Hadoop werden sämtliche Datenstrukturen und Zwischenergebnisse von Berechnungen und Transformationen im Dateisystem persistiert. Für linear-algebraische Berechnungen aus dem Bereich Machine-Learning (lineare Regression, Eigenwertproblem, Hauptkomponentenanalyse), generalisierte n-Körper-Probleme\footnote{n-Körper-Probleme beschreiben unter Anderem das Verhalten von Molekülen bis hin zum Verhalten von Planeten oder Galaxien zueinander. Ziel ist die Berechnung von Positionen und Geschwindigkeiten der einzelnen Körper.} (mit einer Komplexität 
+von O(n²) oder O(n³)), Graphentheorie, Optimierungsprobleme (Verlust-, Kosten- oder Energiefunktionen, sowie Integrations- und Ausrichtungsfunktionen ist \textit{Hadoop} deshalb nur in jeweils einfacher Problemausprägung einsetzbar. Auch für Interaktive Abfragen und für Streaming-Anwendungen ist \textit{Hadoop} nur bedingt geeignet, da es ursprünglich für die \textit{Batch-Verarbeitung} entwickelt wurde. 
 
-Aus diesem Grund wurde am \textit{AMPLab} der University of California in Berkeley nach Alternativen geforscht, die auch für komplexe linear-algebraische Probleme, generalisierte n-Körper-Probleme und diverse Optimierungsprobleme geeignet sind. Das Ergebnis ist \textit{Spark}, mittlerweile \textit{Apache Top-Level-Projekt} und dazu geeignet, die Nachfolge von Hadoop als \textit{Big-Data-Analytics-Framework} anzutreten. 
+
+Aus diesem Grund wurde am \textit{AMPLab} der University of California in Berkeley nach Alternativen geforscht, die auc. Das Ergebnis ist \textit{Spark}, mittlerweile \textit{Apache Top-Level-Projekt} und dazu geeignet, die Nachfolge von Hadoop als \textit{Big-Data-Analytics-Framework} anzutreten. 
 
 \section{Ziel und Aufbau dieser Arbeit}
 \label{section:ziel dieser Arbeit}
 
 Die vorliegende Arbeit beschäftigt sich mit \textit{Apache Spark} und dem dazugehörigen Ökosystem bestehend aus aus einem Applikationsstack mit verschiedenen Bibliotheken, dem \textit{Berkeley Data Anaytics Stack (BDAS)}. Aufgrund der Konzepte von Spark ist dieses unter anderem prädestiniert für Machine-Learning-Anwendungen. Diese bilden, neben der eigentlichen Kernimplementierung von Spark, einen zentralen Teil dieser Arbeit.  Auf dem Markt befindet sich bislang noch verhältnismäßig wenig Literatur zu diesem Thema und wenn, dann werden zumeist Teilaspekte für bestimmte Anwendungsbereiche gekapselt betrachtet. 
 
-Diese Arbeit soll, nachdem einige Grundlagen zum Thema \textit{Big Data Analytics} im Allgemeinen diskutiert werden, zunächst einen ganzheitlichen Überblick über den BDAS bieten. Hier werden die einzelnen Schichten des Stacks kurz beschrieben und gegebenenfalls Alternativlösungen zu den jeweiligen Implementierungen vorgestellt. 
+Diese Arbeit soll, nachdem einige Grundlagen zum Thema \textit{Big Data Analytics} im Allgemeinen diskutiert werden, zunächst einen ganzheitlichen Überblick über den BDAS bieten. Hier werden die einzelnen Schichten des Stacks  beschrieben und gegebenenfalls Alternativlösungen zu den jeweiligen Implementierungen vorgestellt. 
 
 Insbesondere wird in den darauffolgenden Grundlagenkapiteln die Machine-Learning-Bibliothek \textit{MLLib} betrachtet. Um ein Verständnis für die Funktionen dieser Bibliothek zu vermitteln, wird zunächst eine Einführung in die Grundlagen in die Themengebiete Data-Mining und Machine-Learning vermittelt. Anschließend werden die elementaren Machine-Learning-Algorithmen vorgestellt, welche in MLLib implementiert sind.  Auch die übrigen Elemente des BDAS wie das Caching-Frameworks Tachyon, sowie die Streaming-Bibliothek Spark Streaming und die Graphenanwendung GraphX werden vorgestellt. Anschließend werden die APIs der einzelnen Bibliotheken gezeigt. Diese bilden die Grundlage für eigene Anwendungen mit Spark. 
 

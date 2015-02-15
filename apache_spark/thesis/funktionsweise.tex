@@ -14,7 +14,7 @@ Ein weiteres Kernelement der Spark-Implementierung bildet das \textit{In-Memory-
 \label{section:spark im cluster}
 
 %Diesen Abschnitt noch mit Referenzen untermauern
-Eine große Herausforderung im Umfeld verteilter und nebenläufiger Analyse und Verarbeitung großer Datenmengen stellt der Netzwerkverkehr da. Der klassische Aufbau einer verteilten Anwendung hält die Daten auf einer dafür vorgesehen Plattform im Netzwerk. Häufig ist dies ein dedizierter File- oder Datenbankserver, der mit möglichst großer Bandbreite mit dem Applikationsserver verbunden ist (Vergleich Oracle InfinyBand). 
+Eine große Herausforderung im Umfeld verteilter und nebenläufiger Analyse und Verarbeitung großer Datenmengen stellt der Netzwerkverkehr da. Der klassische Aufbau einer verteilten Anwendung hält die Daten auf einer dafür vorgesehen Plattform im Netzwerk. Häufig ist dies ein dedizierter File- oder Datenbankserver, der mit möglichst großer Bandbreite mit dem Applikationsserver verbunden ist. 
 
 %Hier muss noch eine Grafik eines herkömmlichen Netzwerks rein
 \begin{figure}[htb!]
@@ -26,7 +26,7 @@ Eine große Herausforderung im Umfeld verteilter und nebenläufiger Analyse und 
 
 In diesem Aufbau entsteht in der Regel eine sehr hohe Netzwerklast, da die für die Applikation benötigten Daten dieser zunächst zur Verfügung gestellt werden müssen. 
 
-Spark geht hier einen anderen Weg. Ein Spark-Cluster besteht typischerweise aus einem zentralen \textit{Master} und n \textit{Worker-Nodes}. Diese können aus einfachen Servern bestehen, aber auch aus Clustern von Großrechnern (beispielsweise IBM Z, Oracle Exa). Das Hadoop Distributed File System und Spark skalieren über Cluster beliebiger Größenordnung. Über ein verteiltes Dateisystem werden die Daten auf dem Cluster gehalten und sowohl dem \textit{Master}, als auch den \textit{Worker-Nodes} so zur Verfügung gestellt. 
+Spark geht hier einen anderen Weg. Ein Spark-Cluster besteht typischerweise aus einem zentralen \textit{Master} und n \textit{Worker-Nodes}. Diese können aus einfachen Servern bestehen, aber auch aus Clustern von Mainframes (beispielsweise IBM Z, Oracle ExaLogic, etc.). Das Hadoop Distributed File System und Spark skalieren über Cluster beliebiger Größenordnung. Über ein verteiltes Dateisystem werden die Daten auf dem Cluster gehalten und sowohl dem \textit{Master}, als auch den \textit{Worker-Nodes} so zur Verfügung gestellt. 
 
 %Hier Grafik zum Aufbau eines Spark Clusters. 
 \begin{figure}[htb!]
@@ -65,18 +65,22 @@ Wenn ein SparkContext initialisiert wurde, installiert der Spark sogenannte \tex
 
 Die Resiliient Distributed Datasets (RDD) sind das eigentliche Kernelement von Apache Spark. Hierbei handelt es sich um fehlertolerante, parallele Datenstrukturen, die dem Anwender erlauben, Zwischenergebnisse explizit im Hauptspeicher zu halten, ihre Partitionierung zu steuern, um Daten bewusst an bestimmten Stellen halten zu können und diese mittels umfangreichen Operatoren zu manipulieren  \citelit{rdd12}. Das Konzept der RDDs entspricht prinzipiell den Views\footnote{Eine View ist in einem relationalen Datenbanksystem die Ergebnismenge einer persistierten Datenbankabfrage auf bestimmte Daten. Diese lässt Abfragen analog zu einer gewöhnlichen Tabelle zu.} in relationalen Datenbanksystemen. Werden die RDDs für weitere Zugriffe persistiert, entspricht dies dem Prinzip der Materialized Views\footnote{Materialized Views entsprechen bei Abfragen den regulären Views. Allerdings wird hier im Gegensatz zu den Views bei Zugriff keine Abfrage auf die zugrundeliegenden Tabellen durchgeführt. Stattdessen sind die Daten als Kopie in eigenen Datenbankobjekten persistent vorhanden.}.  
 
-RDDs werden mittels deterministischer, paralleler Operationen erstellt, den sogenannten \textit{Transformationen}. Im Fehlerfall, also wenn beispielsweise ein \textit{Node} im Cluster ausfällt, können die RDDs automatisch an Hand der durchgeführten Regeln neu aufgebaut werden. Deshalb merken sich die RDDs die Transformationen, die zu ihrem Aufbau geführt haben und können so verlorene Datenstrukturen schnell rekonstruieren. Die \textit{Resilient Distributed Datasets} können ausschließlich durch Transformationen, wie beispielsweise \textit{map, filter, join}, etc., aus Daten aus dem Dateisystem oder aus anderen, bereits vorhandenen RDDs erzeugt werden, oder durch Verteilen einer Object-Collection in der Driver-Applikation. Diese Datenstrukturen müssen nicht persistiert werden, da sie für einen Partitionierung ausreichende Informationen über ihre Erstellungsregeln und die entsprechenden Datensätze enthalten, das sogenannte \textit{Lineage} \citelit{rdd12}.   
+RDDs werden mittels deterministischer, paralleler Operationen erstellt, den sogenannten \textit{Transformationen}. Im Fehlerfall, also wenn beispielsweise ein \textit{Node} im Cluster ausfällt, können die RDDs automatisch anhand der durchgeführten Regeln neu aufgebaut werden. Deshalb merken sich die RDDs die Transformationen, die zu ihrem Aufbau geführt haben und können so verlorene Datenstrukturen schnell rekonstruieren. Die \textit{Resilient Distributed Datasets} können ausschließlich durch Transformationen, wie beispielsweise \textit{map, filter, join}, etc., auf Daten aus dem Dateisystem oder aus anderen, bereits vorhandenen RDDs erzeugt werden, oder durch Verteilen einer Object-Collection in der Driver-Applikation. Diese Datenstrukturen müssen nicht persistiert werden, da sie für einen Partitionierung ausreichende Informationen über ihre Erstellungsregeln und die entsprechenden Datensätze enthalten, das sogenannte \textit{Lineage} \citelit{rdd12}.   
 
 Da es sich bei RDDs prinzipiell um Scala-Collections handelt, können diese auch direkt in Scala-Code eingebunden und verarbeitet werden, oder interaktiv über die Scala-Konsole REPL genutzt werden. Aber auch für Java und Python bietet Spark APIs an. Für weitere Sprachen wie R oder Clojure existieren Wrapper-Frameworks, welche die RDDs und ihre Operationen verfügbar machen (Vergleich \ref{section:APIs}. RDDs können nur durch grobgranulare, deterministische Transformationen, erstellt werden \citelit{dz14}. 
 
-WIe eingangs beschrieben, verfügen die Anwender von Spark über die Kontrolle der Aspekte \textit{Persistence} und \textit{Partitioning} \citelit{rdd12}. Mit der Persistence lässt sich festlegen, welche RDDs wiederverwendet werden sollen, also welche RDDs nach welcher Strategie persistiert werden. Dies ist besonders wichtig, da nicht explizit persistierte RDDs bei jeder darauf ausgeführten Operation neu berechnet werden. Das Partitioning legt fest, nach welchen Kriterien die RDDs geteilt und über das Cluster verteilt werden sollen, also beispielsweise sortiert nach bestimmten Keys. Die Optimierung der Partitionierung ist unter Anderem wichtig für Join-Operationen. Je nach Partitionierungsstrategie kann dies erhebliche Unterschiede in Laufzeit und Ressourcennutzung bedeuten \citelit{ls15}.  
+WIe eingangs beschrieben, verfügen die Anwender von Spark über die Kontrolle der Aspekte \textit{Persistence} und \textit{Partitioning} \citelit{rdd12}. Mit der Persistence lässt sich festlegen, welche RDDs wiederverwendet werden sollen, also welche RDDs nach welcher Strategie persistiert werden. Dies ist besonders wichtig, da nicht explizit persistierte RDDs bei jeder darauf ausgeführten Operation neu berechnet werden. Das Partitioning legt fest, nach welchen Kriterien die RDDs geteilt und über das Cluster verteilt werden sollen, also beispielsweise sortiert nach bestimmten Keys. Die Optimierung der Partitionierung ist unter anderem elementar für Join-Operationen. Je nach Partitionierungsstrategie kann dies erhebliche Unterschiede in Laufzeit und Ressourcennutzung bedeuten \citelit{ls15}.  
 
 RDDs können prinzipiell auf folgende Arten für die Wiederverwendung gespeichert werden \citeint{sp14}:
 \begin{itemize}
-		\item Als deserialisiertes Java-Objekt im Speicher der JVM – dieses Variante bietet die beste Performance, da die Objekte sich direkt im JVM-Heap befinden
-		\item Als serialisiertes Java-Objekt direkt im Speicher – dieses Verfahren ist effizienter bezüglich der Hauptspeicherauslastung , aber schlechter in der Zugriffsgeschwindigkeit
+		\item Als deserialisiertes Java-Objekt im Speicher der JVM – dieses Variante bietet die beste Performance, da die Objekte sich direkt im JVM-Heap befinden, benötigt jedoch aufgrund der \textit{Lazy Evaluation} ab dem Zeitpunkt der ersten Zugriffe Platz im Heap-Speicher der Laufzeitumgebung und können umfangreicher sein, als nötig. 
+		\item Als serialisiertes Java-Objekt direkt im Speicher – dieses Verfahren ist effizienter bezüglich der Hauptspeicherauslastung da andere Speicherbereiche, als der JVM-Heap für die Materialisierung verwendet werden, aber schlechter in der Zugriffsgeschwindigkeit.
 		\item Im Dateisystem – diese Variante ist erwartungsgemäß die langsamste, jedoch nötig, wenn die RDDs zu groß für die Haltung im RAM sind. 		
 \end{itemize}	
+
+Die Default-Serialisierung findet über die Java Standardbibliothek \texttt{ObjectOutputStream} für Serialisierung statt. So kann jedes Klasse, die \texttt{java.io.Serializable} implementiert, serialisiert werden. Dies ist laut  \citeint{rdd12} oft nicht optimal, da dieser Serialisierer verhältnismäßig langsam ist und häufig zu sehr großen Serialisierungen führt. Spark bietet deshalb als Alternative den Kryo-Serialisierer an (Vergleich \citeint{kry14}). Dieser ist erheblich schneller und erstellt kompaktere Serialisierungen, als die Default-Implementierung. Nachteilig wirkt sich allerdings aus, dass nicht nicht alle Typen von Serialisierungen unterstützt werden und sämtliche zu serialisierenden Klassen bereits im Voraus registriert werden müssen.  
+
+  
 
 \begin{figure}[htb!]
 \centering
@@ -111,14 +115,19 @@ Transformationen werden auf RDDs grundsätzlich nach dem Prinzip der \textit{Laz
 
 
 
-Wie in Abbildung \ref{section:rdd} dargestellt, werden die Daten bei einer Verarbeitung durch Spark zunächst aus dem HDFS geladen, in Resilient Distributed Datasets (RDD) transformiert, und dann im Hauptspeicher für Verarbeitung- oder Analysefunktionen zur Verfügung gestellt. Abfragen werden direkt entweder über eigene Programme, via Scala REPL oder SQL-artige Abfragen zur Laufzeit, über Batch-Jobs oder via Spark Streaming/Storm an die im RAM befindlichen RDDs geleitet.
+Wie in Abbildung \ref{fig:rddunkt} dargestellt, werden die Daten bei einer Verarbeitung durch Spark zunächst aus dem HDFS geladen, in Resilient Distributed Datasets (RDD) transformiert, und dann im Hauptspeicher für weitere Transformationen oder Actions zur Verfügung gestellt. Desweiteren können aus bestehenden RDDs wiederum neue RDDs durch Transformationen geniert werden, wie in Abbildung \ref{fig:sparktransform} dargestellt. 
+
+Transformationen, Actions oder Abfragen auf RDDs werden direkt entweder über eigene Programme, via Scala REPL oder SQL-artige Abfragen zur Laufzeit, über Batch-Jobs oder via Spark Streaming/Storm an die erstellten RDDs gerichtet.
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[width=1.0\textwidth]{bilder/3_spark.png}
-\caption{Schematische Darstellung der Funktionsweise von Spark \protect\citeint{va14}}
-\label{fig:sparkfunkt}
+\includegraphics[width=1.0\textwidth]{bilder/rdd_transform.png}
+\caption{Schematische Darstellung der Erzeugung und Verarbeitung von RDDs aus persistierten Daten}
+\label{fig:rddunkt}
 \end{figure}
+
+
+
 
 \begin{table}[!ht]
 \centering
@@ -134,11 +143,14 @@ first() & Return the first element of the dataset (similar to take(1)). \\ \hlin
 	\label{tab:actions}
 \end{table}
 
+\newpage
+
 \section{Die In-Memory-Primitives von Spark}
 \label{section:in Memory Primvs}
 
-\begin{itemize}
+Wie im vorhergehenden Abschnitt erwähnt wurde, lässt sich Spark durch den Anwender eine eigene Definition der Speicherstrategie von Spark zu. Zu diesem Zweck stellt die API von Spark hier sieben verschiedene In-Memory-Primitives zur Verfügung. Standardmäßig verwaltet Spark die Speicherzuteilung und Lokalisierung der generierten RDDs selbst nach der Prämisse,  diese in der Form zu partitionieren, dass sie möglichst im RAM der jeweiligen Konten Platz finden. Es existieren aber durchaus Nutzungsfälle, wo ein manuelles Eingreifen des Nutzers in diese Strategie sinnvoll ist.  
 
+\begin{itemize}
 \item MEMORY\_ONLY	Store RDD as deserialized Java objects in the JVM. If the RDD does not fit in memory, some partitions will not be cached and will be recomputed on the fly each time they're needed. This is the default level.
 \item MEMORY\_AND\_DISK	Store RDD as deserialized Java objects in the JVM. If the RDD does not fit in memory, store the partitions that don't fit on disk, and read them from there when they're needed.
 \item MEMORY\_ONLY\_SER	Store RDD as serialized Java objects (one byte array per partition). This is generally more space-efficient than deserialized objects, especially when using a fast serializer, but more CPU-intensive to read.

@@ -1,4 +1,4 @@
-\chapter{Architektur und Inbetriebhnahme von lokalen Apache Spark Infrastrukturen }
+\chapter{Architektur und Inbetriebnahme von lokalen Apache Spark Infrastrukturen }
 \label{chapter:architektur}
 
 
@@ -54,7 +54,7 @@ Im Folgenden wird exemplarisch gezeigt, wie ein Docker Container für Apache Spa
 
 Da CentOS auf einer RedHat-Linuxdistribution aufsetzt, wird als Paketmanager \textit{YUM} eingesetzt. Für die einfache Provisionierung der Docker Container bietet sich du Nutzung von Vagrant an \citeint{vag14}. Dies ist eine Konfigurations- und Provisionierungslösung für virtuelle Maschinen und bietet seit Version 1.6 eine native Unterstützung von Docker. So lassen sich die Docker Container mittels entsprechender Scripts einfach konfigurieren und auf beliebige Umgebungen verteilen. 
 
-
+In Listing \ref{vagrant setup jvm-spark} wird 
 
 \begin{lstlisting}[label=vagrant setup jvm-spark,caption=Setup Spark mit eigener JVM]
 FROM jvm
@@ -100,10 +100,24 @@ Vagrant.configure("2") do |config|
 
   
 
-\section{Cluster Management: Mesos und Yarn }
+\section{Cluster Management: Mesos }
 \label{section:mesos}
 
-Blablba
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=1.0\textwidth]{bilder/mesos.png}
+\caption{Build, Installation und Start des Mesos Masternode }
+\label{fig:mesos master]}
+\end{figure} 
+
+
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=1.0\textwidth]{bilder/mesos_start.png}
+\caption{Start und Registrierung eines Mesos Slaves}
+\label{fig:mesos slave]}
+\end{figure} 
 
 \section{Caching-Framework: Tachyon}
 \label{section:tachyon}
@@ -128,7 +142,21 @@ Blablba
 \section{Machine Learning Algorithmen: MLLib}
 \label{section:mllib arch}
 
-Blablba
+\begin{lstlisting}[label=setup mllibs,caption=SBT Script für Anwendungen mit Spark und MLLib-Dependencies]
+name := "SparkMLLibTest"
+
+version := "1.0"
+
+scalaVersion := "2.10.4"
+
+libraryDependencies ++= Seq(
+    "org.apache.spark" % "spark-core_2.10" % "1.1.0",
+    "org.apache.spark" % "spark-mllib_2.10" % "1.1.0",
+    "com.github.scopt" % "scopt_2.9.3" % "3.3.0"
+)
+
+\end{lstlisting}
+
 
 
 
@@ -137,10 +165,6 @@ Blablba
 
 Blablba
 
-\section{Einrichten und Konfigurieren der IDE IntelliJ Idea für Spark}
-\label{section:intellij}
-
-Blablba
 
 \section{Alternativimplementierung zu MLLibs: H2O}
 \label{section:h2o}
@@ -148,7 +172,22 @@ Blablba
 Blablba
 
 \section{Alternativimplementierung zu Spark: Apache Flink}
-\label{section:h2o}
+\label{section:flink}
 
-Blablba
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=1.0\textwidth]{bilder/flink1.png}
+\caption{Start des Apache Flink Masternode mit Anzeige des Logs }
+\label{fig:flink start]}
+\end{figure} 
+
+
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=1.0\textwidth]{bilder/flink2.png}
+\caption{Das Apache Flink Dashboard auf der lokalen Installation}
+\label{fig:flink dashboard]}
+\end{figure} 
+
 
