@@ -52,9 +52,9 @@ union & Produces the union of two data sets. \\ \hline
 \label{fig:flink}
 \end{figure} 
 
-Im Unterschied zu Spark basiert Apache Flink auf einem feingranularen Speichermanagement-Modell. Dies erlaubt eine sehr differenzierte Verteilung der Daten und Operationen zwischen Haupt- und Festspeicher  \citeint{afl14}. Spark nutzt für seine Verarbeitungen ein internes Batch-Processing, die Daten werden also stets in Form von RDDs im RAM, im Cache oder auf Festspeicher materialisiert. Flink hingegen nutzt im Runtime-Layer echtes Datenstreaming, die Daten werden in ihrer Binärrepresentation verarbeitet. So werden, wie in Abbildung \ref{fig:flink} dargestellt, in jeder Iteration Optimierungen mit Kostenfunktionen durchgeführt. Bei jedem Druchlauf wird überprüft, welche Daten Veränderung erfahren. So wird feingranular die Zuordnung zu den jeweiligen Speicherstrategien festgelegt. Durch partielle Serialisierung können die Daten flexibel zwischen RAM, Cache und Festspeicher aufgeteilt werden.
+Im Unterschied zu Spark basiert Apache Flink auf einem feingranularen Speichermanagement-Modell. Dies erlaubt eine sehr differenzierte Verteilung der Daten und Operationen zwischen Haupt- und Festspeicher  \citeint{afl14}. Spark nutzt für seine Verarbeitungen ein internes Batch-Processing, die Daten werden also stets in Form von RDDs im RAM, im Cache oder auf Festspeicher materialisiert. Flink hingegen nutzt im Runtime-Layer echtes Datenstreaming, die Daten werden in ihrer Binärrepresentation verarbeitet. So werden, wie in Abbildung \ref{fig:flink} dargestellt, in jeder Iteration Optimierungen mit Kostenfunktionen durchgeführt. Bei jedem Durchlauf wird überprüft, welche Daten Veränderung erfahren. So wird feingranular die Zuordnung zu den jeweiligen Speicherstrategien festgelegt. Durch partielle Serialisierung können die Daten flexibel zwischen RAM, Cache und Festspeicher aufgeteilt werden.
 
-Da Spark intern mit Batchmechanismen operiert, ist hier allerdings eine wesentlich höhere Fehlertoleranz möglich. Das Prinzip der RDDs, die sich im Fehlerfall nur mit diesem Mechanismus zur Laufzeit aus den Transformationsregeln rekonstruerieren lassen, ist nur so umzusetzen. 
+Da Spark intern mit Batchmechanismen operiert, ist hier allerdings eine wesentlich höhere Fehlertoleranz möglich. Das Prinzip der RDDs, die sich im Fehlerfall nur mit diesem Mechanismus zur Laufzeit aus den Transformationsregeln rekonstruieren lassen, ist nur so umzusetzen. 
 
 
  
@@ -75,20 +75,24 @@ Storm ist das Framework der Wahl, wenn Wert auf sehr kurze Latenzzeiten gelegt w
 \label{section:h20}
 
 
-BluBlaBlubb
+TBD!
 
 
 \section{Alternative zu MLLibs: Dato GraphLab Create\textsuperscript{TM}}
 \label{section:h20}
 
 
-BluBlaBlubb
+TBD!
 
 
 
-\subsection{Zusammenfassung}
-\label{section:storm}
 
 
+\section{Zusammenfassung}
+\label{section:zusammen}
+
+
+
+TBD!
 
 

@@ -3,39 +3,100 @@
 
 
 
-Blablba
+Im vorherigen Kapitel wurde gezeigt, wie verschiedene Entwicklungs- und Testinfrastrukturen mit Apache Spark aufgesetzt werden können. Im Rahmen dieser Thesis wurden für die Frameworks Spark und Flink, sowie für MLLib und H2O jeweils ein Prototyp für Vergleichsmessungen erstellt. Darüber hinaus wurden kleinere Testprototypen für die Bibliotheken Spark Streaming, sowie für GraphX erstellt. Diese werden im folgenden Kapitel vorgestellt.  
 
 \section{Prototyp: Spark}
 \label{section:prototyp spark}
 
-Blablabla
+Das Framework Apache Spark bietet durch seine APIs umfangreiche Möglichkeiten der applikatorischen Datenanalyse und Manipulation. Besonders Anwendungen auf große, persistierte Datenmengen lassen sich so komfortabel mittels Batch-Processing analysieren und verarbeiten. 
+
+Deshalb wurde zum Test der Frameworks Apache Spark und Flink auf eine möglichst große Datenbasis zurückgegriffen, auf der einige durch die APIs angebotene elementare Funktionen angewendet werden.  
+
+Zunächst wurde eine unstrukturierte Textdatei mit einer Größe von ca. 5 GB erstellt. Aus diesen Daten erstellt Spark ein RDD, verteilt es innerhalb der vorhandenen Infrastruktur und zählt alle vorkommenden Buchstaben "e" und "s". 
+Das folgende Listing zeigt diese Testanwendung in Scala.
+
+\newpage
+
+\begin{lstlisting}[label=vwikilogs,caption=SimpleTestApp.scala - zählt Buchstabenvorkommen in Textdateien.]
+ /* SimpleTestApp.scala */
+import org.apache.spark.SparkContext
+import org.apache.spark.SparkContext._
+import org.apache.spark.SparkConf
+import com.codahale.metrics.Meter
+
+object SimpleTestApp {
+  def main(args: Array[String]) {
+
+    val logFile = "acc.log" // filename of the Textfile
+    val conf = new SparkConf().setAppName("Simple Test Application")
+    val sc = new SparkContext(conf)
+    val logData = sc.textFile(logFile, 2).cache()
+    val numAs = logData.filter(line => line.contains("e")).count()
+    val numBs = logData.filter(line => line.contains("s")).count()
+    
+    println("Lines with a: %s, Lines with b: %s".format(numAs, numBs))
+  }
+}
+\end{lstlisting}
+
+Diese kleine Testanwendung zeigt schnell die Performanceverhältnisse zwischen verschiedenen Infrastrukturen und eignet sich gut, um gegebenenfalls Partitionierungsmaßnahmen zu überprüfen.  
+
+Der eigentliche Prototyp für Spark basiert auf dem Datenmodell von Wikipedia-Access-Logfiles von Wikibench \citeint{wik07}. Hier finden sich Zugriffsdaten von Wikipedia aus den Monaten September 2007 bis einschließlich Januar 2008. Insgesamt handelt es sich um ca. 600 GB Daten. 
+
+Jeder Datensatz ist folgendermaßen aufgebaut:
+
+\begin{itemize}
+\item monoton steigender Zähler, der zum Sortieren der Daten in chronologischer Reihenfolge benutzt werden kann
+\item millisekundengenauer Zeitstempel der Requests in Unix-Notation
+\item die abgefragte URL
+\item Flag zur Anzeige ob die Datenbank aufgrund des Requests ein Update erfahren hat. 
+\end{itemize}
+
+\begin{lstlisting}[label=vwikilogs,caption=Beispieleinträge der Wikipedia Access Logs.]
+983510486 1190167848.982 http://en.wikipedia.org/wiki/Money,_Money,_Money -
+983510487 1190167848.986 http://es.wikipedia.org/wiki/Imperialismo -
+983510489 1190167848.959 http://upload.wikimedia.org/wikipedia/en/thumb/e/e1/Viva_Las_Vegas.jpg/180px-Viva_Las_Vegas.jpg -
+983510491 1190167848.984 http://es.wikipedia.org/skins-1.5/monobook/user.gif -
+\end{lstlisting}
+
+TBD!
 
 \subsection{Prototyp: Vergleich Prototyp Apache Flink }
 \label{section:vergleich apache flink}
 
-Blablba
+TBD!
 
 \section{Prototyp: MLLib }
 \label{section:prototyp mllib}
 
-Blablba
+TBD!
 
 \subsection{Prototyp: Vergleich Prototyp H2O }
 \label{section:vergleich h2o}
 
-Blablba
+TBD!
 
 
 \section{Prototyp: Spark Streaming }
 \label{section:prototyp spark streaming}
 
-Blabla
+TBD!
 
 
 
 \section{Prototyp: GraphX}
 \label{section:prototyp graphX}
 
-Blablba
+TBD!
+
+
+
+
+\section{Zusammenfassung}
+\label{section:zusammen}
+
+
+
+TBD!
 
 

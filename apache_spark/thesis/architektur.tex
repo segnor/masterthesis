@@ -54,7 +54,7 @@ Im Folgenden wird exemplarisch gezeigt, wie ein Docker Container für Apache Spa
 
 Da CentOS auf einer RedHat-Linuxdistribution aufsetzt, wird als Paketmanager \textit{YUM} eingesetzt. Für die einfache Provisionierung der Docker Container bietet sich du Nutzung von Vagrant an \citeint{vag14}. Dies ist eine Konfigurations- und Provisionierungslösung für virtuelle Maschinen und bietet seit Version 1.6 eine native Unterstützung von Docker. So lassen sich die Docker Container mittels entsprechender Scripts einfach konfigurieren und auf beliebige Umgebungen verteilen. 
 
-In Listing \ref{vagrant setup jvm-spark} wird 
+In Listing \ref{vagrant setup jvm-spark} wird zunächst eine JVM im Container aufgesetzt. Diese wird von Spark als Laufzeitumgebung benötigt. Die Besonderheit an der unten dargestellten Variante ist die Ausführung von Spark als sogenanntes \textit{Tarball}. Dies entspricht dem Vorgehen für Microservices und erlaubt eine sehr schlanke Konfiguration des Containers (Vergleich \citeint{tar14}).
 
 \begin{lstlisting}[label=vagrant setup jvm-spark,caption=Setup Spark mit eigener JVM]
 FROM jvm
@@ -103,6 +103,8 @@ Vagrant.configure("2") do |config|
 \section{Cluster Management: Mesos }
 \label{section:mesos}
 
+TBD!
+
 \begin{figure}[htb!]
 \centering
 \includegraphics[width=1.0\textwidth]{bilder/mesos.png}
@@ -122,22 +124,21 @@ Vagrant.configure("2") do |config|
 \section{Caching-Framework: Tachyon}
 \label{section:tachyon}
 
-Blablba
-
+TBD!
 \section{Der eigentliche Kern: Apache Spark}
 \label{section:kern}
 
-Blablba
+TBD!
 
 \section{Streaming-Framework: Spark Streaming}
 \label{section:streaming}
 
-Blablba
+TBD!
 
 \section{Abfrageschicht: Spark SQL}
 \label{section:spark sql}
 
-Blablba
+TBD!
 
 \section{Machine Learning Algorithmen: MLLib}
 \label{section:mllib arch}
@@ -163,16 +164,18 @@ libraryDependencies ++= Seq(
 \section{Graphenanwendungen: GraphX}
 \label{section:graphx}
 
-Blablba
+TBD!
 
 
 \section{Alternativimplementierung zu MLLibs: H2O}
 \label{section:h2o}
 
-Blablba
+TBD!
 
 \section{Alternativimplementierung zu Spark: Apache Flink}
 \label{section:flink}
+
+TBD!
 
 \begin{figure}[htb!]
 \centering
@@ -191,3 +194,11 @@ Blablba
 \end{figure} 
 
 
+
+
+\section{Zusammenfassung}
+\label{section:zusammen}
+
+
+
+TBD!

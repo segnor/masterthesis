@@ -21,10 +21,10 @@ Eine große Herausforderung im Umfeld verteilter und nebenläufiger Analyse und 
 \centering
 \includegraphics[width=1.0\textwidth]{bilder/oracle_cluster.jpg}
 \caption{Aufbau eines Standardcluster im Rechenzentrumsbetrieb mit Application-Server und Oracle Datenbanken \protect\citeint{or14}. }
-\label{fig:sparkclustermastermitworker}
+\label{fig:oracle}
 \end{figure} 
 
-In diesem Aufbau entsteht in der Regel eine sehr hohe Netzwerklast, da die für die Applikation benötigten Daten dieser zunächst zur Verfügung gestellt werden müssen. 
+In Abbildung \ref{fig:oracle} wird ein möglicher Aufbau eines herkömmlichen Clusters gezeigt. Dieser besteht in diesem Fall aus drei Applikationsservern, die wiederum über drei Instanzen eines verteilten Caching-Systems auf eine zentrale Datenbank zugreifen. In einem solchen Aufbau entsteht in der Regel eine sehr hohe Netzwerklast, da die für die Applikation benötigten Daten dieser zunächst zur Verfügung gestellt werden müssen. Die Applikation fragt die Daten ab, diese werden dann von der Datenbank zu den Applikationsservern geliefert, hier meist in Applikationsobjekte umgewandelt und stehen dann der Anwendung zur Verfügung. 
 
 Spark geht hier einen anderen Weg. Ein Spark-Cluster besteht typischerweise aus einem zentralen \textit{Master} und n \textit{Worker-Nodes}. Diese können aus einfachen Servern bestehen, aber auch aus Clustern von Mainframes (beispielsweise IBM Z, Oracle ExaLogic, etc.). Das Hadoop Distributed File System und Spark skalieren über Cluster beliebiger Größenordnung. Über ein verteiltes Dateisystem werden die Daten auf dem Cluster gehalten und sowohl dem \textit{Master}, als auch den \textit{Worker-Nodes} so zur Verfügung gestellt. 
 
@@ -38,7 +38,7 @@ Spark geht hier einen anderen Weg. Ein Spark-Cluster besteht typischerweise aus 
 
 
 
-Spark-Anwendungen laufen als unabhängiges Set von Prozessen auf Cluster-Infrastrukturen. Das Hauptprogramm, der sogenannte \textit{Spark Driver}, instanziert das\textit{ SparkContext-Objekt}, das die einzelnen Prozesse koordiniert. Auf Clustersystemen hält der \textit{SparkContext} die Verbindung zum jeweiligen \textit{Cluster-Ressource-Manager} (Mesos, Yarn), im Standalone-Betrieb instanziert der Context selbst einen Dummy-Manager und allokiert in beiden Fällen die für die Anwendung nötigen Hardware-Ressourcen. Die Cluster-Manager liefern ihren aktuellen Status an Spark zurück und melden Auslastung und Gesundheitszustand der einzelnen Knoten. Über interne \textit{Load-Balancing-Systeme}\footnote{Load-Balancing-Systeme sind Überwachungsmechanismen in verteilten Systemen. Jedes Teilsystem meldet seine eigene Auslastung und seine Verfügbarkeit an den Load-Balancer. Dieser verteilt anstehenden Aufgaben so auf die Ressourcen, dass eine möglichst gleichmäßige Verteilung über die gesamte Infrastruktur möglich ist.} wird ermittelt, welche Worker-Nodes die jeweiligen Tasks aus dem Spark-Kontext zugewiesen bekommen. Der SparkContext repräsentiert sowohl für die Spark-Konsole REPL, als auch in eigenen Spark-Programmen innerhalb der APIs das gesamte Cluster. Dem SparkContext wird bei der Initialisierung über ein Konfigurationsobjekt mitgeteilt, welche Ressourcen ihm für das aktuelle Programm zur Verfügung stehen. Die Entscheidung, welche, der initial zur Verfügung gestellten Nodes oder Ressourcen des Clusters von Spark wann in Anspruch genommen werden, obliegt der Kombination aus Spark und \textit{Cluster-Ressource-Manager}. 
+Abblildung \ref{fig:sparkclustermastermitworker} zeigt den Aufbau eines Spark-Clusters. Spark-Anwendungen laufen als unabhängiges Set von Prozessen auf Cluster-Infrastrukturen. Das Hauptprogramm, der sogenannte \textit{Spark Driver}, instanziert das\textit{ SparkContext-Objekt}, das die einzelnen Prozesse koordiniert. Auf Clustersystemen hält der \textit{SparkContext} die Verbindung zum jeweiligen \textit{Cluster-Ressource-Manager} (Mesos, Yarn), im Standalone-Betrieb instanziert der Context selbst einen Dummy-Manager und allokiert in beiden Fällen die für die Anwendung nötigen Hardware-Ressourcen. Die Cluster-Manager liefern ihren aktuellen Status an Spark zurück und melden Auslastung und Gesundheitszustand der einzelnen Knoten. Über interne \textit{Load-Balancing-Systeme}\footnote{Load-Balancing-Systeme sind Überwachungsmechanismen in verteilten Systemen. Jedes Teilsystem meldet seine eigene Auslastung und seine Verfügbarkeit an den Load-Balancer. Dieser verteilt anstehenden Aufgaben so auf die Ressourcen, dass eine möglichst gleichmäßige Verteilung über die gesamte Infrastruktur möglich ist.} wird ermittelt, welche Worker-Nodes die jeweiligen Tasks aus dem Spark-Kontext zugewiesen bekommen. Der SparkContext repräsentiert sowohl für die Spark-Konsole REPL, als auch in eigenen Spark-Programmen innerhalb der APIs das gesamte Cluster. Dem SparkContext wird bei der Initialisierung über ein Konfigurationsobjekt mitgeteilt, welche Ressourcen ihm für das aktuelle Programm zur Verfügung stehen. Die Entscheidung, welche, der initial zur Verfügung gestellten Nodes oder Ressourcen des Clusters von Spark wann in Anspruch genommen werden, obliegt der Kombination aus Spark und \textit{Cluster-Ressource-Manager}. 
 
 %gesamten Abschnitt mit Referenzen belegen!    
 
@@ -78,7 +78,7 @@ RDDs können prinzipiell auf folgende Arten für die Wiederverwendung gespeicher
 		\item Im Dateisystem – diese Variante ist erwartungsgemäß die langsamste, jedoch nötig, wenn die RDDs zu groß für die Haltung im RAM sind. 		
 \end{itemize}	
 
-Die Default-Serialisierung findet über die Java Standardbibliothek \texttt{ObjectOutputStream} für Serialisierung statt. So kann jedes Klasse, die \texttt{java.io.Serializable} implementiert, serialisiert werden. Dies ist laut  \citeint{rdd12} oft nicht optimal, da dieser Serialisierer verhältnismäßig langsam ist und häufig zu sehr großen Serialisierungen führt. Spark bietet deshalb als Alternative den Kryo-Serialisierer an (Vergleich \citeint{kry14}). Dieser ist erheblich schneller und erstellt kompaktere Serialisierungen, als die Default-Implementierung. Nachteilig wirkt sich allerdings aus, dass nicht nicht alle Typen von Serialisierungen unterstützt werden und sämtliche zu serialisierenden Klassen bereits im Voraus registriert werden müssen.  
+Die Default-Serialisierung findet über die Java Standardbibliothek \texttt{ObjectOutputStream} für Serialisierung statt. So kann jede Klasse, die \texttt{java.io.Serializable} implementiert, serialisiert werden. Dies ist laut  \citeint{rdd12} oft nicht optimal, da dieser Serialisierer verhältnismäßig langsam ist und häufig zu sehr großen Serialisierungen führt. Spark bietet deshalb als Alternative den Kryo-Serialisierer an (Vergleich \citeint{kry14}). Dieser ist erheblich schneller und erstellt kompaktere Serialisierungen, als die Default-Implementierung. Nachteilig wirkt sich allerdings aus, dass nicht nicht alle Typen von Serialisierungen unterstützt werden und sämtliche zu serialisierenden Klassen bereits im Voraus registriert werden müssen. Gemäß \citeint{rdd12} wird der Einsatz des Kryo-Serialisierers insbesondere für netzwerkintensive Aufgaben mit Spark ausdrücklich empfohlen. 
 
   
 
@@ -90,7 +90,7 @@ Die Default-Serialisierung findet über die Java Standardbibliothek \texttt{Obje
 \end{figure} 
 
 
- \newpage
+
 In der folgenden Tabelle befindet sich exemplarisch eine Auswahl\footnote{Die vollständige Übersicht über die Transformationen und Actions auf RDDs befindet sich im Anhang dieser Ausarbeitung.} der wichtigsten Transformationen auf RDDs (aus \citeint{spa15}): 
 
 
@@ -126,7 +126,9 @@ Transformationen, Actions oder Abfragen auf RDDs werden direkt entweder über ei
 \label{fig:rddunkt}
 \end{figure}
 
+Im Gegensatz zu den Transformations, die immer ein neues RDD als Ergebnismenge erzeugen, liefern die Actions ein Ergebnis zurück, das entweder an das Driver-Program auf dem Spark Master zurückgegeben, oder im Dateisystem persistiert wird. 
 
+Die Tabelle \ref{tab:actions} zeigt exemplarisch einige wichtige Actions, die auf RDDs angewendet werden können. Eine vollständige Übersicht aller Actions befindet sich im Anhang dieser Arbeit. 
 
 
 \begin{table}[!ht]
@@ -143,12 +145,30 @@ first() & Return the first element of the dataset (similar to take(1)). \\ \hlin
 	\label{tab:actions}
 \end{table}
 
-\newpage
 
-\section{Die In-Memory-Primitives von Spark}
-\label{section:in Memory Primvs}
 
-Wie im vorhergehenden Abschnitt erwähnt wurde, lässt sich Spark durch den Anwender eine eigene Definition der Speicherstrategie von Spark zu. Zu diesem Zweck stellt die API von Spark hier sieben verschiedene In-Memory-Primitives zur Verfügung. Standardmäßig verwaltet Spark die Speicherzuteilung und Lokalisierung der generierten RDDs selbst nach der Prämisse,  diese in der Form zu partitionieren, dass sie möglichst im RAM der jeweiligen Konten Platz finden. Es existieren aber durchaus Nutzungsfälle, wo ein manuelles Eingreifen des Nutzers in diese Strategie sinnvoll ist.  
+Generell kapselt Spark seine Variablen in die jeweiligen Tasks \citeint{adv12}. So kennt jeder Knoten nur die Variablen, die zu dem durch Spark deployten Task gehören. Ist es notwendig, dass große RDDs über Tasks hinweg verfügbar gemacht werden müssen, bietet sich hierfür die Funktion \textit{Broadcast} an. Nach dem Erstellen eines RDD ist es möglich, dem SparkContext mitzuteilen, dass diese erzeugte Collection über Taskgrenzen hinweg verteilt werden soll. 
+
+Folgender Codeausschnitt soll dieses Vorgehen verdeutlichen \citeint{adv12}: 
+
+\begin{lstlisting}[label=broadcast,caption=Verwendung der Broadcast-Variablen in Spark]
+val pageNames = sc.textFile(“pages.txt”).map(...)
+val pageMap = pageNames.collect().toMap()
+val bc = sc.broadcast(pageMap)
+val visits = sc.textFile(“visits.txt”).map(...)
+val joined = visits.map(v => (v._1, (bc.value(v._1), v._2)))
+\end{lstlisting}
+
+In der ersten Zeile wird mittels \texttt{map} aus dem Textfile ein RDD erzeugt, in Zeile zwei wird durch collect eine neue Map erzeugt und die dritte Zeile teilt dem SparkContext mit, dass diese über die Task- und Node-Grenzen hinweg verteilt werden soll. Der Variablen \texttt{joined} wird in Zeile fünf mittels des Aufrufs von \texttt{bc.value} der Wert der geteilten Variable übergeben.
+
+
+
+\section{RDD Persistenz: Storage-Level von Spark}
+\label{section:storage lvl}
+
+Wie im vorhergehenden Abschnitt erwähnt wurde, lässt sich Spark durch den Anwender eine eigene Definition der Speicherstrategie von Spark zu. Zu diesem Zweck stellt die API von Spark hier sieben verschiedene Storage-Levels  zur Verfügung. Standardmäßig verwaltet Spark die Speicherzuteilung und Lokalisierung der generierten RDDs selbst nach der Prämisse,  diese in der Form zu partitionieren, dass sie möglichst im RAM der jeweiligen Konten Platz finden. Es existieren aber durchaus Nutzungsfälle, wo ein manuelles Eingreifen des Nutzers in diese Strategie sinnvoll ist. 
+
+Im Folgenden werden die Storage-Levels von Spark vorgestellt (aus \citeint{spa15}): 
 
 \begin{itemize}
 \item MEMORY\_ONLY	Store RDD as deserialized Java objects in the JVM. If the RDD does not fit in memory, some partitions will not be cached and will be recomputed on the fly each time they're needed. This is the default level.
@@ -160,31 +180,54 @@ Wie im vorhergehenden Abschnitt erwähnt wurde, lässt sich Spark durch den Anwe
 \item OFF\_HEAP (experimental)	Store RDD in serialized format in Tachyon. Compared to MEMORY\_ONLY\_SER, OFF\_HEAP reduces garbage collection overhead and allows executors to be smaller and to share a pool of memory, making it attractive in environments with large heaps or multiple concurrent applications. Furthermore, as the RDDs reside in Tachyon, the crash of an executor does not lead to losing the in-memory cache. In this mode, the memory in Tachyon is discardable. Thus, Tachyon does not attempt to reconstruct a block that it evicts from memory.
 
 \end{intemize}
+
+Wenn ein RDD problemlos in den Speicher passt, sollte man dessen Level auf der Default-Einstellung MEMORY\_ONLY belassen, da dies die schnellsten Ausführungszeiten garantiert. Ist dies nicht der Fall, sollte die Verwendung MEMORY\_ONLY\_SER in Verbindung mit einem schnellen Serialisierer getestet werden. Generell wird empfohlen, Überläufe der RDDs auf den Festspeicher wenn möglich zu verhindern. Nur wenn die Berechnungsfunktionen zur Erstellung der RDDs sehr teuer waren, oder die Ergebnismenge sehr umfangreich ist, sollte diese Möglichkeit genutzt werden. In diesem Fall ist die Weiterverarbeitungsgeschwindigkeit durch Spark auf die Lesegeschwindigkeit des Festspeichers beschränkt.    
+
+
 \section{Die Spark-Console REPL}
 \label{section:repl}
+
+TBD!
+
 
 
 \section{Die Spark APIs}
 \label{section:APIs}
-
+TBD!
 
 \subsection{Spark Scala API}
 \label{section:scala}
 
+TBD!
+
 \subsection{Spark Java API}
 \label{section:java}
+
+TBD!
 
 \subsection{Spark Python API}
 \label{section:python}
 
+TBD!
+
 \subsection{Third Level API für Spark mit Clojure: Flambo}
 \label{section:flambo}
+
+TBD!
 
 \subsection{Third Level API für Spark mit R: SparkR}
 \label{section:sparkr}
 
+TBD!
 
 
+
+\section{Zusammenfassung}
+\label{section:zusammen}
+
+
+
+TBD!
 
 
 
