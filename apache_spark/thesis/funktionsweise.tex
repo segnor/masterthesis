@@ -152,10 +152,10 @@ Generell kapselt Spark seine Variablen in die jeweiligen Tasks \citeint{adv12}. 
 Folgender Codeausschnitt soll dieses Vorgehen verdeutlichen \citeint{adv12}: 
 
 \begin{lstlisting}[label=broadcast,caption=Verwendung der Broadcast-Variablen in Spark]
-val pageNames = sc.textFile(“pages.txt”).map(...)
+val pageNames = sc.textFile("pages.txt").map(...)
 val pageMap = pageNames.collect().toMap()
 val bc = sc.broadcast(pageMap)
-val visits = sc.textFile(“visits.txt”).map(...)
+val visits = sc.textFile("visits.txt").map(...)
 val joined = visits.map(v => (v._1, (bc.value(v._1), v._2)))
 \end{lstlisting}
 

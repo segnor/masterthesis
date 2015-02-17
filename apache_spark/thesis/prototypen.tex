@@ -34,12 +34,12 @@ object SimpleTestApp {
     val numAs = logData.filter(line => line.contains("e")).count()
     val numBs = logData.filter(line => line.contains("s")).count()
     
-    println("Lines with a: %s, Lines with b: %s".format(numAs, numBs))
+    println("Count of e: %s, count ofd s: %s".format(numAs, numBs))
   }
 }
 \end{lstlisting}
 
-Diese kleine Testanwendung zeigt schnell die Performanceverhältnisse zwischen verschiedenen Infrastrukturen und eignet sich gut, um gegebenenfalls Partitionierungsmaßnahmen zu überprüfen.  
+Diese kleine Testanwendung zeigt schnell die Performanceverhältnisse zwischen verschiedenen Infrastrukturen und eignet sich gut, um gegebenenfalls verschiedene Partitionierungsmaßnahmen zu überprüfen.  
 
 Der eigentliche Prototyp für Spark basiert auf dem Datenmodell von Wikipedia-Access-Logfiles von Wikibench \citeint{wik07}. Hier finden sich Zugriffsdaten von Wikipedia aus den Monaten September 2007 bis einschließlich Januar 2008. Insgesamt handelt es sich um ca. 600 GB Daten. 
 

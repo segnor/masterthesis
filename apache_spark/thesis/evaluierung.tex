@@ -24,7 +24,7 @@ Lenovo ThinkPad 410T & Intel i5 & 4 physisch & 8 GB & Windows 8.1, VirtualBox In
 	\label{tab:lokale hardware}
 \end{table}  
 
-Die Tabelle \ref{cluster} zeigt die Konfiguration (Konfigurationsstand Dezember 2014) des verwendeten Clustersystems an der Beuth Hochschule Berlin. 
+Die Tabelle \ref{tab:cluster} zeigt die Konfiguration (Konfigurationsstand Dezember 2014) des verwendeten Clustersystems an der Beuth Hochschule Berlin. 
 
 \begin{table}[!ht]
 \centering
@@ -41,12 +41,18 @@ Worker Node 3 & AMD 6378 & 4 * 16 & 512 GB &  Debian Linux\\ \hline
 	\label{tab:cluster}
 \end{table}  
 
+Des weiteren wurden auch funktionale Anforderungen für die Evaluierung der Frameworks und Bibliotheken definiert. Dies hat besondere Relevanz für die möglichst direkten Vergleiche der Frameworks Spark und Flink, sowie MLLib und H2O. 
+
 
 
 \section{Definition von Metriken für die Bibliotheken des BDAS}
 \label{section:definition der metriken}
 
-TBD!
+
+
+Um die verschiedenen Bibliotheken des BDAS möglichst einheitlich und dennoch nutzungsspezifisch testen zu können, wurden im Rahmen dieser Thesis entsprechende Metriken definiert. Diese sind mehrstufig angeordnet, so dass ein vergleichbares Subset über alle Nutzungsfälle angelegt werden konnte. In einer zweiten Schicht sind zusätzliche, anwendungsfallspezifische Metriken angesiedelt. 
+
+Diese Metriken teilen sich zum einen prinzipiell auf in funktionale und nichtfunktionale Anforderungen. Die funktionalen Anforderungen beschreiben den Funktionsumfang und die Umsetzungsstrategie bestimmter Anforderungen. Die nichtfunktionalen Anforderungen betrachten Aspekte wie Performance auf verschiedenen Ausführungsstufen und nach \(1...n\) Iterationen, Replikationsmechanismen, Verhalten im Fehlerfall. Oberhalb von diesen Metriken sind die speziellen anwendungsfallmetriken. Hier werden beispielsweise die Nachrichten-Durchsatzraten von Spark Streaming oder die Güte und Performance der erlernten Modelle von MLLibs und H2O quantifiziert.  
 
 
 
