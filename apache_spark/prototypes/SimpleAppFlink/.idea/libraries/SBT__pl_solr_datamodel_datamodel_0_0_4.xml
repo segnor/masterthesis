@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="SBT: pl.solr.datamodel:datamodel:0.0.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/pl.solr.datamodel/datamodel/jars/datamodel-0.0.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

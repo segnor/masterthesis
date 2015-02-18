@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="SBT: com.sematext.ag:ag-player:0.1.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.sematext.ag/ag-player/jars/ag-player-0.1.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
