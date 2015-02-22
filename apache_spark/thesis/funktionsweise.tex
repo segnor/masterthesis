@@ -170,16 +170,22 @@ Wie im vorhergehenden Abschnitt erwähnt wurde, lässt sich Spark durch den Anwe
 
 Im Folgenden werden die Storage-Levels von Spark vorgestellt (aus \citeint{spa15}): 
 
-\begin{itemize}
-\item MEMORY\_ONLY	Store RDD as deserialized Java objects in the JVM. If the RDD does not fit in memory, some partitions will not be cached and will be recomputed on the fly each time they're needed. This is the default level.
-\item MEMORY\_AND\_DISK	Store RDD as deserialized Java objects in the JVM. If the RDD does not fit in memory, store the partitions that don't fit on disk, and read them from there when they're needed.
-\item MEMORY\_ONLY\_SER	Store RDD as serialized Java objects (one byte array per partition). This is generally more space-efficient than deserialized objects, especially when using a fast serializer, but more CPU-intensive to read.
-\item MEMORY\_AND\_DISK\_SER	Similar to MEMORY\_ONLY\_SER, but spill partitions that don't fit in memory to disk instead of recomputing them on the fly each time they're needed.
-\item DISK\_ONLY	Store the RDD partitions only on disk.
-\item MEMORY\_ONLY\_2, MEMORY\_AND\_DISK\_2, etc.	Same as the levels above, but replicate each partition on two cluster nodes.
-\item OFF\_HEAP (experimental)	Store RDD in serialized format in Tachyon. Compared to MEMORY\_ONLY\_SER, OFF\_HEAP reduces garbage collection overhead and allows executors to be smaller and to share a pool of memory, making it attractive in environments with large heaps or multiple concurrent applications. Furthermore, as the RDDs reside in Tachyon, the crash of an executor does not lead to losing the in-memory cache. In this mode, the memory in Tachyon is discardable. Thus, Tachyon does not attempt to reconstruct a block that it evicts from memory.
-
-\end{intemize}
+\begin{table}[!ht]
+\centering
+\begin{tabular}{| p{5cm} | p{8cm} | }
+\hline
+Storage Level & Zweck \\ \hline \hline
+MEMORY\_ONLY & Store RDD as deserialized Java objects in the JVM. If the RDD does not fit in memory, some partitions will not be cached and will be recomputed on the fly each time they're needed. This is the default level. \\ \hline 
+MEMORY\_AND\_DISK & Store RDD as deserialized Java objects in the JVM. If the RDD does not fit in memory, store the partitions that don't fit on disk, and read them from there when they're needed. \\ \hline 
+MEMORY\_ONLY\_SER & Store RDD as serialized Java objects (one byte array per partition). This is generally more space-efficient than deserialized objects, especially when using a fast serializer, but more CPU-intensive to read. \\ \hline 
+MEMORY\_AND\_DISK\_SER & Similar to MEMORY\_ONLY\_SER, but spill partitions that don't fit in memory to disk instead of recomputing them on the fly each time they're needed. \\ \hline 
+DISK\_ONLY & Store the RDD partitions only on disk. \\ \hline 
+MEMORY\_ONLY\_2, MEMORY\_AND\_DISK\_2, etc. & Same as the levels above, but replicate each partition on two cluster nodes. \\ \hline 
+OFF\_HEAP & (experimental)	Store RDD in serialized format in Tachyon. Compared to MEMORY\_ONLY\_SER, OFF\_HEAP reduces garbage collection overhead and allows executors to be smaller and to share a pool of memory, making it attractive in environments with large heaps or multiple concurrent applications. Furthermore, as the RDDs reside in Tachyon, the crash of an executor does not lead to losing the in-memory cache. In this mode, the memory in Tachyon is discardable. Thus, Tachyon does not attempt to reconstruct a block that it evicts from memory.  \\ \hline 
+\end{tabular}
+\caption{Übersicht der Storage Levels von Spark}
+	\label{tab:storagelevels}
+\end{table}
 
 Wenn ein RDD problemlos in den Speicher passt, sollte man dessen Level auf der Default-Einstellung MEMORY\_ONLY belassen, da dies die schnellsten Ausführungszeiten garantiert. Ist dies nicht der Fall, sollte die Verwendung MEMORY\_ONLY\_SER in Verbindung mit einem schnellen Serialisierer getestet werden. Generell wird empfohlen, Überläufe der RDDs auf den Festspeicher wenn möglich zu verhindern. Nur wenn die Berechnungsfunktionen zur Erstellung der RDDs sehr teuer waren, oder die Ergebnismenge sehr umfangreich ist, sollte diese Möglichkeit genutzt werden. In diesem Fall ist die Weiterverarbeitungsgeschwindigkeit durch Spark auf die Lesegeschwindigkeit des Festspeichers beschränkt.    
 

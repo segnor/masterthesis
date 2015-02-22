@@ -58,13 +58,21 @@ Das Hadoop Distributed File System basiert ideologisch auf dem GoogleFileSystem 
 
 HDFS wurde speziell für den Einsatz mit MapReduce entwickelt, ist also auf geringe Datenbewegungen ausgelegt, da MR die Berechnungsprozesse jeweils zu den physischen Datensätzen selbst bringt und nicht, wie herkömmlich, die Daten zu den Prozessen geliefert werden müssen. So wird massiv Netzwerkverkehr innerhalb des Clusters eingespart und letztlich werden nur Prozesse und Prozessergebnisse verschickt.  
 
-Die Hauptbestandteile von HDFS sind der sogenannte NameNode, der die Metadaten des Clusters verwaltet und die DataNodes, die die eigentlichen Daten halten. Dateien und Verzeichnisse werden vom NameNode durch inodes repräsentiert. Diese wiederum enthalten Informationen über Zugriffsrechte, Zugriffszeiten oder Größenangaben der Dateien.
+
+\begin{figure}[htb!] 
+\centering
+\includegraphics[width=1.0\textwidth]{bilder/hdfsarchitecture.jpg}
+\caption{Der Aufbau von HDFS mit Namenodes und Datanodes \protect\citeint{hdfs12}.}
+\label{fig:hdfsarch}
+\end{figure} 
+
+Die Hauptbestandteile von HDFS sind der sogenannte NameNode, der die Metadaten des Clusters verwaltet und die DataNodes, die die eigentlichen Daten halten. In Abbildung \ref{fig:hdfsarch} ist dieser Aufbau schematisch dargestellt. Dateien und Verzeichnisse werden vom NameNode durch inodes repräsentiert. Diese wiederum enthalten Informationen über Zugriffsrechte, Zugriffszeiten oder Größenangaben der Dateien.
 
 
 
 \begin{figure}[htb!] 
 \centering
-\includegraphics[width=1.0\textwidth]{bilder/2_3_stack.png}
+\includegraphics[width=0.8\textwidth]{bilder/2_3_stack.png}
 \caption{Der Datamanagement-Layer im BDAS mit Tachyon und diversen Filesystemen \protect\citeint{tac14}.}
 \label{fig:datamgmtlayer}
 \end{figure} 
@@ -77,7 +85,7 @@ Hier lässt sich wahlweise direkt das \textit{HDFS} bzw. dessen Alternativen ans
 
 Tachyon besteht aus einem Master, der in der Regel dem physischen Master einer Spark-Infrastruktur entspricht. Dieser deligiert und überwacht die einzelnen Tachyon Worker-Nodes, die auch den Spark Worker-Nodes entsprechen. Tachyon implementiert auf jedem Knoten ein eigenes RAM-Filesystem, das den Hauptspeicher abseits des JVM-Heaps nutzt \citeint{tah14}.
 
-Unterhalb von Tachyon ist nach wie vor ein HDFS für die persistente Datenhaltung notwendig. Alternativ kann auch das Amazon S3-File-System, Glsuterfs oder Posix eingesetzt werden. Tachyon wurde direkt innerhalb der AMPLabs entwickelt und ist mittlerweile fester Bestandteil des BDAS.  
+Unterhalb von Tachyon ist nach wie vor ein HDFS für die persistente Datenhaltung notwendig. Alternativ kann auch das Amazon S3-File-System, Glusterfs oder Posix eingesetzt werden. Tachyon wurde direkt innerhalb der AMPLabs entwickelt und ist mittlerweile fester Bestandteil des BDAS.  
 
 
 \section{Apache Spark}

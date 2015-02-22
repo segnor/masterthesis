@@ -1,8 +1,14 @@
 package com.contexagon.FlinkWikiLogAnalyzer
 
-import com.contexagon.FlinkWikiLogAnalyzer.WikiLog
-import com.contexagon.FlinkWikiLogAnalyzer.SortHelper
-import org.apache.flink.api.scala.ExecutionEnvironment
+import com.contexagon.FlinkWikiLogAnalyzer.WikiLog._
+import com.contexagon.FlinkWikiLogAnalyzer.SortHelper._
+import org.apache.flink.api.scala._
+import org.apache.flink.api.scala.operators._
+
+import org.apache.flink.client.LocalExecutor._
+
+import org.apache.log4j.Logger._
+import org.apache.log4j.BasicConfigurator._
 
 
 /**
@@ -18,10 +24,15 @@ class FlinkWikiLogAnalyzer {
 
 
     // Reads wikilogs line per line, maps it into a Flink Dataset and tries to cache it
-    val wikiLog = env.readTextFile((wikiFile).map(WikiLog.parseLogLine).cache())
+    val wikiLogcompl = env.readTextFile(wikiFile).map(WikiLog.parseLogLine())
+    val wikiLog: DataSet[String] = WikiLog.parseLogLine(wikiLogcompl.toString).toString
+
+
+    val wlog = wikiLogcompl.map(log => WikiLog.parseLogLine)
+
 
     // calculate statistics based on the logfile size
-    val contentSizes = wikiLog.map(log => log.id).cache()
+    val contentSizes = wikiLog.map(log => log.id)
     println("Content Size Avg: %s, Min: %s, Max: %s".format(
       contentSizes.reduce(_ + _) / contentSizes.count,
       contentSizes.min,
@@ -55,4 +66,4 @@ class FlinkWikiLogAnalyzer {
     sc.stop()
   }
 }
-}
+
