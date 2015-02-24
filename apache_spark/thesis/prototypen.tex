@@ -30,11 +30,18 @@ object SimpleTestApp {
     val logFile = "acc.log" // filename of the Textfile
     val conf = new SparkConf().setAppName("Simple Test Application")
     val sc = new SparkContext(conf)
+    
+    val t1 = System.currentTimeMillis
     val logData = sc.textFile(logFile, 2).cache()
+    val t2 = System.currentTimeMillis
+     
     val numAs = logData.filter(line => line.contains("e")).count()
     val numBs = logData.filter(line => line.contains("s")).count()
+    val t3 = System.currentTimeMillis   
     
     println("Count of e: %s, count ofd s: %s".format(numAs, numBs))
+    println("Creating RDD took " + (t2-t1) + " ms.")
+    println("Counting the chars took " + (t3-t2) + " ms.")
   }
 }
 \end{lstlisting}
@@ -58,6 +65,10 @@ Jeder Datensatz ist folgendermaßen aufgebaut:
 983510489 1190167848.959 http://upload.wikimedia.org/wikipedia/en/thumb/e/e1/Viva_Las_Vegas.jpg/180px-Viva_Las_Vegas.jpg -
 983510491 1190167848.984 http://es.wikipedia.org/skins-1.5/monobook/user.gif -
 \end{lstlisting}
+
+Die Prototypen lassen sich mittels Apache Maven \citeint{mav14} und/oder sbt \citeint{sbt14} bauen. Da Flink spezielle Archetypes für Maven anbietet, ist es hier sinnvoll, sich einen Applikationsrahmen per Maven-Import erstellen zu lassen.  
+
+
 
 TBD!
 

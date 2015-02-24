@@ -48,9 +48,12 @@ Das Linux/Unix Kommando \textit{top} \citeint{top14} bietet hier die nötige Gra
 \label{fig:topcluster}
 \end{figure}    
 
-Eine Einschränkung dieses Kommandos ist die fehlende Identifikation der benutzten Prozessorkerne bei Verwendung von Multicore-Systemen. Die prozentuale Prozessorauslastung wird pro Kern angegeben. Am Beispiel des unter anderem eingesetzten MacBook Pro mit i7 Prozessor (vier physische Kerne, acht mit Hyperthreading) bedeutet dies, dass eine Maximalauslastung der CPU bei dieser Metrik einen Wert von 800\% erreicht. Außerdem lässt sich bei einer dargestellten Auslastung von 100\% so nicht ermitteln, ob es sich bei diesem Wert um einen Thread mit 100\% Auslastung eines Kernes, um zwei Threads mit 80\% und 20\%, oder um vier unabhängige Threads mit je 25\% Kernauslastung handelt. Aus diesem Grund werden für die Metriken statt der prozentualen Angabe der CPU-Auslastung die CPU-Zeit als Messgrößen verwendet. Diese ist proportional zur Prozessorauslastung. Für die durchgeführten Vergleichsmessungen werden die CPU-Zeiten der Standardimplementierung des BDAS mit 100\% gewertet und die Vergleichsalgorithmen dazu in ein Verhältnis gesetzt.  
+Eine Einschränkung dieses Kommandos ist die fehlende Identifikation der benutzten Prozessorkerne bei Verwendung von Multicore-Systemen. Die prozentuale Prozessorauslastung wird pro Kern angegeben. Am Beispiel des unter anderem eingesetzten MacBook Pro mit i7 Prozessor (vier physische Kerne, acht mit Hyperthreading) bedeutet dies, dass eine Maximalauslastung der CPU bei dieser Metrik einen Wert von 800\% erreicht. Außerdem lässt sich bei einer dargestellten Auslastung von 100\% so nicht ermitteln, ob es sich bei diesem Wert um einen Thread mit 100\% Auslastung eines Kernes, um zwei Threads mit 80\% und 20\%, oder um vier unabhängige Threads mit je 25\% Kernauslastung handelt. Aus diesem Grund werden für die Metriken zusätzlich zu der prozentualen Angabe der CPU-Auslastung die CPU-Zeit als Messgrößen verwendet. Diese ist proportional zur Prozessorauslastung. Für die durchgeführten Vergleichsmessungen werden die CPU-Zeiten der Standardimplementierung des BDAS mit 100\% gewertet und die Vergleichsalgorithmen dazu in das entsprechende Verhältnis gesetzt.  
 
 Da Spark die RDDs wenn möglich im Hauptspeicher hält und nur auf Festspeicher auslagert, wenn das RAM nicht ausreichend ist, wird auf ein Monitoring des Hauptspeichers für diese Messungen verzichtet. Statt dessen werden die I/O-Vorgänge überwacht um so einen Überlauf auf den Festspeicher und damit begründete Performance-Einbrüche feststellen zu können. 
+
+
+
 
 \section{Beschreibung der Messumgebungen}
 \label{section:messumgebungen}
@@ -91,6 +94,9 @@ Worker Node 3 & AMD 6378 & 4 * 16 & 512 GB &  Debian Linux\\ \hline
 	\label{tab:cluster}
 \end{table}  
 
+
+\newpage
+
 \subsection{Lokales Single Node Cluster  }
 \label{section:lokales single node}
 
@@ -114,7 +120,16 @@ TBD!
 \subsection{Messergebnisse Apache Spark}
 \label{section:spark eval}
 
-TBD!
+Apache Spark wurde mit den zwei im Kapitel \ref{chapter:implementierung} beschriebenen Prototypen gemessen. Die Messungen wurden gegen verschiedene Metriken durchgeführt. In Diagramm \ref{fig:cpu4th} wird exemplarisch eine solche Messung gezeigt. Hier wurde der Prototyp SimpleSparkPrototype, der das Vorkommen zweier verschiedener Buchstaben in einem unstrukturierten Text zur Aufgabe hat, gemessen. Es wurden Testdaten mit einer Größe von ca. 3,5 GB verwendet, die aus einem Subset der Zugriffslogs von Wikipedia bestehen. 
+
+Das Diagramm zeigt den Verlauf der CPU-Auslastung mit vier zugewiesenen Threads. Wie zu erkennen ist, werden die ersten rund 17 Sekunden der Gesamtlaufzeit von 46 Sekunden für die Initialisierung und den Start von Spark benötigt. Dies nimmt verhältnismäßig viel Zeit in Anspruch, da hier sowohl der Spark-Context für die Verwaltung des Clusters, als auch der Webserver für die Überwachung des Spark-Clusters initialisiert werden. Die folgenden Messungen zeigen diese Ramp-Up-Phase von Spark nicht mehr, sondern starten erst mit dem Lesen der Quelldaten und dem Transformationsschritt.  
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=1.0\textwidth]{bilder/SparkCharCount4Thr.png}
+\caption{Messung der Laufzeit und CPU-Auslastung des CharCounters mit 4 Threads}
+\label{fig:cpu4th}
+\end{figure}   
 
 \subsection{Messergebnisse Apache Flink}
 \label{section:mllib arch}
