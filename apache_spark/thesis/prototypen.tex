@@ -68,7 +68,174 @@ Jeder Datensatz ist folgendermaßen aufgebaut:
 
 Die Prototypen lassen sich mittels Apache Maven \citeint{mav14} und/oder sbt \citeint{sbt14} bauen. Da Flink spezielle Archetypes für Maven anbietet, ist es hier sinnvoll, sich einen Applikationsrahmen per Maven-Import erstellen zu lassen.  
 
+\begin{lstlisting}[label=configspark,caption=Konfigurationseinstellungen der lokalen Spark-Installation]
+# Default system properties included when running spark-submit.
+# This is useful for setting default environmental settings.
 
+# Example:
+# spark.master                     spark://master:7077
+spark.eventLog.enabled           true
+# spark.eventLog.dir               hdfs://namenode:8021/directory
+# spark.serializer                 org.apache.spark.serializer.KryoSerializer
+spark.driver.memory                 256m
+spark.executor.memory			 2g
+# spark.executor.extraJavaOptions  -XX:+PrintGCDetails -Dkey=value -Dnumbers="one two three"
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[label=sbtspark,caption=sbt-Buildfile zum Bauen des Spark-WordCount-Prototyp]
+
+name := "SparkWordCountPrototype"
+
+version := "1.0"
+
+scalaVersion := "2.10.4"
+
+libraryDependencies += "org.apache.spark" %% "spark-core" % "1.1.1"
+\end{lstlisting}
+
+
+
+\begin{lstlisting}[label=sparkwc,caption=Spark-WordCount-Prototyp mit Implementierung mittels MapReduce-Algorithmus ]
+package com.contexagon.thesis.prototype
+/* SparkWordCountPrototype.scala */
+import org.apache.spark._
+import org.apache.spark.SparkContext
+import org.apache.spark.SparkContext._
+import org.apache.spark.SparkConf
+
+/**
+ * Simple WordCountPrototype for Apache Spark
+ * Apache Foundation, Sascha P. Lorenz
+ * Purpose: performance comparisons between Apache Spark and Apache Flink
+ * Date: 23.12.2014
+ * Version: 1.0
+ */
+
+object SparkWordCountPrototype {
+
+    def main(args: Array[String]) {
+      if (!parseParameters(args)) {
+        // if application is calles without any parms
+        sourcePath = "/Applications/spark-1.1.0/wikilogs_oct07/wikiall"
+        destinationPath = "/Users/contexagon-SL01/Documents/masterthesis/thesis_lorenz/apache_spark/prototypes/logs/sparkOutput.out"
+        return
+      }
+
+
+    val logFile = "/Applications/spark-1.1.0/wikilogs_oct07/wikiall" // Should be some file on your system
+    // this line is for local use within IDE
+    //val conf = new SparkConf().setAppName("Simple Application").setMaster("local[8]")
+
+    // this line is for local use as standalone application
+    val conf = new SparkConf().setAppName("Simple Application")
+
+    // creates the SparkContext sc
+    val sc = new SparkContext(conf)
+
+    val t1 = System.currentTimeMillis
+
+    // reads the textfile and transforms it into a RDD as soon as it will be called
+    val text = sc.textFile(logFile)
+
+    val t2 = System.currentTimeMillis
+
+    // The actual word count algorithm as MapReduce implementation
+    val counts = text.flatMap(line => line.toLowerCase().split("\\W+")).filter(_.nonEmpty)
+      .map(word => (word, 1))
+      .reduceByKey(_ + _)
+      .sortByKey(true)
+    //counts.sortByKey()
+
+    val t3 = System.currentTimeMillis
+      //counts.foreach(println)
+
+      counts.saveAsTextFile(destinationPath)
+    val t4 = System.currentTimeMillis
+
+      //file.saveAsTextFile(args(2))
+    sc.stop()
+
+    // print some performance data
+    println("Creating RDD took " + (t2-t1) + " ms.")
+    println("Wordcount took " + (t3-t2) + " ms.")
+    println("Writing files took " + (t4-t3) + " ms.")
+    println("Total time consumption: " + (t4-t1) + " ms.")
+
+  }
+
+  // parse call parameters
+  private def parseParameters(args: Array[String]): Boolean = {
+    if (args.length > 0) {
+      if (args.length == 2) {
+        sourcePath = args(0)
+        destinationPath = args(1)
+        true
+      } else {
+        System.err.println("Usage: WordCount <text path> <result path>")
+        false
+      }
+    } else {
+      System.out.println("Executing WordCount example with built-in default data.")
+      System.out.println("  Provide parameters to read input data from a file.")
+      System.out.println("  Usage: WordCount <text path> <result path>")
+      true
+    }
+  }
+
+
+  private var sourcePath: String = "/Applications/spark-1.1.0/wikilogs_oct07/wikiall"
+  private var destinationPath: String = "/Users/contexagon-SL01/Documents/masterthesis/thesis_lorenz/apache_spark/prototypes/logs/sparkOutput.out"
+
+}
+\end{lstlisting}
+
+
+\begin{lstlisting}[label=sparkshell,caption=ShellScript zum Start des Spark-WordCount-Prototyp]
+
+#! /bin/bash
+
+################################################
+# Masterthesis Big Data Processing with Apache Spark
+# Sascha P. Lorenz - Hochschule Emden-Leer, Beuth Hochschule Berlin
+# Start Script for WordCount in Apache Spark for Performance Comparison Reasons	
+# OUTPUTDIR = Destination for performance logs
+# INPUT_PATH = Location of the application 
+# APPLICATION = Name of the application
+# CLASS = Fully qualified classname of the main method
+################################################
+
+OUTPUTDIR=/Users/contexagon-SL01/Documents/masterthesis/thesis_lorenz/apache_spark/prototypes/logs
+OUTPUT_LOG=$OUTPUTDIR/simpleapp.log
+INPUT_PATH=/Users/contexagon-SL01/Documents/masterthesis/thesis_lorenz/apache_spark/prototypes
+APPLICATION=/WordcountSparkPrototype/target/scala-2.10/sparkwordcountprototype_2.10-1.0.jar
+CLASS="com.contexagon.thesis.prototype.SparkWordCountPrototype"
+
+rm -r /Users/contexagon-SL01/Documents/masterthesis/thesis_lorenz/apache_spark/prototypes/logs/sparkOutput.out
+
+
+
+COMMAND_TOP=top > $OUTPUT_LOG
+COMMAND_PID="ps -ef | grep -v 'grep' | grep 'top'"
+
+
+
+# uncomment this block for usage at multinode clusters
+#for i in `cat hosts`;do
+#  ssh $i $COMMAND_TOP
+#  ssh $i "$COMMAND_PID | awk '{print \$2}' > $PID"
+#done
+
+
+
+./bin/spark-submit --class $CLASS --master local[4] $INPUT_PATH$APPLICATION
+
+
+pkill java
+pkill top
+
+\end{lstlisting}
 
 TBD!
 
@@ -76,7 +243,7 @@ TBD!
 \label{section:vergleich apache flink}
 
 
-\begin{lstlisting}[label=flink config,caption=Konfigurationseine.]
+\begin{lstlisting}[label=flink config,caption=Konfigurationseinstellungen der lokalen Flink-Installation]
 jobmanager.rpc.address: localhost
 
 jobmanager.rpc.port: 6123
@@ -93,7 +260,304 @@ parallelization.degree.default: 4
 \section{Prototyp: MLLib }
 \label{section:prototyp mllib}
 
-TBD!
+
+\begin{lstlisting}[label=flink config,caption=WordCountPrototyp für Apache Flink als MapReduce-Implementierung]
+package com.contexagon.thesis.prototype
+
+import org.apache.flink.api.scala._
+
+/**
+ * Simple WordCountPrototype for Apache Flink
+ * Apache Foundation, Sascha P. Lorenz
+ * Purpose: performance comparisons between Apache Spark and Apache Flink
+ * Date: 03.01.2015
+ * Version: 1.0
+ */
+object FlinkWordCountPrototype {
+
+  def main(args: Array[String]) {
+    if (!parseParameters(args)) {
+      // if application is calles without any parms
+      sourcePath = "/Applications/spark-1.1.0/wikilogs_oct07/wikiall"
+      destinationPath = "/Users/contexagon-SL01/Documents/masterthesis/thesis_lorenz/apache_spark/prototypes/logs/flinkOutput.out"
+      return
+    }
+
+
+    val t1 = System.currentTimeMillis
+    val env = ExecutionEnvironment.getExecutionEnvironment
+    //val text = getTextDataSet(env)
+
+    val text = env.readTextFile(sourcePath)
+
+    val t2 = System.currentTimeMillis
+
+    // The actual word count algorithm as MapReduce implementation
+    val counts = text.flatMap {
+      _.toLowerCase.split("\\W+") filter {
+        _.nonEmpty
+      }
+    }
+      .map { word => (word, 1)}
+      .groupBy(0)
+      .sum(1)
+
+
+    val t3 = System.currentTimeMillis
+    // write results as file
+    counts.writeAsCsv(destinationPath, "\n", " ")
+
+
+    env.execute("WordCountPrototype")
+    val t4 = System.currentTimeMillis
+
+    // print a few performance data
+    println("Creating Dataset took " + (t2-t1) + " ms.")
+    println("Wordcount took " + (t3-t2) + " ms.")
+    println("Writing files took " + (t4-t3) + " ms.")
+    println("Total time consumption: " + (t4-t1) + " ms.")
+
+  }
+
+  // parse call parameters
+  private def parseParameters(args: Array[String]): Boolean = {
+    if (args.length > 0) {
+      if (args.length == 2) {
+        sourcePath = args(0)
+        destinationPath = args(1)
+        true
+      } else {
+        System.err.println("Wrong call: FlinkWordCountPrototype <text path> <result path>")
+        false
+      }
+    } else {
+      System.out.println("  Reading default input file on local file system (wikilogs_all).")
+      true
+    }
+  }
+
+
+  private var sourcePath: String = "/Applications/spark-1.1.0/wikilogs_oct07/wikiall"
+  private var destinationPath: String = "/Users/contexagon-SL01/Documents/masterthesis/thesis_lorenz/apache_spark/prototypes/logs/flinkOutput.out"
+
+}
+\end{lstlisting}
+
+\begin{lstlisting}[label=flinkpom,caption=Maven POM zum bauen von Flink-Applikationen als JAR und Fat-JAR inklusive aller Dependencies ]
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.contexagon.thesis.prototype</groupId>
+	<artifactId>WordCountFlinkPrototype</artifactId>
+	<version>0.1</version>
+	<packaging>jar</packaging>
+
+	<name>FlinkWordCountPrototype</name>
+	<url>http://www.contexagon.com</url>
+
+	<repositories>
+		<repository>
+			<id>apache.snapshots</id>
+			<name>Apache Development Snapshot Repository</name>
+			<url>https://repository.apache.org/content/repositories/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<!--  These two requirements are the minimum to use and develop Flink. -->
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-scala</artifactId>
+			<version>0.8.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-streaming-scala</artifactId>
+			<version>0.8.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-clients</artifactId>
+			<version>0.8.0</version>
+		</dependency>
+	</dependencies>
+
+	<!-- We use the maven-assembly plugin to create a fat jar that contains all dependencies
+		except flink and it's transitive dependencies. The resulting fat-jar can be executed
+		on a cluster. Change the value of Program-Class if your program entry point changes. -->
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<descriptors>
+						<descriptor>src/assembly/flink-fat-jar.xml</descriptor>
+					</descriptors>
+					<archive>
+						<manifestEntries>
+							<Program-Class>org.myorg.FlinkWordCountPrototype.Job</Program-Class>
+						</manifestEntries>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>scala-maven-plugin</artifactId>
+				<version>3.1.4</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Eclipse Integration -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.8</version>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<projectnatures>
+						<projectnature>org.scala-ide.sdt.core.scalanature</projectnature>
+						<projectnature>org.eclipse.jdt.core.javanature</projectnature>
+					</projectnatures>
+					<buildcommands>
+						<buildcommand>org.scala-ide.sdt.core.scalabuilder</buildcommand>
+					</buildcommands>
+					<classpathContainers>
+						<classpathContainer>org.scala-ide.sdt.launching.SCALA_CONTAINER
+						</classpathContainer>
+						<classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER
+						</classpathContainer>
+					</classpathContainers>
+					<excludes>
+						<exclude>org.scala-lang:scala-library</exclude>
+						<exclude>org.scala-lang:scala-compiler</exclude>
+					</excludes>
+					<sourceIncludes>
+						<sourceInclude>**/*.scala</sourceInclude>
+						<sourceInclude>**/*.java</sourceInclude>
+					</sourceIncludes>
+				</configuration>
+			</plugin>
+
+			<!-- Adding scala source directories to build path -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<!-- Add src/main/scala to eclipse build path -->
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/main/scala</source>
+							</sources>
+						</configuration>
+					</execution>
+					<!-- Add src/test/scala to eclipse build path -->
+					<execution>
+						<id>add-test-source</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/test/scala</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+\end{lstlisting}
+
+
+\begin{lstlisting}[label=shellflink,caption=Shellscript zum Start des Flink WordCountPrototyp]
+#! /bin/bash
+
+##############################################
+# Masterthesis Big Data Processing with Apache Spark
+# Sascha P. Lorenz - Hochschule Emden-Leer, Beuth Hochschule Berlin
+# Start Script for WordCount in Apache Flink for Performance Comparison Reasons	
+# OUTPUTDIR = Destination for performance logs
+# INPUT_PATH = Location of the application 
+# APPLICATION = Name of the application
+# CLASS = Full qualified classname of the main method
+##############################################
+
+OUTPUTDIR=/Users/contexagon-SL01/Documents/masterthesis/thesis_lorenz/apache_spark/prototypes/logs
+OUTPUT_LOG=$OUTPUTDIR/simpleapp.log
+INPUT_PATH=/Users/contexagon-SL01/Documents/masterthesis/thesis_lorenz/apache_spark/prototypes
+APPLICATION=/WordcountSparkPrototype/target/scala-2.10/sparkwordcountprototype_2.10-1.0.jar
+CLASS="com.contexagon.thesis.prototype.SparkWordCountPrototype"
+
+rm -r /Users/contexagon-SL01/Documents/masterthesis/thesis_lorenz/apache_spark/prototypes/logs/flinkOutput.out
+
+COMMAND_TOP=top > $OUTPUT_LOG
+COMMAND_PID="ps -ef | grep -v 'grep' | grep 'top'"
+
+
+
+# uncomment this block for usage at multinode clusters
+#for i in `cat hosts`;do
+#  ssh $i $COMMAND_TOP
+#  ssh $i "$COMMAND_PID | awk '{print \$2}' > $PID"
+#done
+
+
+
+./bin/flink run /Users/contexagon-SL01/Documents/masterthesis/thesis_lorenz/apache_spark/prototypes/flink_tests/WordCountPrototypeFlink/target/WordCountFlinkPrototype-0.1.jar -c "com.contexagon.thesis.prototype.FlinkWordCountPrototype" -v
+
+pkill java
+pkill top
+\end{lstlisting}
+
+TBD Extrakt - Rest in Anhang
 
 \subsection{Prototyp: Vergleich Prototyp H2O }
 \label{section:vergleich h2o}

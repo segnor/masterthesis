@@ -5,10 +5,19 @@ import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
 import org.apache.spark.SparkConf
 
+/**
+ * Simple WordCountPrototype for Apache Spark
+ * Apache Foundation, Sascha P. Lorenz
+ * Purpose: performance comparisons between Apache Spark and Apache Flink
+ * Date: 23.12.2014
+ * Version: 1.0
+ */
+
 object SparkWordCountPrototype {
 
     def main(args: Array[String]) {
       if (!parseParameters(args)) {
+        // if application is calles without any parms
         sourcePath = "/Applications/spark-1.1.0/wikilogs_oct07/wikiall"
         destinationPath = "/Users/contexagon-SL01/Documents/masterthesis/thesis_lorenz/apache_spark/prototypes/logs/sparkOutput.out"
         return
@@ -22,14 +31,17 @@ object SparkWordCountPrototype {
     // this line is for local use as standalone application
     val conf = new SparkConf().setAppName("Simple Application")
 
-
+    // creates the SparkContext sc
     val sc = new SparkContext(conf)
 
     val t1 = System.currentTimeMillis
 
+    // reads the textfile and transforms it into a RDD as soon as it will be called
     val text = sc.textFile(logFile)
 
     val t2 = System.currentTimeMillis
+
+    // The actual word count algorithm as MapReduce implementation
     val counts = text.flatMap(line => line.toLowerCase().split("\\W+")).filter(_.nonEmpty)
       .map(word => (word, 1))
       .reduceByKey(_ + _)
@@ -45,12 +57,15 @@ object SparkWordCountPrototype {
       //file.saveAsTextFile(args(2))
     sc.stop()
 
+    // print some performance data
     println("Creating RDD took " + (t2-t1) + " ms.")
     println("Wordcount took " + (t3-t2) + " ms.")
     println("Writing files took " + (t4-t3) + " ms.")
     println("Total time consumption: " + (t4-t1) + " ms.")
 
   }
+
+  // parse call parameters
   private def parseParameters(args: Array[String]): Boolean = {
     if (args.length > 0) {
       if (args.length == 2) {
