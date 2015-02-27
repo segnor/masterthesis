@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/WordCountFlinkPrototype.iml" filepath="$PROJECT_DIR$/WordCountFlinkPrototype.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FlinkWordCountPrototype.iml" filepath="$PROJECT_DIR$/FlinkWordCountPrototype.iml" />
     </modules>
   </component>
 </project>

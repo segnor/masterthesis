@@ -75,7 +75,20 @@ TBD!
 \subsection{Prototyp: Vergleich Prototyp Apache Flink }
 \label{section:vergleich apache flink}
 
-TBD!
+
+\begin{lstlisting}[label=flink config,caption=Konfigurationseine.]
+jobmanager.rpc.address: localhost
+
+jobmanager.rpc.port: 6123
+
+jobmanager.heap.mb: 256
+
+taskmanager.heap.mb: 2048
+
+taskmanager.numberOfTaskSlots: 4
+
+parallelization.degree.default: 4
+\end{lstlisting}
 
 \section{Prototyp: MLLib }
 \label{section:prototyp mllib}

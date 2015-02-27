@@ -17,10 +17,10 @@ object SparkWordCountPrototype {
 
     val logFile = "/Applications/spark-1.1.0/wikilogs_oct07/wikiall" // Should be some file on your system
     // this line is for local use within IDE
-    val conf = new SparkConf().setAppName("Simple Application").setMaster("local[8]")
+    //val conf = new SparkConf().setAppName("Simple Application").setMaster("local[8]")
 
     // this line is for local use as standalone application
-    //val conf = new SparkConf().setAppName("Simple Application")
+    val conf = new SparkConf().setAppName("Simple Application")
 
 
     val sc = new SparkContext(conf)

@@ -1,4 +1,4 @@
-name := "Simple Project"
+name := "SparkWordCountPrototype"
 
 version := "1.0"
 
