@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="SBT: com.github.scopt:scopt_2.9.3:3.3.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.github.scopt/scopt_2.9.3/jars/scopt_2.9.3-3.3.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

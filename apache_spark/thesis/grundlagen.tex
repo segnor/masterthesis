@@ -103,7 +103,24 @@ In Abbildung \ref{fig:MLP2} wird das erzeugte Modell zusammen mit produktiven Da
 
 Die Hauptanwendungsgebiete für \textit{Machine Learning} sind sämtliche Bereiche, in denen eine Anwendung von strikten, regelbasierten Algorithmen nicht in Frage kommt \citelit{pdl97}. Beispiele für diese Bereiche sind laut \citelit{pml06} Suchmaschinen, Sprach- und Musikerkennung, Handschriftenerkennung, Spamfilter, Umgebungserkennungen und viele mehr. 
 
+In den vergangenen Jahren werden besonders in Anwendungsfällen der \textit{Artificial Intelligence} die sogenannten \textit{Deep Learning Algorithmen} als äußerst vielversprechender Ansatz gesehen \citelit{dl09}. Dieses basieren auf überwachten oder unüberwachten Lernmethoden, die nichtlinear miteinander gekoppelt werden. DL-Architekturen sind in der Regel in Schichten aufgebaut, wobei eine untere Schicht die von der oberen Schicht klassifizierten oder vorhergesagten Daten zu entsprechenden Weiterverarbeitung erhält. 
 
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=0.5\textwidth]{bilder/deeplearning.png}
+\caption{Exemplarische Darstellung eines Bilderkennungsprozesses mittels Deep Learning. Entnommen aus \protect\citelit{dl09}}
+\label{fig:deeplearning}
+\end{figure}    
+
+
+Besonders für Anwendungen der Bild und Tonerkennung kommen diese Verfahren mittlerweile in Form verschiedener Algorithmen und Architekturen zur Anwendung. In Abbildung \ref{fig:deeplearning}, entnommen aus dem Paper \textit{Learning Deep Architectures for AI} \citelit{dl09}, werden die verschiedenen Iterationen einer Deep-Learning-Anwendung am Beispiel einer Bilderkennung visualisiert. Das Bild wird hier nach und nach von konkreten Attributen wie Kanten, Helligkeitswerten, Farben, lokalen Formen, Teilen von Objekten, etc. in jedem Layer hin zu abstrakteren Repräsentationen transformiert. Auf der höchsten Abstraktionsstufe sollte das Deep-Learning-System erkannt haben, dass es sich um die Darstellung eines sitzenden Mannes handelt.      
+
+
+In der praktischen Anwendung würde eine solche Interpretation ohne explizit gelernten Kontext noch nicht funktionieren, da für die jeweilige Stufe keine richtige Interpretation vorhergesagt werden kann. Hier gehen Forschungsvorhaben in Richtung der Anreicherung der Algorithmen mit Konzepten aus der Linguistik. 
+
+Es existieren diverse Algorithmen, Architekturen und Definitionen von Deep-Learning. Für die Anwendung der Algorithmen ist eine detaillierte Kenntnis dieser meist nicht nötig. Dies ist auch einer der Kritikpunkte, der in Verbindung mit Deep-Learning genannt wird. Die Verfahren präsentieren sich für die Anwender in der Regel als intransparente Black-Box. Für eine Vorstellung der Deep-Learning-Ansätze wird an dieser Stelle an entsprechende Sekundärliteratur verwiesen. 
+
+\newpage
 
 \subsection{Klassifizierung von Daten}
 \label{section:klassifizierung von daten}
@@ -112,12 +129,23 @@ Die Hauptanwendungsgebiete für \textit{Machine Learning} sind sämtliche Bereic
 Im Gegensatz zu herkömmlichen \textit{Business-Intelligence-Anwendungen}\footnote{Laut \citelit{bi12} versteht man unter \textit{Business Intelligence (BI)} die Sammlung, Auswertung und Darstellung von Daten anhand definierter Prozesse.} zeichnen sich Big-Data-Anwendungen in erster Linie durch Unterschiede in der Herangehensweise und in der Formulierung der primären Fragestellungen aus. In der Vergangenheit wurden zu Beginn einer Analyse zunächst Problemstellungen formuliert und aufgrund dessen Prozesse und vor allen Dingen die zu sammelnden Daten definiert \citelit{bi12}. Mit der steigenden Etablierung von Big-Data-Anwendungen hat sich dieser Ansatz gewandelt. Hier werden zunächst sämtliche anfallenden Daten gespeichert. Auf diese Datensätze, deren Größe in relativ kurzer Zeit massiv anwachsen kann, werden erweiterte Analyseprozesse\footnote{Unter dem Begriff \textit{Advanced Analytics} sind verschiedene Werkzeugtypen aus der vorhersagenden Analyse (\textit{Predictive Analytics}), aus dem Data Mining, aus der Statistik, der Künstlichen Intelligenz, der Sprachverarbeitung und weiteren Disziplinen zusammengefasst \citelit{tdwi11}.} angewendet, die unter anderem auch Vorhersagen erlauben \citelit{tdwi11}. 
 So liegen also bei Big-Data-Analytics große Datenmengen vor, ohne dass das Ziel der Analyse im Vorfeld bekannt ist. 
 
-\subsubsection{Clusterverfahren}
+\subsubsection{Cluster-Verfahren}
 \label{section:clusterverfahren}
 
 Nun gibt es verschiedene Herangehensweisen, wie sich relevante Fragestellungen aus den vorliegenden Daten ableiten lassen. Ein sinnvoller Ansatz besteht darin, sogenannte Cluster innerhalb der Daten zu ermitteln, also ähnliche Datensätze zu entsprechenden Gruppen zusammenzufassen. Aus diesen Gruppen werden Klassen gebildet, in dem ihnen aussagekräftige Namen zugeordnet werden\citelit{cl14}. Cluster werden beispielsweise benötigt, um Kunden nach bestimmten Interessen zu gruppieren, um Zeichen auf Ähnlichkeiten für die automatischen Zeichenerkennung zu untersuchen, oder Bilder auf vergleichbare Bildpunktanordnungen oder Farbspektren, also generell überall, wo nach Ähnlichkeiten gesucht wird. 
 
 Ein Cluster zeichnet sich dadurch aus, dass die Objekte innerhalb eines Clusters möglichst ähnlich sind, die Cluster untereinander jedoch möglichst unähnliche Inhalte besitzen. Um Ähnlichkeiten zwischen Datensätzen oder Clustern feststellen zu können, bedarf es einer Distanzfunktion, zur Ermittlung und Sicherstellung der Clustergüte einer Qualitätsfunktion (Vergleich \citelit{cl14}). 
+
+In Abbildung \ref{fig:clusterverf} wird stellvertretend das Cluster-Verfahren \textit{k-Means} in sechs Iterationsschritten zu Cluster-Bildung gezeigt. Dieses und weitere Cluster-Verfahren werden in diesem Unterkapitel nach der Vorstellung einiger relevanter Distanzfunktionen genauer beschrieben. 
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[width=1.0\textwidth]{bilder/kmeansclustering.jpg}
+\caption{Cluster-Verfahren mit verschiedenen Iterationsschritten am Beispiel k-Means. Entnommen aus \protect\citeint{clu14}}
+\label{fig:clusterverf}
+\end{figure}    
+
+\newpage
 
 Laut \citelit{cl14} sind für Distanz- und Qualitätsfunktionen folgende Annahmen zu treffen:  
 
@@ -201,7 +229,7 @@ Prinzipiell wird zwischen vier verschiedenen Clusterarten unterschieden \citelit
 Zu den Cluster-Verfahren zählen laut \citelit{ams03} und \citelit{cl14} unter Anderem folgende Algorithmen:
 
 \begin{itemize}
-		\item \textbf{klassischer k-Means-Algorithmus (partitionierendes Verfahren):} Wie bei allen partitionierenden Verfahren werden zunächst die Clusterzahl \textit{k} und je Cluster ein Zentrum definiert. Die Zentrumsdefinition, und somit die Clusterbildung findet zufällig statt. Die Repräsentation des Clusters erfolgt durch den Centroid, also den Schwerpunkt. Eine Fehlerfunktion wird iterativ minimiert, indem die euklidischen quadrierten Abstände der Inhaltsobjekte zu den Centroiden hin verschoben werden. Nach jedem Iterationsschritt werden durch Mittelwertbildung die Centroiden neu definiert. Dieses Verfahren wird so lange iterativ durchgeführt, bis kein Datenobjekt mehr sein Cluster wechselt. Der k-Means-Algorithmus setzt metrische Werte\footnote{\textit{Metrisch}: Merkmal, das aus einer Zahl besteht und Dimension, sowie Nullpunkt besitzt (z.B. Geschwindigkeit, Einkommen, Alter), \textit{ordinal}: Merkmal mit natürlicher Ordnung (z.B. Schulnoten sehr gut, gut, befriedigend,...), \textit{nominal}: Merkmal ohne natürliche Ordnung (z.B. Geschlecht, Name)} voraus. Die Umwandlung von ordinalen Daten in metrische ist meist einfach umzusetzen, nominale Daten können mittels \textit{Binarisierung} in numerische Werte gewandelt werden. Alternativ kann auch ein modifiziertes \textit{k-Means-Verfahren} eingesetzt werden (Vergleich \citelit{cl14}, Kapitel 8).
+		\item \textbf{klassischer k-Means-Algorithmus (partitionierendes Verfahren):} Wie bei allen partitionierenden Verfahren werden zunächst die Clusterzahl \textit{k} und je Cluster ein Zentrum definiert. Die Zentrumsdefinition, und somit die Clusterbildung findet zufällig statt. Die Repräsentation des Clusters erfolgt durch den Centroid, also den Schwerpunkt. Eine Fehlerfunktion wird iterativ minimiert, indem die euklidischen quadrierten Abstände der Inhaltsobjekte zu den Centroiden hin verschoben werden. Nach jedem Iterationsschritt werden durch Mittelwertbildung die Centroiden neu definiert. Dieses Verfahren wird so lange iterativ durchgeführt, bis kein Datenobjekt mehr sein Cluster wechselt. Der k-Means-Algorithmus setzt metrische Werte\footnote{\textit{Metrisch}: Merkmal, das aus einer Zahl besteht und Dimension, sowie Nullpunkt besitzt (z.B. Geschwindigkeit, Einkommen, Alter), \textit{ordinal}: Merkmal mit natürlicher Ordnung (z.B. Schulnoten sehr gut, gut, befriedigend,...), \textit{nominal}: Merkmal ohne natürliche Ordnung (z.B. Geschlecht, Name)} voraus. Die Umwandlung von ordinalen Daten in metrische ist meist einfach umzusetzen, nominale Daten können mittels \textit{Binarisierung} in numerische Werte gewandelt werden. Alternativ kann auch ein modifiziertes \textit{k-Means-Verfahren} eingesetzt werden (Vergleich \citelit{cl14}, Kapitel 8). In Abbildung \ref{fig:clusterverf} wird die Clusterbildung mittels k-Means-Algorithmus visualisiert.
 		\item \textbf{k-Medoid-Verfahren (partitionierende Verfahren):} Im Unterschied zum k-Means-Algorithmus wird hier nicht der Centroid, sondern der Medoid als Stellvertreter für ein Cluster definiert. Ein Medoid muss immer ein Element der Datenobjekte sein. Durch Vertauschung wird nun iterativ nach qualitativ hochwertigeren Medoiden gesucht, also solchen, deren mittlere Distanz zu den anderen Datenobjekten im Cluster geringer ist. Dies wird so lange durchgeführt, bis kein Tausch der Medoiden mehr stattfindet, also jedes Cluster seinen qualitativ hochwertigsten Medoid besitzt. Die beiden wichtigsten k-Mediod-Verfahren sind PAM (Partitoning Around Medoids) und CLARANS (Clustering Large Applications based on RANdomized Search) (Vergleich \citelit{cl02}). Bei PAM wird jeweils nach dem besten neuen Mediod mit Hilfe einer Qualitätsverbesserung durch graphische Repräsentation der Datenobjektverteilung und -häufigkeit gesucht. Allerdings ist PAM nur für kleine Datenmengen zu verwenden. CLARANS ist für große Datenmengen besser geeignet, da hier nicht sämtliche Datenobjekte durchsucht werden. Statt dessen beschränkt sich die Suche auf Teilmengen.   
 		\item \textbf{k-Median-Algorithmus (partitionierendes Verfahren)} Im Gegensatz zu den k-Means-Verfahren wird beim k-Median nicht mit der Euklidischen Distanz der Abstand zu den Zentren ermittelt, sondern die Summen der Manhattan-Distanzen (1-Norm-Distanzen) werden iterativ minimiert \citelit{ncs06}.
 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/simplesparkprototype.iml" filepath="$PROJECT_DIR$/.idea/modules/simplesparkprototype.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/simplesparkprototype-build.iml" filepath="$PROJECT_DIR$/.idea/modules/simplesparkprototype-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sparkloganalyzerprototype.iml" filepath="$PROJECT_DIR$/.idea/modules/sparkloganalyzerprototype.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sparkloganalyzerprototype-build.iml" filepath="$PROJECT_DIR$/.idea/modules/sparkloganalyzerprototype-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sparkmllibsprototype.iml" filepath="$PROJECT_DIR$/.idea/modules/sparkmllibsprototype.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sparkmllibsprototype-build.iml" filepath="$PROJECT_DIR$/.idea/modules/sparkmllibsprototype-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sparkmllibsrandomforest.iml" filepath="$PROJECT_DIR$/.idea/modules/sparkmllibsrandomforest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sparkmllibsrandomforest-build.iml" filepath="$PROJECT_DIR$/.idea/modules/sparkmllibsrandomforest-build.iml" />
+    </modules>
+  </component>
+</project>
+
