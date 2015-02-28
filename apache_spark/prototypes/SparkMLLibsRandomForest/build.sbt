@@ -1,4 +1,4 @@
-name := "SparkMLLibTest"
+name := "SparkMLLibsRandomForest"
 
 version := "1.0"
 
