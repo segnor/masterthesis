@@ -558,15 +558,22 @@ pkill top
 
 TBD Extrakt - Rest in Anhang
 
-\section{Prototyp: MLLib }
+\section{Prototypen: MLLib }
 \label{section:prototyp mllib}
+
+Für die Machine-Learning-Bibliothek von Spark (MLLib) wurden im Rahmen dieser Thesis mehrere verschiedene Prototypen entwickelt. Für den Vergleich mit dem Framework H2O wurde eine Testimplementierung eines Random Forests genutzt, da dies einem Ensemble-Learning-Algortihmus entspricht und hier H2O seine Stärken voll ausspielen kann. 
+
+Als Testdatenset wurde zunächst ein vorklassifiziertes Datenset der University of California, Irvine genutzt \citeint{uic96}. Hierbei handelt es sich um Daten von gut 49 000 Erwachsenen Personen, die durch 14 Attribute klassifiziert werden und eine Vorhersage ermöglichen sollen, ob eine Person ein Jahresgehalt von über oder unter 50 000\$ erwirtschaftet. Die Attribute werden in Form von Integer-Werten dargestellt, die Einteilung in die Gehaltsklasse wird durch -1 oder +1 ausgedrückt.
+
+
+
 
 
 
 \subsection{Prototyp: Vergleich Prototyp H2O }
 \label{section:vergleich h2o}
 
-\citeint{spawa14}
+Das Machine-Learning Framework H2O  \citeint{spawa14}
 
 
 \section{Prototyp: Spark Streaming }

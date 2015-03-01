@@ -23,6 +23,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../../target/scala-2.10/resource_managed/main" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../src/test/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../target/scala-2.10/resource_managed/test" type="java-test-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/../../target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -110,13 +111,6 @@
     <orderEntry type="library" name="SBT: org.apache.hadoop:hadoop-yarn-common:2.2.0" level="project" />
     <orderEntry type="library" name="SBT: org.apache.hadoop:hadoop-yarn-server-common:2.2.0" level="project" />
     <orderEntry type="library" name="SBT: org.apache.mesos:mesos:0.18.1" level="project" />
-    <orderEntry type="library" name="SBT: org.apache.spark:spark-catalyst_2.10:1.2.0" level="project" />
-    <orderEntry type="library" name="SBT: org.apache.spark:spark-core_2.10:1.2.0" level="project" />
-    <orderEntry type="library" name="SBT: org.apache.spark:spark-mllib_2.10:1.2.0" level="project" />
-    <orderEntry type="library" name="SBT: org.apache.spark:spark-network-common_2.10:1.2.0" level="project" />
-    <orderEntry type="library" name="SBT: org.apache.spark:spark-network-shuffle_2.10:1.2.0" level="project" />
-    <orderEntry type="library" name="SBT: org.apache.spark:spark-sql_2.10:1.2.0" level="project" />
-    <orderEntry type="library" name="SBT: org.apache.spark:spark-streaming_2.10:1.2.0" level="project" />
     <orderEntry type="library" name="SBT: org.apache.zookeeper:zookeeper:3.4.5" level="project" />
     <orderEntry type="library" name="SBT: org.codehaus.jackson:jackson-core-asl:1.9.11" level="project" />
     <orderEntry type="library" name="SBT: org.codehaus.jackson:jackson-jaxrs:1.8.8" level="project" />
@@ -172,6 +166,13 @@
     <orderEntry type="library" name="SBT: org.xerial.snappy:snappy-java:1.1.1.6" level="project" />
     <orderEntry type="library" name="SBT: stax:stax-api:1.0.1" level="project" />
     <orderEntry type="library" name="SBT: xmlenc:xmlenc:0.52" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.spark:spark-catalyst_2.10:1.2.1" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.spark:spark-core_2.10:1.2.1" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.spark:spark-mllib_2.10:1.2.1" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.spark:spark-network-common_2.10:1.2.1" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.spark:spark-network-shuffle_2.10:1.2.1" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.spark:spark-sql_2.10:1.2.1" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.spark:spark-streaming_2.10:1.2.1" level="project" />
   </component>
 </module>
 

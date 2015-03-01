@@ -4,7 +4,7 @@
 		module="sparkmllibsrandomforest_2.10"
 		revision="1.0"
 		status="integration"
-		publication="20150228232254"
+		publication="20150301154844"
 	>
 		<description>
 		SparkMLLibsRandomForest

@@ -4,7 +4,7 @@
 		module="sparkmllibsrandomforest_2.10"
 		revision="1.0"
 		status="integration"
-		publication="20150228232620"
+		publication="20150301223211"
 	>
 		<description>
 		SparkMLLibsRandomForest
@@ -32,8 +32,8 @@
 	<dependencies>
 		<dependency org="org.scala-lang" name="scala-compiler" rev="2.10.4" conf="scala-tool->default,optional(default)"/>
 		<dependency org="org.scala-lang" name="scala-library" rev="2.10.4" conf="scala-tool->default,optional(default);compile->default(compile)"/>
-		<dependency org="org.apache.spark" name="spark-core_2.10" rev="1.2.0" conf="compile->default(compile)"/>
-		<dependency org="org.apache.spark" name="spark-mllib_2.10" rev="1.2.0" conf="compile->default(compile)"/>
+		<dependency org="org.apache.spark" name="spark-core_2.10" rev="1.2.1" conf="compile->default(compile)"/>
+		<dependency org="org.apache.spark" name="spark-mllib_2.10" rev="1.2.1" conf="compile->default(compile)"/>
 		<dependency org="com.github.scopt" name="scopt_2.9.3" rev="3.3.0" conf="compile->default(compile)"/>
 	</dependencies>
 </ivy-module>

@@ -4,7 +4,7 @@
 		module="sparkmllibsrandomforest$sbt_2.10"
 		revision="1.0"
 		status="integration"
-		publication="20150228232629"
+		publication="20150301223239"
 	/>
 	<configurations>
 		<conf name="default" visibility="public"/>

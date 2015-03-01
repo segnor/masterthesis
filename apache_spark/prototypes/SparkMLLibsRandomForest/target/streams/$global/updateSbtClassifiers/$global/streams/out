@@ -611,9 +611,9 @@
 [debug] 	[NOT REQUIRED] org.scala-sbt#test-agent;0.13.5!test-agent.jar
 [debug] 	[NOT REQUIRED] org.scala-sbt#test-interface;1.0!test-interface.jar
 [debug] 	[NOT REQUIRED] org.scala-sbt#apply-macro;0.13.5!apply-macro.jar
-[debug] :: resolution report :: resolve 249ms :: artifacts dl 8ms
+[debug] :: resolution report :: resolve 154ms :: artifacts dl 6ms
 [debug] 	report for sparkmllibsrandomforest#sparkmllibsrandomforest$sbt_2.10;1.0 default produced in /Users/contexagon-SL01/Documents/masterthesis/thesis_lorenz/apache_spark/prototypes/SparkMLLibsRandomForest/target/resolution-cache/reports/sparkmllibsrandomforest-sparkmllibsrandomforest$sbt_2.10-default.xml
-[debug] 	resolve done (249ms resolve - 8ms download)
+[debug] 	resolve done (154ms resolve - 6ms download)
 [debug] Using inline dependencies specified in Scala.
 [debug] :: resolving dependencies :: sparkmllibsrandomforest#sparkmllibsrandomforest$sources_2.10;1.0
 [debug] 	confs: [default]
@@ -955,6 +955,6 @@
 [debug] 	[NOT REQUIRED] org.scala-sbt#precompiled-2_8_2;0.13.5!precompiled-2_8_2.jar(src)
 [debug] 	[NOT REQUIRED] org.scala-sbt#precompiled-2_9_2;0.13.5!precompiled-2_9_2.jar(src)
 [debug] 	[NOT REQUIRED] org.scala-sbt#precompiled-2_9_3;0.13.5!precompiled-2_9_3.jar(src)
-[debug] :: resolution report :: resolve 67ms :: artifacts dl 23ms
+[debug] :: resolution report :: resolve 51ms :: artifacts dl 17ms
 [debug] 	report for sparkmllibsrandomforest#sparkmllibsrandomforest$sources_2.10;1.0 default produced in /Users/contexagon-SL01/Documents/masterthesis/thesis_lorenz/apache_spark/prototypes/SparkMLLibsRandomForest/target/resolution-cache/reports/sparkmllibsrandomforest-sparkmllibsrandomforest$sources_2.10-default.xml
-[debug] 	resolve done (67ms resolve - 23ms download)
+[debug] 	resolve done (51ms resolve - 17ms download)
